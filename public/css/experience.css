@@ -1,0 +1,548 @@
+/* Keep existing color variable names while giving each content area its palette. */
+.brand-mark { display: block; width: 1em; height: 1em; flex-shrink: 0; }
+.pick-loading-brand { display: inline-flex; align-items: center; }
+.pick-loading-brand .brand-mark { font-size: 27px; margin-right: 6px; color: var(--pick-accent); }
+.banner-illustration .brand-mark { position: absolute; width: 100px; height: 100px; left: 0; top: 0; margin: 0; transform: rotate(-8deg); }
+body {
+  --page: #f4f6ff;
+  --surface: #fff;
+  --ink: #1d2948;
+  --muted: #64708a;
+  --line: #dce2f1;
+  --orange: #4566e8;
+  --orange-text: #3451bd;
+  --soft: #eaf0ff;
+  --action-fill: #3455ca;
+  --hero-a: #182d64;
+  --hero-b: #173d59;
+  --hero-glow: #6b94ff;
+  --hero-highlight: #b9d9ff;
+}
+body.anime-page {
+  --page: #f8f4ff;
+  --ink: #352649;
+  --muted: #796b89;
+  --line: #e6ddef;
+  --orange: #8959d9;
+  --orange-text: #7444bc;
+  --soft: #f0e8ff;
+  --action-fill: #7542c0;
+  --hero-a: #34205b;
+  --hero-b: #272b57;
+  --hero-glow: #d797ff;
+  --hero-highlight: #edc7ff;
+}
+body.boardgame-page {
+  --page: #f2f7f1;
+  --ink: #1d3e35;
+  --muted: #647a6e;
+  --line: #d7e4d9;
+  --orange: #22816a;
+  --orange-text: #176e58;
+  --soft: #e3f2e9;
+  --action-fill: #176d58;
+  --hero-a: #133e35;
+  --hero-b: #293d2f;
+  --hero-glow: #b5d991;
+  --hero-highlight: #e8d49a;
+}
+body.dark-theme {
+  --page: #10182b;
+  --surface: #1a253c;
+  --ink: #edf2ff;
+  --muted: #a7b5d1;
+  --line: #30415d;
+  --orange: #91aeff;
+  --orange-text: #aac0ff;
+  --soft: #233356;
+}
+body.anime-page.dark-theme {
+  --page: #1b1429;
+  --surface: #291f3b;
+  --ink: #f4ecff;
+  --muted: #bfaed1;
+  --line: #463751;
+  --orange: #c3a0ff;
+  --orange-text: #d2baff;
+  --soft: #3c2b52;
+}
+body.boardgame-page.dark-theme {
+  --page: #10251e;
+  --surface: #1a342a;
+  --ink: #edf6ec;
+  --muted: #abc3af;
+  --line: #345344;
+  --orange: #8ed4b5;
+  --orange-text: #a3dfc4;
+  --soft: #244936;
+}
+body .btn-primary,
+body.dark-theme .btn-primary {
+  background: var(--action-fill);
+  box-shadow: 0 5px 18px color-mix(in srgb, var(--action-fill) 22%, transparent);
+}
+body .btn-primary:hover,
+body.dark-theme .btn-primary:hover {
+  background: color-mix(in srgb, var(--action-fill) 85%, #14213d);
+}
+body .content-link.active,
+body .genre-tab.active {
+  background: var(--action-fill);
+  border-color: var(--action-fill);
+  color: #fff;
+}
+body .card-save[aria-pressed="true"] {
+  background: var(--action-fill);
+  color: #fff;
+}
+body.dark-theme .card-save[aria-pressed="true"] {
+  background: var(--action-fill);
+  color: #fff;
+}
+body.dark-theme .genre-tab.active {
+  color: #fff;
+}
+body.dark-theme .preference-banner {
+  background: linear-gradient(120deg, var(--soft), var(--surface));
+}
+body.dark-theme .mini-avatars i {
+  color: var(--orange-text);
+}
+body .preference-banner {
+  background: linear-gradient(
+    120deg,
+    var(--soft),
+    color-mix(in srgb, var(--soft) 45%, var(--surface))
+  );
+  border: 1px solid var(--line);
+}
+body .mini-avatars i {
+  background: var(--soft);
+  color: var(--orange-text);
+}
+body .mini-avatars i:nth-child(2) {
+  background: color-mix(in srgb, var(--orange) 18%, var(--surface));
+}
+body .mini-avatars i:nth-child(3) {
+  background: color-mix(in srgb, var(--orange) 30%, var(--surface));
+}
+.pick-loading[data-theme="webtoon"] {
+  --pick-paper: #f5f7ff;
+  --pick-ink: #1d2948;
+  --pick-muted: #64708a;
+  --pick-line: #dce2f1;
+  --pick-accent: #3455ca;
+}
+.hero-copy {
+  animation: experience-arrive 0.7s ease-out both;
+}
+body .hero-art {
+  height: 440px;
+  background:
+    radial-gradient(
+      ellipse at 75% 15%,
+      color-mix(in srgb, var(--hero-glow) 22%, transparent),
+      transparent 65%
+    ),
+    linear-gradient(135deg, var(--hero-a), var(--hero-b));
+  border: 1px solid color-mix(in srgb, var(--hero-glow) 30%, transparent);
+  border-radius: 24px;
+  box-shadow: 0 18px 50px color-mix(in srgb, var(--hero-a) 14%, transparent);
+  isolation: isolate;
+  animation: experience-arrive 0.8s 0.1s ease-out both;
+}
+.hero-art::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  top: 120px;
+  left: -100px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--hero-glow) 18%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+  animation: experience-drift 14s ease-in-out infinite alternate;
+}
+.hero-art .art-orbit {
+  border-color: #ffffff13;
+  width: 80%;
+  height: auto;
+  aspect-ratio: 1;
+  left: 10%;
+  top: 50px;
+  pointer-events: none;
+}
+.hero-art .orbit-two {
+  width: 105%;
+  left: -2.5%;
+  top: -30px;
+}
+.hero-stage-heading {
+  position: absolute;
+  z-index: 4;
+  left: 26px;
+  right: 26px;
+  top: 22px;
+  pointer-events: none;
+}
+.hero-category {
+  display: block;
+  color: var(--hero-highlight);
+  font-size: 8px;
+  letter-spacing: 2.6px;
+  font-weight: 800;
+  margin-bottom: 7px;
+}
+#heroTagline {
+  color: #f1f4ff;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 0;
+  text-wrap: balance;
+  min-height: 20px;
+}
+.hero-deck {
+  position: absolute;
+  inset: 0;
+}
+.hero-art .hero-cover {
+  width: 30%;
+  height: 246px;
+  border: 1px solid #ffffff28;
+  border-radius: 12px;
+  background: #ffffff0c;
+  box-shadow: 5px 16px 28px #0004;
+}
+.hero-art .cover-left {
+  left: 6%;
+  top: 126px;
+  transform: rotate(-12deg);
+}
+.hero-art .cover-right {
+  right: 6%;
+  top: 123px;
+  transform: rotate(12deg);
+}
+.hero-art .cover-front {
+  width: 33%;
+  height: 269px;
+  left: 33.5%;
+  top: 102px;
+  transform: rotate(-3deg);
+}
+.hero-art .hero-cover span {
+  bottom: 0;
+  padding: 25px 10px 12px;
+  font-size: 10px;
+  white-space: normal;
+  line-height: 1.45;
+  text-wrap: balance;
+  overflow: hidden;
+  max-height: 74px;
+}
+.hero-deck[data-size="1"] .hero-cover {
+  left: 33.5%;
+  top: 102px;
+  transform: rotate(-3deg);
+}
+.hero-controls {
+  position: absolute;
+  bottom: 18px;
+  left: 22px;
+  right: 22px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: #dae6f6;
+}
+.hero-controls > div {
+  display: flex;
+  gap: 6px;
+}
+.hero-slide-caption {
+  font-size: 7px;
+  letter-spacing: 1.7px;
+}
+.hero-slide-caption b {
+  color: var(--hero-highlight);
+  font-size: 10px;
+  margin-left: 5px;
+}
+.hero-controls button {
+  border: 1px solid #ffffff30;
+  border-radius: 30px;
+  padding: 7px 11px;
+  background: #ffffff0c;
+  color: #fff;
+  font-size: 10px;
+  line-height: 1.5;
+  transition: background 0.2s;
+}
+.hero-controls button:hover {
+  background: #ffffff25;
+}
+.hero-controls button:focus-visible,
+.hero-cover:focus-visible {
+  outline: 2px solid var(--hero-highlight);
+  outline-offset: 4px;
+}
+.hero-controls button span {
+  margin-left: 4px;
+}
+.hero-art.is-quiet::before {
+  animation-play-state: paused;
+}
+[data-reveal] {
+  transition:
+    opacity 0.6s ease,
+    translate 0.6s ease;
+}
+[data-reveal="pending"] {
+  opacity: 0;
+  translate: 0 18px;
+}
+[data-reveal="visible"] {
+  opacity: 1;
+  translate: 0 0;
+}
+.webtoon-card {
+  animation: experience-card-in 0.4s ease-out both;
+}
+.content-link,
+.mood-chip,
+.genre-tab {
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s,
+    translate 0.2s;
+}
+@media (hover: hover) and (pointer: fine) {
+  .hero-art .hero-cover:hover {
+    transform: translateY(-9px) rotate(0deg);
+    z-index: 3;
+  }
+  .webtoon-card {
+    transition: translate 0.25s ease;
+  }
+  .webtoon-card:hover {
+    translate: 0 -5px;
+  }
+  .card-art {
+    transition: box-shadow 0.25s ease;
+  }
+  .webtoon-card:hover .card-art {
+    box-shadow: 0 14px 28px color-mix(in srgb, var(--ink) 15%, transparent);
+  }
+  .content-link:hover,
+  .mood-chip:hover {
+    translate: 0 -2px;
+  }
+}
+@keyframes experience-arrive {
+  from {
+    opacity: 0;
+    translate: 0 16px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes experience-card-in {
+  from {
+    opacity: 0.4;
+    translate: 0 8px;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes experience-drift {
+  to {
+    transform: translate(260px, -160px) scale(1.15);
+  }
+}
+@media (max-width: 1100px) and (min-width: 769px) {
+  body .hero-art {
+    height: 390px;
+  }
+  .hero-art .hero-cover {
+    height: 205px;
+    top: 121px;
+  }
+  .hero-art .cover-front {
+    height: 229px;
+    top: 100px;
+  }
+  .hero-slide-caption {
+    font-size: 6px;
+    letter-spacing: 0.5px;
+  }
+  .hero-controls {
+    left: 15px;
+    right: 15px;
+  }
+  .hero-controls button {
+    font-size: 9px;
+    padding: 6px 8px;
+  }
+}
+@media (max-width: 768px) {
+  body .hero-art {
+    height: 420px;
+  }
+  .hero-art .hero-cover {
+    height: 237px;
+  }
+  .hero-art .cover-front {
+    height: 259px;
+  }
+}
+@media (max-width: 480px) {
+  body .hero-art {
+    height: 335px;
+    border-radius: 19px;
+  }
+  .hero-stage-heading {
+    left: 18px;
+    right: 18px;
+    top: 17px;
+  }
+  #heroTagline {
+    font-size: 10px;
+  }
+  .hero-category {
+    font-size: 7px;
+    letter-spacing: 2px;
+  }
+  .hero-art .hero-cover {
+    top: 111px;
+    height: 159px;
+    border-radius: 8px;
+  }
+  .hero-art .cover-front {
+    top: 93px;
+    height: 181px;
+  }
+  .hero-art .hero-cover span {
+    padding: 19px 6px 8px;
+    font-size: 8px;
+  }
+  .hero-controls {
+    left: 14px;
+    right: 14px;
+    bottom: 15px;
+    gap: 5px;
+  }
+  .hero-controls button {
+    padding: 6px 8px;
+    font-size: 9px;
+  }
+  .hero-slide-caption {
+    font-size: 6px;
+    letter-spacing: 0.6px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal="pending"] {
+    opacity: 1;
+    translate: none;
+  }
+  .hero-copy,
+  body .hero-art,
+  .hero-art::before,
+  .webtoon-card {
+    animation: none;
+  }
+  .webtoon-card:hover,
+  .content-link:hover,
+  .mood-chip:hover {
+    translate: none;
+  }
+  .hero-art .hero-cover:hover {
+    transform: none;
+  }
+}
+
+/* Each snap point is one real card; scroll position continuously controls the fan. */
+.hero-art .hero-deck {
+  inset: 101px 18px 67px;
+  display: flex;
+  padding-inline: var(--_hero-inset, 0px);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  overflow-anchor: none;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 12px;
+}
+.hero-deck::-webkit-scrollbar { display: none; }
+.hero-page {
+  flex: 0 0 var(--_hero-step, 22%);
+  min-width: 0;
+  position: relative;
+  isolation: isolate;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+.hero-art .hero-page .hero-cover {
+  position: absolute;
+  inset: 3% auto auto 50%;
+  min-width: 0;
+  width: var(--_hero-card-width, 200px);
+  height: 93%;
+  z-index: 3;
+  transform: translateX(-50%) rotate(var(--_card-angle, -2deg)) scale(var(--_card-scale, 1));
+  transform-origin: 50% 85%;
+  opacity: var(--_card-opacity, 0);
+  filter: brightness(var(--_card-brightness, 1));
+  border-color: #ffffff38;
+  box-shadow: 0 9px 16px #0004;
+  overflow: hidden;
+  transition: border-color .2s ease;
+}
+.hero-art .hero-page.is-current .hero-cover {
+  border-color: color-mix(in srgb, var(--hero-highlight) 72%, #fff);
+  box-shadow: 0 16px 24px #0006, 0 0 0 1px #ffffff12;
+}
+.hero-art .hero-page .hero-cover:hover {
+  transform: translateX(-50%) rotate(var(--_card-angle, -2deg)) scale(var(--_card-scale, 1));
+}
+.hero-art .hero-page .hero-cover span {
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding-bottom: 14px;
+  font-size: 12px;
+  opacity: var(--_caption-opacity, 0);
+}
+.hero-slide-caption small { display: block; font-size: 8px; letter-spacing: 0; opacity: .7; margin-top: 4px; }
+.hero-controls button:disabled { opacity: .35; cursor: default; }
+.platform-mark[data-platform="laftel"] { background: #7951ce; color: #fff; }
+.platform-mark[data-platform="netflix"] { background: #c71126; color: #fff; }
+.hero-deck:focus-visible { outline: 2px solid var(--hero-highlight); outline-offset: 3px; }
+@media (max-width: 480px) {
+  .hero-art .hero-deck { inset: 86px 12px 64px; }
+  .hero-art .hero-page .hero-cover span {
+    padding-bottom: 10px;
+    font-size: 10px;
+  }
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .hero-art .hero-page .hero-cover:hover {
+    border-color: var(--hero-highlight);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-art .hero-page .hero-cover { transition: none; }
+}

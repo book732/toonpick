@@ -1,0 +1,847 @@
+/* Theme-specific waiting scenes share one dialog and one request lifecycle. */
+.pick-loading {
+  --pick-accent: #c44325;
+  --pick-muted: #706b61;
+  --pick-line: #ddd9cc;
+  --pick-paper: #fffdf5;
+  --pick-ink: #242b28;
+  padding: 0;
+  width: min(620px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  margin: auto;
+  border: 1px solid #fff6;
+  border-radius: 22px;
+  background: var(--pick-paper);
+  color: var(--pick-ink);
+  box-shadow: 0 30px 100px #0005;
+  overflow: auto;
+  overscroll-behavior: contain;
+  isolation: isolate;
+}
+.pick-loading::backdrop {
+  background: #12211ddb;
+  backdrop-filter: blur(10px);
+}
+.pick-loading[open] {
+  animation: pick-arrive 0.35s ease-out both;
+}
+.pick-loading[data-theme="anime"] {
+  --pick-accent: #c3b3ff;
+  --pick-muted: #b9bbd2;
+  --pick-line: #424159;
+  --pick-paper: #1a1d32;
+  --pick-ink: #f4f1ff;
+}
+.pick-loading[data-theme="boardgame"] {
+  --pick-accent: #efcb80;
+  --pick-muted: #b6c8bb;
+  --pick-line: #426053;
+  --pick-paper: #193d33;
+  --pick-ink: #fff9e8;
+}
+.pick-loading-top,
+.pick-loading-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 20px 28px;
+}
+.pick-loading-brand {
+  font-size: 19px;
+  font-weight: 850;
+  letter-spacing: -1px;
+}
+.pick-loading-brand > span {
+  color: var(--pick-accent);
+}
+.pick-minimize {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid var(--pick-line);
+  border-radius: 30px;
+  padding: 8px 13px;
+  font: inherit;
+  font-size: 11px;
+  color: var(--pick-ink);
+  background: transparent;
+  cursor: pointer;
+}
+.pick-minimize > span {
+  font-size: 19px;
+  line-height: 1;
+}
+.pick-loading button:hover {
+  background: color-mix(in srgb, var(--pick-accent) 12%, transparent);
+}
+.pick-loading button:focus-visible {
+  outline: 2px solid var(--pick-accent);
+  outline-offset: 4px;
+}
+.pick-scene {
+  height: 260px;
+  position: relative;
+  overflow: hidden;
+}
+.pick-scene > div {
+  position: absolute;
+  inset: 0;
+}
+.pick-loading-copy {
+  text-align: center;
+  padding: 16px 36px 0;
+}
+.pick-eyebrow {
+  margin: 0 0 12px;
+  font-size: 10px;
+  letter-spacing: 2.4px;
+  font-weight: 750;
+  color: var(--pick-accent);
+}
+.pick-loading h2 {
+  margin: 0;
+  font-size: clamp(27px, 5.8vw, 38px);
+  line-height: 1.35;
+  letter-spacing: -1.8px;
+  font-weight: 850;
+}
+.pick-loading h2 > span {
+  display: block;
+}
+.pick-title-dot {
+  color: var(--pick-accent);
+}
+.pick-loading-message {
+  min-height: 46px;
+  margin: 15px 0 14px;
+  color: var(--pick-muted);
+  font-size: 12px;
+  line-height: 1.85;
+  text-wrap: balance;
+}
+.pick-loading-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 13px;
+  font-size: 10px;
+  color: var(--pick-muted);
+  flex-wrap: wrap;
+}
+.pick-live {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--pick-ink);
+  font-weight: 650;
+}
+.pick-live i {
+  width: 6px;
+  height: 6px;
+  background: var(--pick-accent);
+  border-radius: 50%;
+}
+.pick-signal {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  margin: 10px auto 0;
+}
+.pick-signal i {
+  width: 4px;
+  height: 13px;
+  border-radius: 4px;
+  background: var(--pick-accent);
+  animation: pick-wave 1.4s ease-in-out infinite;
+}
+.pick-signal i:nth-child(3n) {
+  animation-delay: -0.3s;
+}
+.pick-signal i:nth-child(3n + 1) {
+  animation-delay: -0.6s;
+}
+.pick-signal i:nth-child(4n) {
+  animation-delay: -0.9s;
+}
+#pickLoadingNote {
+  margin: 6px 0 22px;
+  color: var(--pick-muted);
+  font-size: 10px;
+  line-height: 1.7;
+}
+.pick-loading-bottom {
+  border-top: 1px solid var(--pick-line);
+  padding: 15px 28px;
+  font-size: 10px;
+  color: var(--pick-muted);
+}
+.pick-loading-bottom button {
+  border: 0;
+  padding: 5px 0;
+  color: var(--pick-muted);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Comic panels drift independently inside a printed halftone stage. */
+.pick-scene-webtoon {
+  background: radial-gradient(#ded9c9 1px, transparent 1px) center / 8px 8px;
+}
+.comic-panel {
+  position: absolute;
+  top: 24px;
+  left: calc(50% - 73px);
+  width: 146px;
+  height: 210px;
+  border: 2px solid #242b28;
+  background: #f7ecd5;
+  box-shadow: 5px 6px 0 #242b28;
+  overflow: hidden;
+  animation: comic-hover 3.4s ease-in-out infinite;
+}
+.comic-panel > span {
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  left: 9px;
+  font-size: 6px;
+  letter-spacing: 0.6px;
+  color: #242b28;
+  font-weight: 750;
+}
+.comic-panel svg {
+  display: block;
+  width: 100%;
+  height: 180px;
+  margin-top: 10px;
+}
+.comic-panel > b {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 8px 2px;
+  font-size: 11px;
+  background: #fffdf5;
+  text-align: center;
+  border-top: 2px solid #242b28;
+}
+.comic-panel-one {
+  --panel-x: -134px;
+  --panel-r: -13deg;
+  top: 36px;
+  background: #b9d1c5;
+  animation-delay: -0.5s;
+}
+.comic-panel-two {
+  --panel-x: 0px;
+  --panel-r: -3deg;
+  z-index: 2;
+  background: #f8ddcd;
+}
+.comic-panel-three {
+  --panel-x: 135px;
+  --panel-r: 11deg;
+  top: 37px;
+  animation-delay: -1.2s;
+}
+.comic-burst {
+  position: absolute;
+  left: calc(50% - 219px);
+  top: 13px;
+  z-index: 3;
+  color: #b23e23;
+  font-weight: 900;
+  font-size: 29px;
+  transform: rotate(-14deg);
+  animation: comic-pop 2.8s ease-in-out infinite;
+  text-shadow: 2px 2px #fffdf5;
+}
+.comic-bubble {
+  position: absolute;
+  z-index: 4;
+  left: calc(50% + 50px);
+  bottom: 8px;
+  border: 2px solid #242b28;
+  border-radius: 50%;
+  padding: 13px 18px;
+  background: #ffda77;
+  color: #242b28;
+  font-size: 12px;
+  font-weight: 750;
+  transform: rotate(-6deg);
+  animation: pick-bob 3s ease-in-out infinite;
+}
+.comic-spark {
+  position: absolute;
+  left: calc(50% + 185px);
+  top: 3px;
+  font-size: 43px;
+  color: #c44325;
+  animation: pick-turn 12s linear infinite;
+}
+
+/* An opening title floats over an illustrated sunset and orbit lines. */
+.pick-scene-anime {
+  background:
+    radial-gradient(ellipse at 50% 60%, #5b528459, transparent 64%),
+    radial-gradient(#a4a0d875 1px, transparent 1px) center / 27px 27px;
+}
+.anime-orbit {
+  position: absolute;
+  left: calc(50% - 225px);
+  top: 42px;
+  width: 450px;
+  height: 175px;
+  border: 1px solid #aaa5ea40;
+  border-radius: 50%;
+  transform: rotate(-17deg);
+}
+.anime-orbit-two {
+  transform: rotate(24deg);
+  width: 390px;
+  left: calc(50% - 195px);
+}
+.anime-frame {
+  position: absolute;
+  left: calc(50% - 150px);
+  top: 18px;
+  width: 300px;
+  height: 219px;
+  background: linear-gradient(#424468, #b48b9c 63%, #edbd9c);
+  border: 1px solid #dedbff9c;
+  border-radius: 4px;
+  box-shadow:
+    10px 11px 0 #13162b,
+    0 0 60px #a09ee526;
+  overflow: hidden;
+  transform: rotate(-5deg);
+  animation: anime-float 5s ease-in-out infinite;
+}
+.anime-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(transparent 0 3px, #27284112 3px 4px);
+  pointer-events: none;
+}
+.anime-frame-label,
+.anime-timecode {
+  position: absolute;
+  z-index: 2;
+  left: 16px;
+  top: 13px;
+  font-size: 7px;
+  font-weight: 650;
+  color: #fff9e6;
+  letter-spacing: 2px;
+}
+.anime-timecode {
+  top: auto;
+  bottom: 12px;
+  font-size: 6px;
+  letter-spacing: 1.6px;
+}
+.anime-sun {
+  position: absolute;
+  top: 54px;
+  right: 23px;
+  width: 76px;
+  height: 76px;
+  background: #ffd8b4;
+  border-radius: 50%;
+  box-shadow: 0 0 35px #f7bd9855;
+}
+.anime-horizon {
+  position: absolute;
+  inset: 120px -30px -20px;
+  background: #3b3e60;
+  clip-path: polygon(
+    0 60%,
+    18% 20%,
+    40% 65%,
+    63% 10%,
+    85% 55%,
+    100% 20%,
+    100% 100%,
+    0 100%
+  );
+}
+.anime-person {
+  position: absolute;
+  bottom: 15px;
+  right: 56px;
+  width: 21px;
+  height: 54px;
+  background: #22273f;
+  border-radius: 40% 40% 0 0;
+  transform: rotate(3deg);
+}
+.anime-person::before {
+  content: "";
+  position: absolute;
+  top: -13px;
+  left: 2px;
+  width: 17px;
+  height: 20px;
+  border-radius: 45%;
+  background: #22273f;
+}
+.anime-person::after {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: -26px;
+  width: 37px;
+  height: 8px;
+  background: #e5aaa6;
+  clip-path: polygon(0 20%, 100% 0, 100% 100%, 15% 75%);
+  animation: anime-scarf 2s ease-in-out infinite alternate;
+}
+.anime-frame > b {
+  position: absolute;
+  z-index: 1;
+  left: 19px;
+  top: 48px;
+  color: #fff5df;
+  font-size: 34px;
+  line-height: 0.95;
+  letter-spacing: -1px;
+  font-weight: 900;
+  text-shadow: 2px 2px #39374f;
+}
+.anime-frame > b > span {
+  display: block;
+  margin-top: 11px;
+  font-size: 7px;
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+.anime-star {
+  position: absolute;
+  color: #dec5ff;
+  animation: anime-twinkle 3s ease-in-out infinite;
+}
+.anime-star-one {
+  left: calc(50% - 208px);
+  top: 53px;
+  font-size: 35px;
+}
+.anime-star-two {
+  left: calc(50% + 181px);
+  top: 112px;
+  font-size: 42px;
+  animation-delay: -1s;
+}
+.anime-star-three {
+  left: calc(50% + 130px);
+  top: 7px;
+  font-size: 20px;
+  animation-delay: -2s;
+}
+.anime-comet {
+  position: absolute;
+  top: 55px;
+  left: 50%;
+  width: 110px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #e1dcff);
+  transform: rotate(-32deg);
+  animation: anime-comet 5s ease-in-out infinite;
+}
+.anime-ticket {
+  position: absolute;
+  z-index: 3;
+  bottom: 12px;
+  left: calc(50% + 72px);
+  padding: 11px 18px;
+  color: #26283f;
+  background: #c3b3ff;
+  font-size: 9px;
+  transform: rotate(8deg);
+  border: 1px dashed #6a608b;
+  box-shadow: 0 0 0 4px #c3b3ff;
+}
+.anime-ticket b {
+  font-size: 13px;
+  line-height: 1.8;
+  letter-spacing: 1px;
+}
+
+/* Cards fan out while a five-pip die rolls across a felt table. */
+.pick-scene-boardgame {
+  background:
+    radial-gradient(ellipse at center, #75aa882e, transparent 68%),
+    radial-gradient(#b7cda52b 0.7px, transparent 0.7px) center / 6px 6px;
+}
+.board-orbit {
+  position: absolute;
+  left: calc(50% - 215px);
+  top: 17px;
+  width: 430px;
+  height: 227px;
+  border: 1px dashed #d6e4b44d;
+  border-radius: 50%;
+  transform: rotate(-10deg);
+}
+.board-hand {
+  position: absolute;
+  left: 50%;
+  top: 42px;
+}
+.board-card {
+  position: absolute;
+  left: -57px;
+  width: 114px;
+  height: 162px;
+  border: 5px solid #fff6db;
+  border-radius: 10px;
+  background: #ca7055;
+  color: #fff5d5;
+  box-shadow: 3px 9px 0 #0e282a4d;
+  padding: 9px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  animation: board-fan 4s ease-in-out infinite;
+}
+.board-card::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1px solid #fff8d155;
+  border-radius: 35px;
+}
+.board-card > span {
+  align-self: flex-start;
+  font-size: 10px;
+  font-weight: 750;
+}
+.board-card b {
+  font-size: 57px;
+  line-height: 1;
+}
+.board-card small {
+  font-size: 7px;
+  letter-spacing: 0.8px;
+}
+.board-card-one {
+  --card-x: -79px;
+  --card-r: -23deg;
+  background: #396d7b;
+  animation-delay: -0.6s;
+}
+.board-card-two {
+  --card-x: 0px;
+  --card-r: -4deg;
+  z-index: 1;
+}
+.board-card-three {
+  --card-x: 81px;
+  --card-r: 19deg;
+  background: #d4ab57;
+  color: #354433;
+  animation-delay: -1.2s;
+}
+.board-die {
+  position: absolute;
+  left: calc(50% - 190px);
+  top: 149px;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 5px;
+  width: 59px;
+  height: 59px;
+  border-radius: 12px;
+  background: #fff2cf;
+  border: 1px solid #fff6e5;
+  box-shadow:
+    4px 6px 0 #cab891,
+    12px 16px 20px #071f2766;
+  padding: 10px;
+  animation: board-roll 3.8s ease-in-out infinite;
+}
+.board-die i {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #254f44;
+}
+.board-die i:nth-child(2) {
+  grid-column: 3;
+}
+.board-die i:nth-child(3) {
+  grid-column: 2;
+  grid-row: 2;
+}
+.board-die i:nth-child(4) {
+  grid-row: 3;
+}
+.board-die i:nth-child(5) {
+  grid-column: 3;
+  grid-row: 3;
+}
+.board-pawn {
+  position: absolute;
+  left: calc(50% + 152px);
+  top: 142px;
+  width: 38px;
+  height: 55px;
+  background: #93bbad;
+  clip-path: polygon(
+    35% 0,
+    65% 0,
+    77% 15%,
+    70% 32%,
+    63% 40%,
+    68% 68%,
+    92% 83%,
+    100% 100%,
+    0 100%,
+    8% 83%,
+    32% 68%,
+    37% 40%,
+    30% 32%,
+    23% 15%
+  );
+  animation: pick-bob 3s ease-in-out infinite;
+}
+.board-chip {
+  position: absolute;
+  border: 2px dashed #fff3b985;
+  border-radius: 50%;
+  width: 37px;
+  height: 18px;
+  background: #dcb96f;
+  box-shadow: 0 4px 0 #967b44;
+}
+.board-chip-one {
+  top: 210px;
+  left: calc(50% + 101px);
+  transform: rotate(-9deg);
+}
+.board-chip-two {
+  top: 220px;
+  left: calc(50% + 125px);
+  transform: rotate(17deg);
+}
+.board-callout {
+  position: absolute;
+  top: 10px;
+  left: calc(50% - 197px);
+  font-size: 13px;
+  color: #efcb80;
+  font-weight: 650;
+  transform: rotate(-12deg);
+}
+
+.recommendation-floating[data-theme="anime"] button {
+  border-color: #a395d9;
+}
+.recommendation-floating[data-theme="boardgame"] button {
+  border-color: #588a70;
+}
+.recommendation-floating[data-theme="anime"] .recommendation-spinner {
+  border-top-color: #a395d9;
+}
+.recommendation-floating[data-theme="boardgame"] .recommendation-spinner {
+  border-top-color: #588a70;
+}
+.pick-loading[data-paused="true"] *,
+.pick-loading[data-paused="true"] *::after,
+.pick-loading[data-paused="true"] *::before {
+  animation-play-state: paused !important;
+}
+.pick-loading:not([open]) * {
+  animation-play-state: paused;
+}
+
+@keyframes pick-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pick-wave {
+  0%,
+  100% {
+    transform: scaleY(0.45);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scaleY(1.4);
+    opacity: 1;
+  }
+}
+@keyframes pick-bob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+@keyframes pick-turn {
+  to {
+    rotate: 360deg;
+  }
+}
+@keyframes comic-hover {
+  0%,
+  100% {
+    transform: translate(var(--panel-x), 0) rotate(var(--panel-r));
+  }
+  50% {
+    transform: translate(var(--panel-x), -9px)
+      rotate(calc(var(--panel-r) + 3deg));
+  }
+}
+@keyframes comic-pop {
+  0%,
+  100% {
+    scale: 1;
+  }
+  50% {
+    scale: 1.12;
+  }
+}
+@keyframes anime-float {
+  0%,
+  100% {
+    transform: rotate(-5deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-2deg) translateY(-6px);
+  }
+}
+@keyframes anime-scarf {
+  to {
+    transform: skewY(12deg) scaleX(0.85);
+  }
+}
+@keyframes anime-twinkle {
+  0%,
+  100% {
+    opacity: 0.4;
+    scale: 0.8;
+  }
+  50% {
+    opacity: 1;
+    scale: 1.15;
+  }
+}
+@keyframes anime-comet {
+  0%,
+  10% {
+    opacity: 0;
+    transform: translate(-150px, 40px) rotate(-32deg);
+  }
+  30% {
+    opacity: 1;
+  }
+  55%,
+  100% {
+    opacity: 0;
+    transform: translate(200px, -120px) rotate(-32deg);
+  }
+}
+@keyframes board-fan {
+  0%,
+  100% {
+    transform: translateX(var(--card-x)) rotate(var(--card-r));
+  }
+  50% {
+    transform: translate(calc(var(--card-x) * 0.8), -8px)
+      rotate(calc(var(--card-r) * 0.7));
+  }
+}
+@keyframes board-roll {
+  0%,
+  55%,
+  100% {
+    transform: rotate(-15deg);
+  }
+  20% {
+    transform: translate(13px, -22px) rotate(160deg);
+  }
+  40% {
+    transform: translate(0, -3px) rotate(345deg);
+  }
+}
+@media (max-width: 480px) {
+  .pick-loading-top {
+    padding: 17px 19px;
+  }
+  .pick-scene {
+    height: 220px;
+  }
+  .pick-scene > div {
+    width: 500px;
+    left: calc(50% - 250px);
+    transform: scale(0.8);
+    transform-origin: center top;
+  }
+  .pick-loading-copy {
+    padding: 4px 22px 0;
+  }
+  .pick-loading h2 {
+    letter-spacing: -1px;
+  }
+  .pick-loading-message {
+    margin-top: 12px;
+    min-height: 45px;
+  }
+  .pick-loading-bottom {
+    padding: 12px 17px;
+    font-size: 9px;
+  }
+  .pick-loading-meta {
+    gap: 9px;
+  }
+  .recommendation-floating {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+@media (max-height: 650px) and (min-width: 481px) {
+  .pick-scene {
+    height: 195px;
+  }
+  .pick-scene > div {
+    transform: scale(0.75);
+    transform-origin: center top;
+  }
+  .pick-loading-copy {
+    padding-top: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pick-loading,
+  .pick-loading *,
+  .pick-loading *::before,
+  .pick-loading *::after {
+    animation: none !important;
+  }
+  .comic-panel {
+    transform: translateX(var(--panel-x)) rotate(var(--panel-r));
+  }
+  .board-card {
+    transform: translateX(var(--card-x)) rotate(var(--card-r));
+  }
+  .anime-comet {
+    display: none;
+  }
+}

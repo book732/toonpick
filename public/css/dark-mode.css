@@ -1,0 +1,37 @@
+body.dark-theme {
+  color-scheme: dark;
+  --page: #191e1c;
+  --surface: #242b27;
+  --ink: #eef0e8;
+  --muted: #a4ada5;
+  --line: #384039;
+  --orange: #ff805b;
+  --orange-text: #ff9475;
+  --soft: #3d2e26;
+}
+.dark-theme .preference-banner {
+  background: #2b352c;
+}
+.dark-theme .hero-art {
+  background-color: #233b3b;
+}
+.dark-theme .card-save {
+  color: #243b32;
+}
+.dark-theme .card-save[aria-pressed="true"] {
+  color: #fff;
+  background: #bd482c;
+}
+.dark-theme .btn-primary {
+  background: #bd482c;
+}
+.dark-theme .btn-primary:hover {
+  background: #a93c22;
+}
+.dark-theme .mini-avatars i {
+  color: #493c2b;
+}
+.dark-theme .genre-tab.active,
+.dark-theme .btn-dark {
+  color: #191e1c;
+}

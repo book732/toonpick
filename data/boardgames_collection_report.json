@@ -1,0 +1,2137 @@
+{
+  "sourceUrl": "https://www.koreaboardgames.com/product/1depth/list?dspCateFirst=FC00004734",
+  "startedAt": "2026-10-31T09:50:39.802530+00:00",
+  "previousCount": 770,
+  "target": 1000,
+  "excluded": [
+    {
+      "sku": "PD2025000216XJRH",
+      "title": "아크 노바 확장: 마린 월드",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000131XZFP",
+      "title": "[세트] 아컴호러 카드 확장: 수몰된 도시",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001956VPMY",
+      "title": "브금 카드 홀더",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002868I1OX",
+      "title": "아크 노바 확장: 동물원 지도 세트 A",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240022232QWU",
+      "title": "보드게임 플레이 매트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002133WB9M",
+      "title": "보드게임 주사위 트레이",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002000TTL4",
+      "title": "듄: 임페리움 딜럭스 업그레이드 팩",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002561V4ON",
+      "title": "듄 임페리움 확장: 불멸",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000207UFDQ",
+      "title": "커피 러시 프로모: 벚꽃",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001948ZTAQ",
+      "title": "테라포밍 마스 개인판 듀얼 레이어",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001291K1KS",
+      "title": "엘드리치 호러 번역 개선 구성물",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000066KWPB",
+      "title": "[세트] 엘드리치 호러 시리즈 7종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240019773X5O",
+      "title": "테라포밍 마스 확장: 서곡",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000515F8R3",
+      "title": "반지의 제왕 가운데땅에서의 대결 확장: 조력자들",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002075YQ41",
+      "title": "7원더스 대결 확장: 판테온",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002756NODR",
+      "title": "보드게임 플레이 매트 빅사이즈",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002492YJOW",
+      "title": "[세트] 커피 러시 + 확장: 케이크 타임 + 프로모 카드 3종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240028745RUX",
+      "title": "커피 러시 프로모: 크리스마스2",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000022PAOA",
+      "title": "보드게임 만들기 키트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000308XJGV",
+      "title": "구룡투 확장: 도전의 길",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000190CUC3",
+      "title": "커피 러시 프로모: 댕푸치노",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000451WDRO",
+      "title": "[세트] 스플렌더 + 확장 2종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002611QBKA",
+      "title": "글룸헤이븐 리무버블 스티커",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002056HTBJ",
+      "title": "윙스팬 확장: 오세아니아",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000128ROV3",
+      "title": "윙스팬 확장: 아메리카",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002572O7CC",
+      "title": "[세트] 할리갈리 + 루미큐브 클래식 + 다빈치 코드",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000578ONS4",
+      "title": "스플렌더 아트 슬리브",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000577EZQJ",
+      "title": "스플렌더 플레이 매트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000007OVJM",
+      "title": "[우노 지비츠 증정] 우노 + 할리갈리 + 도블 + 우봉고 브레인 게임",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002574IILN",
+      "title": "[세트] 캐스캐디아 + 확장 + 프로모",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002823ZGFZ",
+      "title": "테라포밍 마스 확장: 업적과 기업상",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002303XZPS",
+      "title": "루빅스 레이스",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002465SAJI",
+      "title": "커피 러시 프로모: 파주 장단콩",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000081ULFF",
+      "title": "생츄어리 프로모: 매점",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002738UPQH",
+      "title": "원목 주사위 트레이",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002524AAAO",
+      "title": "보드게임 카드홀더",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000055UI49",
+      "title": "[세트] 우노 카드게임 확장 4종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000166MKF0",
+      "title": "[세트] 아컴호러 카드: 스타터팩(본판+던위치+카르코사)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002350MKOR",
+      "title": "[세트] 아컴호러 카드 확장: 던위치의 유산 개정판",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001562DEGQ",
+      "title": "황금의 땅 엘도라도 프로모 카드2&3",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000008PNSX",
+      "title": "[우노 지비츠 증정] 우노 + 루미큐브 클래식 + 다빈치 코드",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20250004068WAA",
+      "title": "듄 임페리움 확장: 익스의 부상",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000002BMUD",
+      "title": "히트 확장: 폭우를 뚫고",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002593CKPA",
+      "title": "[세트] 클래시 오브 덱스 6종 + 기본판",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20250003411AK2",
+      "title": "아그리콜라 확장: 동네 라이벌 덱",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002770MTYA",
+      "title": "[세트] 아컴호러 카드 확장: 카르코사로 가는 길 개정판",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20250001291MVG",
+      "title": "마블 챔피언스 카드게임 히어로 합본2(4종)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002416UTPT",
+      "title": "[세트] 다윈의 여정 일반판 + 미니 확장 3종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000450PLMP",
+      "title": "스플렌더 확장: 저물지 않는 태양",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002614FDUY",
+      "title": "글룸헤이븐 확장: 잊힌 비술",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002045ZJMS",
+      "title": "캐스캐디아 프로모 동물 점수 카드 팩",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001690YSZ8",
+      "title": "테라포밍 마스 프로모 카드3",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000449Z9CR",
+      "title": "스플렌더 확장: 실크로드",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000591PTH2",
+      "title": "폴리스의 건축가들 확장: 판테온",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000391KQNL",
+      "title": "딕싯 확장: 퀘스트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20260000573LE9",
+      "title": "[세트] 클루: 원피스 + 원피스: 동료들과 바다로",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000442JCXB",
+      "title": "[세트] 네메시스 락다운 + 스트레치 골 + 프로모 2종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002852C4FG",
+      "title": "나빗길 프로모: 검은 나비",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002361S1WC",
+      "title": "[세트] 클랭크 레거시 올인원",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002132ICCC",
+      "title": "뱅 확장: 닷지시티",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001934RGCW",
+      "title": "클라스크 오리지널 스페어 파츠",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD202400186968AT",
+      "title": "딕싯 확장: 백일몽",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002464ICSQ",
+      "title": "커피 러시 확장: 케이크 타임",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240019693CSY",
+      "title": "마블 챔피언스 시나리오 확장: 과거와 미래의 캉",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001652QW8Q",
+      "title": "아컴호러 카드 독립: 광기의 미궁",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000028TSYV",
+      "title": "[세트] 스플렌더 키즈 + 딕싯 키즈",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002825VKVA",
+      "title": "테라포밍 마스 확장: 유토피아 & 킴메리아",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002649JAAM",
+      "title": "반지의 제왕 확장: 어둠 속에 도사린 자",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002612KUKG",
+      "title": "글룸헤이븐 확장: 잊힌 비술 리무버블 스티커",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002353RGCY",
+      "title": "[세트] 카베르나 올인원(+프로모 타일 증정)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001973YAFW",
+      "title": "테라포밍 마스 확장: 비너스 넥스트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001806VC5R",
+      "title": "마블 챔피언스 시나리오 확장: 그린 고블린",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001804ROCW",
+      "title": "광기의 저택 확장: 뱀이 서린 길",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002220ED8L",
+      "title": "뱅 확장: 확장판 모음",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000130R6RX",
+      "title": "마블 챔피언스 카드게임 히어로 합본1(6종)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002760HCU8",
+      "title": "[세트] 뱅 올인원",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002746JBUD",
+      "title": "에이언즈 엔드 확장: 묻혀 버린 비밀",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD202400257700D9",
+      "title": "[세트] EXIT 북극 탐험 기지 + 불길한 고성 + 저주받은 섬",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002437YPKI",
+      "title": "황금의 땅 엘도라도 확장: 위험과 무이스카 & 용과 보물, 그리고 비경",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001827P35I",
+      "title": "딕싯 확장: 예지",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000013MB7T",
+      "title": "티켓 투 라이드 확장: 한국&이베리아",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000355H9XZ",
+      "title": "[세트] 반지의 제왕: 가운데땅 여정 + 확장 4종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000224DUGG",
+      "title": "[세트] 폴리스의 건축가들 + 확장: 아테나",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000022DICE",
+      "title": "[세트] 인기 액션 보드게임 4종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002850FAQP",
+      "title": "엘드리치 호러 확장: 카르코사의 표식",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002822THWG",
+      "title": "테라포밍 마스 확장: 아마조니스 & 보레알리스",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240027794OLC",
+      "title": "[세트] 입문용 필수 보드게임 딜럭스 3종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002729CTFE",
+      "title": "벚꽃 내리는 시대에 결투를 확장: 도앵단원 & 신좌앵연기 전편",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002648CFCN",
+      "title": "반지의 제왕 확장: 그림자 드리운 길",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002647OAWP",
+      "title": "반지의 제왕 확장: 에리아도르의 악한",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240026204LKB",
+      "title": "네메시스 락다운 스트레치 골",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001776ICGA",
+      "title": "마블 챔피언스 시나리오 확장: 레킹 크루",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240017218XJB",
+      "title": "도미니언 확장: 정복자의 바다",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001613RTWX",
+      "title": "아그리콜라 확장: 기술자 덱",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240027479GIC",
+      "title": "뱅 확장: 전설적인 무법자들",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002650OBWR",
+      "title": "반지의 제왕 확장: 퍼져가는 전운",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002083NM4Z",
+      "title": "뱅 확장: 골드러시",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000516OLRH",
+      "title": "[세트] 올플레이 타이니 박스 3종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000395Q1EW",
+      "title": "[세트] 디텍티브: 모던 크라임 보드게임 + 프로모 1, 2, 3",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000390XMPL",
+      "title": "디텍티브 프로모1: 사건6",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000374SUQY",
+      "title": "벚꽃 내리는 시대에 결투를 프로모: 집중력 카드 4종(미소라&이니르 세 자매)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000152LLAY",
+      "title": "캐스캐디아 확장: 랜드마크",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000125IJMI",
+      "title": "도미니언 프로모 카드 세트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000124JK90",
+      "title": "다윈의 여정 일반판(미니 확장: 시나리오 동봉)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000059HILF",
+      "title": "[세트] 안도르의 전설 시리즈 4종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20250000562CGC",
+      "title": "[세트] BEST 주사위 게임 5종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002887EY7I",
+      "title": "도미니언 확장: 르네상스의 도래",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002733KWD8",
+      "title": "벚꽃 내리는 시대에 결투를 프로모: 집중력 카드 2종(아키나&시스이)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002732DIYQ",
+      "title": "벚꽃 내리는 시대에 결투를 프로모: 집중력 카드 2종(카무이&렌리)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001861MMKX",
+      "title": "아줄 확장: 크리스탈 모자이크",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001802YOZV",
+      "title": "엘드리치 호러 확장: 광기의 산맥",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD202400178698ZH",
+      "title": "아컴호러 3판 확장: 악몽의 밤",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001720UOLB",
+      "title": "비티컬처 확장: 라인밸리에서 온 방문객들",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001530O3CG",
+      "title": "크로키놀 디스크 보관 케이스",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001444V3TV",
+      "title": "카베르나 프로모 타일",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001433U2TY",
+      "title": "테라포밍 마스: 아레스 익스페디션 플레이 매트 2입",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20260003621YBN",
+      "title": "[세트] 과학 보드게임 3종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002869XJPX",
+      "title": "혁신의 시대 밸런스 패치 타일",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002744PZOB",
+      "title": "[세트] 카베르나 확장: 잊힌 종족 + 프로모 타일 + 목재 미플",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001698QYVA",
+      "title": "엘드리치 호러 확장: 버림받은 지식",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240014715PJV",
+      "title": "네메시스 프로모: 정비 통로 카드",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001470LNT3",
+      "title": "네메시스 프로모: 업적 카드",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240023566KPM",
+      "title": "[세트] 테라포밍 마스: 아레스 익스페디션 + 플레이 매트(+프로모 증정)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000396DFCU",
+      "title": "[세트] 디텍티브: 모던 크라임 보드게임 + 확장: LA 크라임 + 프로모 4종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000385QPUV",
+      "title": "[세트] 알쏭달쏭 열고개 5종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000330QTBY",
+      "title": "그레이트 킹덤 생각 키우기",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20260000135EI9",
+      "title": "우노 카드게임 확장: 스택",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000307SN1N",
+      "title": "구룡투 점자 키트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000222NT4H",
+      "title": "폴리스의 건축가들 확장: 아테나",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20250001676E2D",
+      "title": "[세트] 캐터펄트 킹덤 올인원",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000081QXEC",
+      "title": "[세트] 아크라이트 미니북 풀세트 4종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000065YMCR",
+      "title": "[세트] 도미니언 시리즈 6종 + 프로모 증정",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000017O6SV",
+      "title": "파워그리드 재충전 지도: 브레멘&맨해튼",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002851HKBC",
+      "title": "엘드리치 호러 확장: 몽환의 땅",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002849SKGD",
+      "title": "엘드리치 호러 확장: 피라미드 아래서",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002494XTJ2",
+      "title": "[세트] 펭귄 얼음 깨기 + 개구리 사탕먹기 + 모두의 마블 베이직",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002179PRLV",
+      "title": "루빅스 레이스 트래블",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002030YHKU",
+      "title": "캐터펄트 킹덤 확장: 발리스타",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001876ACH0",
+      "title": "도미니언 확장: 굳건한 동맹",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001864ZHZ8",
+      "title": "아컴호러 3판 확장: 검은 파도 아래",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001751XIA8",
+      "title": "사건의 재구성 확장: 레드뷰에 오신 걸 환영합니다",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001734W0NA",
+      "title": "티펜탈의 선술집 확장: 신장개업",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001701RIRY",
+      "title": "엘드리치 호러 확장: 기이한 잔재",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001649NJIP",
+      "title": "안도르의 전설 확장: 북부를 향한 여정",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001632JZHE",
+      "title": "7원더스 2판 확장: 리더스",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240016257VC3",
+      "title": "안도르의 전설 확장: 새로운 영웅들",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001603E2VR",
+      "title": "캐터펄트 킹덤 미니 확장: 주사위 포탄",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001592L2EF",
+      "title": "석기시대 확장: 매머드 무리",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001507CJ0G",
+      "title": "보타닉 가든 프로모: 화분 없는 식물",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240014533SFN",
+      "title": "크로키놀 디스크(검정)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001403TJGP",
+      "title": "마르코 폴로2 확장: 카라반",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000012ARWP",
+      "title": "우노 카드게임 확장: 스왑",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001391QGPL",
+      "title": "다윈의 여정 미니 확장: 팔머스 항",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001390DLXV",
+      "title": "다윈의 여정 미니 확장: 다윈 일꾼",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001993SWL4",
+      "title": "도미니언 확장: 장막 뒤의 사람들",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001985DV4J",
+      "title": "도미니언 확장: 위대한 제국",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000766ZFCT",
+      "title": "터틀 카드슬리브 라이트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000765V1HJ",
+      "title": "터틀 카드슬리브 베이직",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000764WGJQ",
+      "title": "터틀 카드슬리브 스탠다드",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000763SSMA",
+      "title": "터틀 카드슬리브 프리미엄",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000762J7TV",
+      "title": "터틀 카드슬리브 얼티밋",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000014YVOJ",
+      "title": "우노 카드게임 확장: 스피드",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000011C6FX",
+      "title": "우노 카드게임 확장: 리버스",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000445V21C",
+      "title": "[세트] 프로젝트 L + 확장 2종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000067FDOB",
+      "title": "[세트] 굴러라 색연필 시리즈 3종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002871M3SU",
+      "title": "키포지: 음산한 잔영 집정관 팩",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002810YXGD",
+      "title": "루빅스 그리드록",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002737V3TX",
+      "title": "[세트] 오토배틀 챌린저스 + 비치 컵",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240026563IVI",
+      "title": "버라지 프로모: 간부 타일 B(WU)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002654LT9U",
+      "title": "버라지 확장: 5번째 발전회사",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002653378T",
+      "title": "버라지 확장: 레이흐바터르 프로젝트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002628VNH0",
+      "title": "디텍티브 프로모3: 신분증",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002627IAGF",
+      "title": "디텍티브 프로모2: 인물사진",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240026199ZMZ",
+      "title": "네메시스 락다운 프로모: 새로운 우주 고양이",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002618ZSCX",
+      "title": "네메시스 락다운 프로모: 새로운 왕들",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002551XZ48",
+      "title": "버라지 프로모: 간부 타일 A(ELON)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002108TVEO",
+      "title": "키포지: 교역의 바람 집정관 팩",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001866KXLO",
+      "title": "캐터펄트 킹덤 확장: 충차와 둥근 성벽",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001854S1JZ",
+      "title": "프로젝트 L 확장: 고스트 블록",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001842BNHF",
+      "title": "키포지: 어둠의 물결 집정관 팩",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001839FI1M",
+      "title": "루빅스 플립 트래블",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001835EEUE",
+      "title": "프로젝트 L 확장: 피네스",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001826VJRF",
+      "title": "캐터펄트 킹덤 확장: 진격 삼두룡",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001824YIKN",
+      "title": "캐터펄트 킹덤 확장: 바이킹의 습격",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001807PPDQ",
+      "title": "캐터펄트 킹덤: 전용 매트 (2매 1세트)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001691QOKO",
+      "title": "안도르의 전설 확장: 별빛 방패",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001651YZJ2",
+      "title": "7원더스 2판 확장: 아르마다",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240016392UQB",
+      "title": "키포지 볼트 덱 박스: 블루",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001634E1TQ",
+      "title": "7원더스 2판 확장: 시티즈",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001602VLSN",
+      "title": "캐터펄트 킹덤 미니 확장: 생선 포탄",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240015532EMC",
+      "title": "키포지 덱 북: 레드",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240014619QJ7",
+      "title": "키포지 로고 슬리브: 블루",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001460CUQ2",
+      "title": "키포지 로고 슬리브: 블랙",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240014584TSU",
+      "title": "키포지 로고 슬리브: 레드",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240014289ST3",
+      "title": "키포지 플레이매트: 원정 팀",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001427ML9O",
+      "title": "키포지 플레이매트: 울트라 그래비트론",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001426PMPS",
+      "title": "키포지 플레이매트: 신더",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001425AHWP",
+      "title": "키포지 플레이매트: 부관 가버널",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001424I6B6",
+      "title": "키포지 플레이매트: 래드 페니",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001422CKI3",
+      "title": "키포지 덱 북: 블랙",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240013984FD3",
+      "title": "키포지 볼트 덱 박스: 블랙",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240013970XTK",
+      "title": "키포지 볼트 덱 박스: 레드",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240013882UNH",
+      "title": "구룡투 점자 키트 2020",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001355FASL",
+      "title": "키포지 덱 북: 블루",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001250CX9G",
+      "title": "키포지 플레이매트: 데우실로스",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001212VIHO",
+      "title": "키포지 플레이매트: 니플 고릴라",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20250002384CQR",
+      "title": "듄 임페리움 확장: 혈통",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240018723QKY",
+      "title": "스타워즈 리벨리온 확장: 제국의 부상",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002773WZT0",
+      "title": "[세트] 7원더스 대결 + 확장 2종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000594NML5",
+      "title": "혁신의 시대 확장: 미래와 과거",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240019829IY6",
+      "title": "7원더스 대결 확장: 아고라",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240014544DUM",
+      "title": "크로키놀 디스크(하양)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001731BH6B",
+      "title": "듄 임페리움 확장: 익스의 부상 드레드노트 팩",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000037NUQ2",
+      "title": "스피크이지 목재 화폐 토큰",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000557NHHR",
+      "title": "새우깡 보드게임 선물세트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000404962Y",
+      "title": "클랭크 카타콤 확장: 소굴과 묘실",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000154GYCR",
+      "title": "만리장성 용 게임 플레이 올인 (강철용 제외)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000517A3HS",
+      "title": "그랜드 오스트리아 호텔 확장: 왈츠를 춥시다",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000465LHEC",
+      "title": "커피 러시 프로모: 전통음료",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000444EATD",
+      "title": "[세트] 레이스 포 더 갤럭시 + 확장: 첫 번째 아크",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000443SZCZ",
+      "title": "[세트] 롤 포 더 갤럭시 + 확장: 끝없는 야망",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000369PNA1",
+      "title": "[세트] 온 마스 + 확장: 에일리언 인베이전",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20250003606FJR",
+      "title": "[세트] 팍스 파미르 + 메탈 코인",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000344QDRM",
+      "title": "[세트] 알마마터 + 확장",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000343NZWS",
+      "title": "[세트] 스키티아의 침략자 + 메탈코인 + 프로모",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000342LZHO",
+      "title": "[세트] 코라: 제국의 번성 + 메탈코인",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000217MTNN",
+      "title": "벚꽃 내리는 시대에 결투를 확장: 후일담",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000172EOAE",
+      "title": "헥스버그 나노(라쿠카라차 나노버그)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000165YUX1",
+      "title": "[세트] 아컴호러 카드 확장: 헴록 베일의 축일",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000163Z8XS",
+      "title": "[세트] 아컴호러 카드 확장: 지구의 끝자락",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000162ZCFT",
+      "title": "[세트] 아컴호러 카드 확장: 잊힌 시대",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000134ZOMB",
+      "title": "아컴호러 카드 조사자 확장 5종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20250001332QXO",
+      "title": "아컴호러 카드 확장: 꿈을 먹는자",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000132G0FA",
+      "title": "아컴호러 카드 확장: 인스머스에 드리운 음모",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20250001319GQ8",
+      "title": "만리장성 업그레이드 팩(규칙서 2.01 동봉)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000128XLAX",
+      "title": "디센트: 암흑의 전설 용인 백부장 미니어처 세트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000053IHLZ",
+      "title": "프로스트헤이븐 리무버블 스티커",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2025000041JHRO",
+      "title": "카르카손 확장: 여관과 대성당",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002830FQF5",
+      "title": "[세트] 마하라자 + 프로모",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002826V1SJ",
+      "title": "테라포밍 마스 확장: 서곡2",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002824SAWF",
+      "title": "테라포밍 마스 프로모 카드7",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002772RLHX",
+      "title": "[세트] 7원더스 2판 + 확장 3종(+프로모 세트 증정)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002764UCIR",
+      "title": "[세트] 케메트 + 확장 + 프로모 4종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002763TKNA",
+      "title": "[세트] 서쪽 왕국의 건축가 + 확장 2종 + 프로모",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002762Z5K2",
+      "title": "[세트] 북해의 침략자 + 확장 2종",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002736P5I7",
+      "title": "벚꽃 내리는 시대에 결투를 신좌앵연기 후편 수정 카드",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002730HGQS",
+      "title": "벚꽃 내리는 시대에 결투를 확장: 포일 카드 팩 영롱2",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002719QXQM",
+      "title": "[세트] 아컴호러 카드 확장: 진홍색 열쇠",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002718XZ9E",
+      "title": "아컴호러 카드 독립: 한탕과 허탕",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002708QE69",
+      "title": "팍스 파미르 메탈 코인",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240027071J6J",
+      "title": "파워그리드 재충전 확장: 지도 모음집",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002706UGAK",
+      "title": "트루아 확장: 트루아의 여인들",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002698ODTB",
+      "title": "코라 프로모: 메탈코인",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002687NTCA",
+      "title": "워터게이트 프로모",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002684VGY5",
+      "title": "온 마스 확장: 에일리언 인베이전",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002678WRDW",
+      "title": "스키티아의 침략자 프로모",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002676HUAJ",
+      "title": "스키티아의 침략자 메탈코인",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002675XV3P",
+      "title": "서쪽 왕국의 성기사 프로모 세트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002674Z3NP",
+      "title": "서쪽 왕국의 성기사 확장: 왕관의 도시",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240026726CKD",
+      "title": "서쪽 왕국의 성기사 컬렉터스 박스",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002671ENXS",
+      "title": "서쪽 왕국의 건축가 프로모 세트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240026700JJU",
+      "title": "서쪽 왕국의 건축가 확장: 환상의 걸작",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002669OR67",
+      "title": "서쪽 왕국의 건축가 확장: 장인의 시대",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002667RHTN",
+      "title": "서쪽 왕국의 건축가 플레이 매트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002666XMOI",
+      "title": "서쪽 왕국의 건축가 컬렉터스 박스",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002665N8MB",
+      "title": "사이드 확장: 먼 곳에서 온 침략자들",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002660FVSV",
+      "title": "북해의 침략자 확장: 영웅의 전당",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002659ISWN",
+      "title": "북해의 침략자 확장: 영광의 전장",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240026571TZZ",
+      "title": "버라지 프로모: 간부 타일 C(AMIR)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002655IOJR",
+      "title": "버라지 확장: 나일강",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002643TWS3",
+      "title": "맹세 프로모: 딜럭스 구성물",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002641SOQO",
+      "title": "만리장성 언어팩",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240026385SMP",
+      "title": "롤 포 더 갤럭시 확장: 끝없는 야망",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002635J1I3",
+      "title": "레즈 아르카나 확장: 진주 제국",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002630HUVG",
+      "title": "레이스 포 더 갤럭시 확장: 첫 번째 아크",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002623UMRV",
+      "title": "다섯 부족 확장: 술탄의 변덕",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002622YRXL",
+      "title": "다섯 부족 확장: 나칼라의 장인들",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002579KMFP",
+      "title": "[세트] EXIT 수상한 저택 + 수수께끼의 집 + 신비스러운 박물관",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002570HUXQ",
+      "title": "알마마터 확장: 새로운 학생들",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002567LRME",
+      "title": "퓨덤 프로모 세트",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002555K1UF",
+      "title": "마하라자 프로모",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002548LHBX",
+      "title": "비티컬처 확장: 월드",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002540AYVP",
+      "title": "사그라다 확장: 5-6인용",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240024385JNS",
+      "title": "황금의 땅 엘도라도 확장: 전설적 탐험가와 저주",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002368TYUB",
+      "title": "[세트] 스카페이스 1920 - MOBSTER",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002366KKWV",
+      "title": "[세트] 위쳐: 올드 월드",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240023552C97",
+      "title": "[세트] 아컴호러 카드 확장: 끝맺지 못한 의식",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002168NITS",
+      "title": "카탄 확장: 도시와 기사",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002150SQI7",
+      "title": "카탄 확장: 5-6인용",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002134HR9U",
+      "title": "카탄 확장: 탐험가와 해적",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002130ES1V",
+      "title": "카탄 확장: 항해사",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002118C2EY",
+      "title": "테라포밍 마스 빅 박스",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002023L63C",
+      "title": "윙스팬 확장: 유럽",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024002007LHUX",
+      "title": "브금 보드게임 박스 밴드(대)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001966HPCU",
+      "title": "딕싯 확장: 메모리즈",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001962ARNF",
+      "title": "테라포밍 마스 확장: 헬라스 & 엘리시움",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001935KOUR",
+      "title": "딕싯 확장: 하모니즈",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001929NGW6",
+      "title": "광기의 저택 확장: 아컴의 거리",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001928HZQI",
+      "title": "테라포밍 마스 확장: 격동",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001925OTP9",
+      "title": "브금 보드게임 박스 밴드(소)",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001920UJDO",
+      "title": "크베들린부르크의 돌팔이 약장수 확장: 허브 마녀",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001916EYZ9",
+      "title": "크베들린부르크의 돌팔이 약장수 확장: 연금술사",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240019072Z8C",
+      "title": "팬데믹 확장: 벼랑 끝에서",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001904WCG8",
+      "title": "딕싯 확장: 오리진",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001899RQCB",
+      "title": "마블 챔피언스 캠페인 확장: 레드 스컬의 부상",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001891YGHF",
+      "title": "딕싯 확장: 기념일",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001888QAV6",
+      "title": "마블 챔피언스 캠페인 확장: 시니스터 모티브",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001868IMYJ",
+      "title": "카르카손 확장: 상인과 건축가",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001852CEKE",
+      "title": "아컴호러 카드 잊힌시대: 돌아온 잊힌 시대",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001849ONAQ",
+      "title": "사건의 재구성 확장: 느와르",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240018414RAH",
+      "title": "아컴호러 카드 독립: 시간을 초월한 음모",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001840FE1U",
+      "title": "아컴호러 카드 카르코사: 돌아온 카르코사로 가는 길",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240018316N3F",
+      "title": "캔버스 확장: 리플렉션",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001788GGXX",
+      "title": "아컴호러 카드 독립: 엑셀시어 호텔 살인사건",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD202400177947OO",
+      "title": "아컴호러 카드 독립: 심연의 수호자",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001737GWBU",
+      "title": "딕싯 확장: 저니",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240016672Z7M",
+      "title": "테라포밍 마스 확장: 개척기지",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001665D1YD",
+      "title": "아그리콜라 확장: 농삿소 덱",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD20240016542FOE",
+      "title": "글룸헤이븐: 사자의 턱 리무버블 스티커",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001633L9ZM",
+      "title": "테라포밍 마스 프로모 카드6",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001618K0KN",
+      "title": "아크 노바 프로모: 동물원 지도 9 & 지도 10",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2024001410G2JI",
+      "title": "언더워터 시티즈 플라스틱 자원 업그레이드 팩",
+      "reason": "accessory_or_expansion"
+    },
+    {
+      "sku": "PD2026000010FEQM",
+      "title": "자두의 해결카드",
+      "reason": "missing_verified_game_identity_or_cover"
+    }
+  ],
+  "duplicates": [
+    {
+      "sku": "PD20240022104YTN",
+      "title": "카르카손",
+      "retained": "카르카손"
+    },
+    {
+      "sku": "PD2024002433KKSI",
+      "title": "하모니즈",
+      "retained": "하모니즈"
+    },
+    {
+      "sku": "PD20260000566GZK",
+      "title": "스플렌더",
+      "retained": "스플렌더"
+    },
+    {
+      "sku": "PD2024002261FGQV",
+      "title": "젝스님트",
+      "retained": "젝스님트"
+    },
+    {
+      "sku": "PD2024002230YYCP",
+      "title": "윙스팬",
+      "retained": "윙스팬"
+    },
+    {
+      "sku": "PD2024002337BNG2",
+      "title": "할리갈리 딜럭스",
+      "retained": "할리갈리"
+    },
+    {
+      "sku": "PD2024002263BXSK",
+      "title": "사보타지",
+      "retained": "사보타지"
+    },
+    {
+      "sku": "PD2024002307WA7Q",
+      "title": "우봉고 미니",
+      "retained": "우봉고"
+    },
+    {
+      "sku": "PD2026000084WGGD",
+      "title": "루미큐브 75주년 기념판",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD2025000231JRMY",
+      "title": "원카드 콤팩트 미키와 친구들",
+      "retained": "원카드"
+    },
+    {
+      "sku": "PD202600045872LE",
+      "title": "사보타지 딜럭스",
+      "retained": "사보타지"
+    },
+    {
+      "sku": "PD20250000032RPL",
+      "title": "루미큐브 알토",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD2024002321NY8U",
+      "title": "딕싯",
+      "retained": "딕싯"
+    },
+    {
+      "sku": "PD20240023277EFI",
+      "title": "도블 동물원",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD2024002198YJ8N",
+      "title": "팬데믹",
+      "retained": "팬데믹"
+    },
+    {
+      "sku": "PD2026000806JLJT",
+      "title": "크로키놀 라이트",
+      "retained": "크로키놀: 챔피언십"
+    },
+    {
+      "sku": "PD2024002306HNSS",
+      "title": "카탄",
+      "retained": "카탄"
+    },
+    {
+      "sku": "PD2024002434OXPW",
+      "title": "햄버거 타이쿤",
+      "retained": "버거 마스터"
+    },
+    {
+      "sku": "PD2024002224O4GJ",
+      "title": "레지스탕스 아발론",
+      "retained": "레지스탕스 아발론 빅 박스"
+    },
+    {
+      "sku": "PD2025000153AYRW",
+      "title": "캐스캐디아",
+      "retained": "캐스캐디아"
+    },
+    {
+      "sku": "PD2024002161QTU7",
+      "title": "아줄",
+      "retained": "아줄"
+    },
+    {
+      "sku": "PD2024002317QE40",
+      "title": "루미큐브 퍼니백",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD2024002302BQ9Y",
+      "title": "쿼리도",
+      "retained": "쿼리도 미니"
+    },
+    {
+      "sku": "PD20240022422BRY",
+      "title": "우노 포켓몬",
+      "retained": "우노 카드게임"
+    },
+    {
+      "sku": "PD2025000283ME3B",
+      "title": "러시아워",
+      "retained": "러시아워 딜럭스"
+    },
+    {
+      "sku": "PD2024002844PKZ2",
+      "title": "할리갈리 포켓몬",
+      "retained": "할리갈리"
+    },
+    {
+      "sku": "PD2024002257YA6J",
+      "title": "러브레터",
+      "retained": "러브레터"
+    },
+    {
+      "sku": "PD2026000558U1SK",
+      "title": "우노 마인크래프트",
+      "retained": "우노 카드게임"
+    },
+    {
+      "sku": "PD20240025859BVR",
+      "title": "도블 산리오캐릭터즈",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD2024002300K6TV",
+      "title": "도블 포켓몬",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD20240022653EEG",
+      "title": "루미큐브 인피니티",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD2024002175JNUJ",
+      "title": "우노 슈퍼 마리오",
+      "retained": "우노 카드게임"
+    },
+    {
+      "sku": "PD20240023331T8Y",
+      "title": "루미큐브 트래블",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD20240023049GZN",
+      "title": "아발론 클래식",
+      "retained": "레지스탕스 아발론 빅 박스"
+    },
+    {
+      "sku": "PD2024002297G11J",
+      "title": "할리갈리 카카오프렌즈",
+      "retained": "할리갈리"
+    },
+    {
+      "sku": "PD2024002174RFGY",
+      "title": "루미큐브 더블 엑스엘",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD2024002769WCS9",
+      "title": "루미큐브 네오",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD2024002380OJ9S",
+      "title": "젝스님트 30주년 기념판",
+      "retained": "젝스님트"
+    },
+    {
+      "sku": "PD2025000164VXO5",
+      "title": "치킨차차 딜럭스",
+      "retained": "치킨차차"
+    },
+    {
+      "sku": "PD20260008077QCN",
+      "title": "우노 케이팝 데몬 헌터스",
+      "retained": "우노 카드게임"
+    },
+    {
+      "sku": "PD2026000333GHS3",
+      "title": "도블 케이팝 데몬 헌터스",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD2025000230SAFV",
+      "title": "구십구 콤팩트 토이 스토리",
+      "retained": "구십구"
+    },
+    {
+      "sku": "PD2024002293MT4X",
+      "title": "쿠키박스 포켓몬",
+      "retained": "쿠키박스"
+    },
+    {
+      "sku": "PD202400222534MK",
+      "title": "루미큐브 퍼니백 미니",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD2024002734NWLL",
+      "title": "아발론 트래블",
+      "retained": "레지스탕스 아발론 빅 박스"
+    },
+    {
+      "sku": "PD2024002243O6UH",
+      "title": "퀵소",
+      "retained": "퀵소 미니"
+    },
+    {
+      "sku": "PD2024002116X24N",
+      "title": "루미큐브 셀렉트",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD20260000261SIU",
+      "title": "할리갈리 미키와 친구들",
+      "retained": "할리갈리"
+    },
+    {
+      "sku": "PD20250002796QYP",
+      "title": "오델로 트래블",
+      "retained": "오델로 클래식"
+    },
+    {
+      "sku": "PD2025000018NADO",
+      "title": "원카드 딜럭스 미키와 친구들",
+      "retained": "원카드"
+    },
+    {
+      "sku": "PD20240022981SWM",
+      "title": "루미큐브 클래식 미니",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD2024002218OGAJ",
+      "title": "구십구 포켓몬",
+      "retained": "구십구"
+    },
+    {
+      "sku": "PD2024002173NW1E",
+      "title": "크로키놀",
+      "retained": "크로키놀: 챔피언십"
+    },
+    {
+      "sku": "PD2026000392QV7E",
+      "title": "페레르 마호가니 체스 세트 L",
+      "retained": "체스앤체커"
+    },
+    {
+      "sku": "PD2026000331E5PZ",
+      "title": "도블 동물의 숲",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD2025000458YOP7",
+      "title": "원카드 티니핑",
+      "retained": "원카드"
+    },
+    {
+      "sku": "PD2024002839YR7T",
+      "title": "학교에 가자(민트)",
+      "retained": "학교에 가자(핑크)"
+    },
+    {
+      "sku": "PD2024002724HQLW",
+      "title": "루미큐브 엑스피",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD2024002296MENE",
+      "title": "루미큐브 보이저",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD2024002244HD7O",
+      "title": "젬블로 딜럭스",
+      "retained": "젬블로"
+    },
+    {
+      "sku": "PD2024002180XSA2",
+      "title": "도블 미니언즈",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD2024002099UPVQ",
+      "title": "도블 컬렉터스 에디션",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD2026000394XCOG",
+      "title": "페레르 퀸스 갬빗 체스 세트 M",
+      "retained": "체스앤체커"
+    },
+    {
+      "sku": "PD2026000393Z1AA",
+      "title": "페레르 마호가니 체스 세트 M",
+      "retained": "체스앤체커"
+    },
+    {
+      "sku": "PD2026000332RAXC",
+      "title": "도블 슈퍼 마리오",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD2025000229O7YT",
+      "title": "원카드 콤팩트 썸썸",
+      "retained": "원카드"
+    },
+    {
+      "sku": "PD2025000179YUNE",
+      "title": "오델로 게임 파티 미키와 친구들",
+      "retained": "오델로 클래식"
+    },
+    {
+      "sku": "PD2025000006FUUY",
+      "title": "구십구 곰돌이 푸",
+      "retained": "구십구"
+    },
+    {
+      "sku": "PD2024002726IGUE",
+      "title": "신비아파트 루미큐브 마이 퍼스트",
+      "retained": "루미큐브 마이 퍼스트"
+    },
+    {
+      "sku": "PD2024002725NBWY",
+      "title": "루미큐브 엑스피 미니",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD2024002222EAON",
+      "title": "루미큐브 틴 디럭스",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD20240021404HB9",
+      "title": "도블 캠핑",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD2024002137YJGB",
+      "title": "도블 쿠키런 킹덤",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD2024002128IPLQ",
+      "title": "도블 마블",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD2024002053L6C9",
+      "title": "루미큐브 트위스트 미니",
+      "retained": "루미큐브 트위스트"
+    },
+    {
+      "sku": "PD2024002002DMXF",
+      "title": "티켓 투 라이드: 유령 열차",
+      "retained": "티켓 투 라이드"
+    },
+    {
+      "sku": "PD2024001950XPDQ",
+      "title": "그랜드마스터 카스파로프 실버 브론즈 체스 세트",
+      "retained": "체스앤체커"
+    },
+    {
+      "sku": "PD2024001782FWMY",
+      "title": "도블 프렌즈",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD2024001780GHWJ",
+      "title": "쿼키 서킷 미니",
+      "retained": "쿼키 서킷"
+    },
+    {
+      "sku": "PD2024001644RKTJ",
+      "title": "키포지: 교역의 바람 듀얼 스타터 팩",
+      "retained": "키포지: 어둠의 물결 듀얼 스타터 팩"
+    },
+    {
+      "sku": "PD2024001627JKXK",
+      "title": "샤크(시가)",
+      "retained": "샤크"
+    },
+    {
+      "sku": "PD2024001199HKBR",
+      "title": "자이언트 우노 BTS",
+      "retained": "우노 카드게임"
+    },
+    {
+      "sku": "PD2024002213Q9VD",
+      "title": "티켓 투 라이드",
+      "retained": "티켓 투 라이드"
+    },
+    {
+      "sku": "PD2024002814YIDL",
+      "title": "루미큐브 셀렉트 빈티지",
+      "retained": "루미큐브 클래식"
+    },
+    {
+      "sku": "PD2025000223CLNQ",
+      "title": "도블 공룡",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD20250004932PDZ",
+      "title": "쿠키박스 티니핑",
+      "retained": "쿠키박스"
+    },
+    {
+      "sku": "PD2025000126G4DP",
+      "title": "디센트: 암흑의 전설 한정무기 세트",
+      "retained": "디센트: 암흑의 전설 아크릴 다이얼 세트"
+    },
+    {
+      "sku": "PD20240028738M9K",
+      "title": "히트: 질주의 열기",
+      "retained": "히트: 질주의 열기"
+    },
+    {
+      "sku": "PD2024002767WQG1",
+      "title": "도블 디즈니",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD20240027102VWA",
+      "title": "팬데믹 레거시 시즌2: 블랙",
+      "retained": "팬데믹 레거시 시즌2: 옐로"
+    },
+    {
+      "sku": "PD20240024865OFM",
+      "title": "7원더스 2판",
+      "retained": "세븐 원더스"
+    },
+    {
+      "sku": "PD2024002316TDKE",
+      "title": "텔레스트레이션 2016",
+      "retained": "텔레스트레이션"
+    },
+    {
+      "sku": "PD2024002284WQ8E",
+      "title": "할리갈리 라인프렌즈",
+      "retained": "할리갈리"
+    },
+    {
+      "sku": "PD2024002195ZCWH",
+      "title": "스컬",
+      "retained": "스컬"
+    },
+    {
+      "sku": "PD20240021660APG",
+      "title": "노 땡스",
+      "retained": "노 땡스 딜럭스"
+    },
+    {
+      "sku": "PD2024002154NOZW",
+      "title": "도블 해리포터",
+      "retained": "도블"
+    },
+    {
+      "sku": "PD202400215275SU",
+      "title": "카르카손 빅 박스",
+      "retained": "카르카손"
+    },
+    {
+      "sku": "PD2024002072GUSM",
+      "title": "카탄 보이저",
+      "retained": "카탄"
+    },
+    {
+      "sku": "PD2024001981WHPX",
+      "title": "카타미노 클래식",
+      "retained": "카타미노"
+    },
+    {
+      "sku": "PD2024001628TLSJ",
+      "title": "루미큐브 그래피티",
+      "retained": "루미큐브 클래식"
+    }
+  ],
+  "failures": [],
+  "sourcePages": 30,
+  "sourceProducts": 1163,
+  "expectedSourceProducts": 1163,
+  "finalCount": 770,
+  "sourceCounts": {
+    "retainedProducts": 740,
+    "excludedProducts": 323,
+    "duplicateProducts": 100
+  },
+  "newUniqueGames": 0,
+  "completedAt": "2026-10-31T09:50:40.258495+00:00"
+}

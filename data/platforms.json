@@ -1,0 +1,286 @@
+[
+  {
+    "key": "naver",
+    "name": "네이버웹툰",
+    "home": "https://comic.naver.com/",
+    "searchUrl": "https://comic.naver.com/search?keyword={query}",
+    "workHosts": [
+      "comic.naver.com"
+    ],
+    "workPattern": "^/webtoon/list$",
+    "imageHosts": [
+      "image-comic.pstatic.net"
+    ],
+    "adapter": "naver",
+    "color": "#03a94d"
+  },
+  {
+    "key": "naverseries",
+    "name": "네이버 시리즈",
+    "home": "https://series.naver.com/comic/home.series",
+    "searchUrl": "https://series.naver.com/search/search.series?t=comic&q={query}",
+    "workHosts": [
+      "series.naver.com"
+    ],
+    "workPattern": "^/comic/detail\\.series$",
+    "imageHosts": [
+      "*.pstatic.net"
+    ],
+    "adapter": "html",
+    "color": "#178c46"
+  },
+  {
+    "key": "kakaopage",
+    "name": "카카오페이지",
+    "home": "https://page.kakao.com/",
+    "searchUrl": "https://page.kakao.com/search/result?keyword={query}",
+    "workHosts": [
+      "page.kakao.com"
+    ],
+    "workPattern": "^/content/[0-9]+$",
+    "imageHosts": [
+      "*.kakao.com",
+      "*.kakaocdn.net"
+    ],
+    "adapter": "kakaopage",
+    "color": "#8a6800"
+  },
+  {
+    "key": "kakaowebtoon",
+    "name": "카카오웹툰",
+    "home": "https://webtoon.kakao.com/",
+    "searchUrl": "https://webtoon.kakao.com/search?keyword={query}",
+    "workHosts": [
+      "webtoon.kakao.com"
+    ],
+    "workPattern": "^/content/[^/]+/[0-9]+$",
+    "imageHosts": [
+      "*.kakaopagecdn.com",
+      "*.kakaocdn.net"
+    ],
+    "adapter": "kakaowebtoon",
+    "color": "#303030"
+  },
+  {
+    "key": "lezhin",
+    "name": "레진코믹스",
+    "home": "https://www.lezhin.com/ko",
+    "searchUrl": "https://www.lezhin.com/ko/search?t=all&q={query}",
+    "workHosts": [
+      "www.lezhin.com"
+    ],
+    "workPattern": "^/ko/comic/[A-Za-z0-9_-]+$",
+    "imageHosts": [
+      "*.lezhin.com"
+    ],
+    "adapter": "lezhin",
+    "color": "#d73c3c"
+  },
+  {
+    "key": "ridi",
+    "name": "리디",
+    "home": "https://ridibooks.com/webtoon/recommendation",
+    "searchUrl": "https://ridibooks.com/search?q={query}&tab=WEBTOON",
+    "workHosts": [
+      "ridibooks.com"
+    ],
+    "workPattern": "^/books/[0-9]+$",
+    "imageHosts": [
+      "*.ridicdn.net"
+    ],
+    "adapter": "ridi",
+    "color": "#176ec9"
+  },
+  {
+    "key": "bomtoon",
+    "name": "봄툰",
+    "home": "https://www.bomtoon.com/",
+    "searchUrl": "https://www.bomtoon.com/search?q={query}",
+    "workHosts": [
+      "www.bomtoon.com"
+    ],
+    "workPattern": "^/detail/[A-Za-z0-9_-]+$",
+    "imageHosts": [
+      "image.balcony.studio",
+      "*.bomtoon.com"
+    ],
+    "adapter": "bomtoon",
+    "color": "#b33570"
+  },
+  {
+    "key": "toptoon",
+    "name": "탑툰",
+    "home": "https://toptoon.com/",
+    "searchUrl": "https://toptoon.com/",
+    "workHosts": [
+      "toptoon.com"
+    ],
+    "workPattern": "^/comic/ep_list/[A-Za-z0-9_-]+$",
+    "imageHosts": [
+      "*.toptoon.com"
+    ],
+    "adapter": "html",
+    "color": "#bd372b"
+  },
+  {
+    "key": "toomics",
+    "name": "투믹스",
+    "home": "https://www.toomics.kr/",
+    "searchUrl": "https://www.toomics.kr/",
+    "workHosts": [
+      "www.toomics.kr",
+      "www.toomics.com"
+    ],
+    "workPattern": "^/webtoon/(?:episode/toon/[0-9]+|bridge/type/[0-9]+/toon/[0-9]+)$",
+    "imageHosts": [
+      "*.toomics.com",
+      "*.toomics.kr"
+    ],
+    "adapter": "html",
+    "color": "#b22929"
+  },
+  {
+    "key": "mrblue",
+    "name": "미스터블루",
+    "home": "https://www.mrblue.com/webtoon",
+    "searchUrl": "https://www.mrblue.com/search/content?keyword={query}",
+    "workHosts": [
+      "www.mrblue.com",
+      "m.mrblue.com"
+    ],
+    "workPattern": "^/webtoon/(?:detail/[A-Za-z0-9_-]+|wt_[A-Za-z0-9_-]+)$",
+    "imageHosts": [
+      "*.mrblue.com"
+    ],
+    "adapter": "html",
+    "color": "#1766aa"
+  },
+  {
+    "key": "bookcube",
+    "name": "북큐브",
+    "home": "https://www.bookcube.com/toon/main.asp",
+    "searchUrl": "https://www.bookcube.com/search.asp?searchString={query}&page=toon",
+    "workHosts": [
+      "www.bookcube.com"
+    ],
+    "workPattern": "^/toon/detail\\.asp$",
+    "imageHosts": [
+      "*.bookcube.com"
+    ],
+    "adapter": "html",
+    "color": "#944a23"
+  },
+  {
+    "key": "peanutoon",
+    "name": "피너툰",
+    "home": "https://www.peanutoon.com/",
+    "searchUrl": "https://www.peanutoon.com/search.html?search_txt={query}",
+    "workHosts": [
+      "www.peanutoon.com"
+    ],
+    "workPattern": "^/comics_(?:comics-)?[0-9]+\\.html$",
+    "imageHosts": [
+      "*.peanutoon.com"
+    ],
+    "adapter": "html",
+    "color": "#845626"
+  },
+  {
+    "key": "onestory",
+    "name": "원스토리",
+    "home": "https://onestory.co.kr/",
+    "searchUrl": "https://onestory.co.kr/",
+    "workHosts": [
+      "onestory.co.kr"
+    ],
+    "workPattern": "^/display/product/[A-Za-z0-9]+$",
+    "imageHosts": [
+      "*.onestore.net",
+      "*.onechain.nexus"
+    ],
+    "adapter": "link",
+    "color": "#8a4ac0"
+  },
+  {
+    "key": "comico",
+    "name": "코미코",
+    "home": "https://www.comico.kr/",
+    "searchUrl": "https://www.comico.kr/",
+    "workHosts": [
+      "www.comico.kr"
+    ],
+    "workPattern": "^/comic/[A-Za-z0-9_-]+$",
+    "imageHosts": [
+      "*.comico.kr"
+    ],
+    "adapter": "link",
+    "color": "#b44341"
+  },
+  {
+    "key": "anytoon",
+    "name": "애니툰",
+    "home": "https://www.anytoon.co.kr/webtoon/main",
+    "searchUrl": "https://www.anytoon.co.kr/webtoon/main",
+    "workHosts": [
+      "www.anytoon.co.kr"
+    ],
+    "workPattern": "(?!)",
+    "imageHosts": [],
+    "adapter": "link",
+    "color": "#af343e"
+  },
+  {
+    "key": "mootoon",
+    "name": "무툰",
+    "home": "https://www.mootoon.co.kr/mtoon/top.mg",
+    "searchUrl": "https://www.mootoon.co.kr/mtoon/top.mg",
+    "workHosts": [
+      "www.mootoon.co.kr"
+    ],
+    "workPattern": "^/comic/moo_list\\.mg$",
+    "imageHosts": [
+      "*.mootoon.co.kr"
+    ],
+    "adapter": "html",
+    "color": "#8e4427"
+  },
+  {
+    "key": "postype",
+    "name": "포스타입",
+    "home": "https://www.postype.com/",
+    "searchUrl": "https://www.postype.com/",
+    "workHosts": [
+      "www.postype.com"
+    ],
+    "workPattern": "(?!)",
+    "imageHosts": [],
+    "adapter": "link",
+    "color": "#924498"
+  },
+  {
+    "key": "toon365",
+    "name": "만화365",
+    "home": "https://www.toon365.com/",
+    "searchUrl": "https://www.toon365.com/",
+    "workHosts": [
+      "www.toon365.com"
+    ],
+    "workPattern": "(?!)",
+    "imageHosts": [],
+    "adapter": "link",
+    "color": "#565db2"
+  },
+  {
+    "key": "manhwa",
+    "name": "인터넷만화방",
+    "home": "https://manhwa.co.kr/",
+    "searchUrl": "https://manhwa.co.kr/",
+    "workHosts": [
+      "manhwa.co.kr"
+    ],
+    "workPattern": "(?!)",
+    "imageHosts": [],
+    "adapter": "link",
+    "color": "#426e88"
+  }
+]

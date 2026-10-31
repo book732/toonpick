@@ -1,0 +1,26 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "outputDirectory": "public",
+  "functions": {
+    "api/**/*.py": {
+      "maxDuration": 120,
+      "includeFiles": "data/**",
+      "excludeFiles": "{assets/**,public/**,tests/**,scripts/**,.cache/**}"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/boardgames",
+      "destination": "/boardgames/index.html"
+    },
+    {
+      "source": "/anime",
+      "destination": "/anime/index.html"
+    },
+    {
+      "source": "/api/generate",
+      "destination": "/api"
+    }
+  ]
+}

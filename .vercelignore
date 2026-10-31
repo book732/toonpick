@@ -1,0 +1,13 @@
+# Only deployment inputs belong in the upload.
+.git/
+.cache/
+.env*
+.vercel/
+.venv/
+venv/
+**/__pycache__/
+**/*.pyc
+tests/
+docs/
+.vscode/
+.idea/

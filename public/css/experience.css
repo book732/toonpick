@@ -599,3 +599,16 @@ body .hero-art {
 .content-chevron { display: block; width: 12px; height: 12px; }
 body .content-menu:has(.content-link.active) { background: var(--action-fill); border-color: var(--action-fill); color: #fff; }
 body .content-menu .content-link.active { background: transparent; border-color: transparent; color: inherit; }
+
+.hero-cta-group { flex-wrap: wrap; }
+body .hero-cta-group > .btn-primary {
+  min-width: min(100%, 300px);
+  max-width: 100%;
+  min-height: 72px;
+  padding: 22px 28px;
+  gap: 14px;
+  border-radius: 10px;
+  font-size: 16px;
+  box-shadow: 0 0 24px color-mix(in srgb, var(--action-fill) 22%, transparent), 0 6px 18px color-mix(in srgb, var(--action-fill) 14%, transparent);
+}
+.hero-cta-group > .btn-primary .icon { width: 22px; height: 22px; }

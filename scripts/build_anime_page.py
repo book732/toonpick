@@ -9,6 +9,18 @@ def _main():
     _html = (_root / "index.html").read_text(encoding="utf-8")
     _html = _html.replace('<script src="js/storage.js" defer>', '<script src="js/anime.js" defer></script>\n    <script src="js/storage.js" defer>', 1)
     _html = _html.replace('<body>', '<body class="anime-page">', 1)
+    _html = _html.replace('<link rel="stylesheet" href="css/style.css" />', '<link rel="stylesheet" href="css/style.css" /><link rel="stylesheet" href="css/anime-schedule.css" />', 1)
+    _html = _html.replace('<script src="js/app.js" defer>', '<script src="js/anime-schedule.js" defer></script>\n    <script src="js/app.js" defer>', 1)
+    _schedule = '''      <section class="container anime-schedule" id="animeSchedule" aria-labelledby="scheduleTitle">
+        <div class="schedule-heading"><div><span class="section-kicker orange">ON THE CALENDAR</span><h2 id="scheduleTitle">분기별 방영 미리보기</h2><p>올해와 다음 해, 기다리는 애니메이션을 미리 만나보세요.</p></div><label class="schedule-year" for="scheduleYear">방영 연도<select id="scheduleYear"></select></label></div>
+        <div class="schedule-quarters" role="group" aria-label="방영 분기"><button type="button" data-quarter="1" aria-pressed="false">1분기</button><button type="button" data-quarter="2" aria-pressed="false">2분기</button><button type="button" data-quarter="3" aria-pressed="false">3분기</button><button type="button" data-quarter="4" aria-pressed="false">4분기</button></div>
+        <p class="schedule-message" id="scheduleMessage" role="status" aria-live="polite">발표된 방영 일정을 확인하세요.</p>
+        <div class="schedule-grid" id="scheduleGrid" aria-busy="false"></div>
+        <div class="schedule-controls"><button class="btn btn-outline" type="button" id="scheduleRetry" hidden>다시 불러오기</button><button class="btn btn-outline" type="button" id="scheduleMore" hidden>방영 작품 더 보기</button></div>
+        <p class="schedule-note">1분기 1–3월 · 2분기 4–6월 · 3분기 7–9월 · 4분기 10–12월<br>해외 최초 공개 분기 기준이며 국내 공개일·플랫폼은 다를 수 있습니다. 발표 전 일정은 표시되지 않으며 편성은 변경될 수 있어요. <a id="scheduleSource" href="https://anilist.co/search/anime" target="_blank" rel="noopener noreferrer">일정 출처: AniList ↗</a></p>
+      </section>
+'''
+    _html = _html.replace('      <section\n        class="container catalog-section"', _schedule + '      <section\n        class="container catalog-section"', 1)
     _html = _html.replace('<a href="/" class="content-link active" aria-current="page">', '<a href="/" class="content-link">').replace('<a href="/anime" class="content-link">', '<a href="/anime" class="content-link active" aria-current="page">')
     _html = _html.replace('오늘의 덕질 — 웹툰 추천', '오늘의 덕질 — 애니메이션 추천')
     _html = _html.replace('다음 한 컷이', '다음 한 편이').replace('맞는 웹툰을', '맞는 애니메이션을').replace('웹툰 큐레이션', '애니메이션 큐레이션')
@@ -25,7 +37,6 @@ def _main():
     _html = _html.replace('여러 플랫폼 검색과 AI 분석으로', '작품 정보 조회와 AI 분석으로')
     _html = re.sub(r'      <section\s+class="container platforms-section".*?</section>\n', '', _html, count=1, flags=re.S)
     _html = _html.replace('            <span class="section-kicker orange">DISCOVER YOUR PICK</span>\n', '')
-    _html = _html.replace('<span class="editor-label"', '<span class="editor-label" hidden').replace('<span id="recommendationLabel">오늘의 덕질 에디터 큐레이션</span>', '<span id="recommendationLabel"></span>')
     _html = _html.replace('관심등록순', '인기순')
     _html = re.sub(r'(src|href)="(assets|js|css)/', r'\1="/\2/', _html)
     _directory = _root / "anime"

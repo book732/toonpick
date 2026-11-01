@@ -5,56 +5,8 @@
   const _play = document.getElementById("heroPlay");
   const _next = document.getElementById("heroNext");
   const _previous = document.getElementById("heroPrevious");
-  const _tagline = document.getElementById("heroTagline");
   const _motion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const _type = window.TOONPICK_PAGE?.type || "webtoon";
-  const _copy = {
-    webtoon: {
-      category: "WEBTOON CLUB",
-      lines: [
-        "오늘의 취향은 어느 컷에 숨어 있을까요?",
-        "스크롤 끝에서 새로운 최애를 만나요.",
-        "가벼운 터치 하나, 새로운 세계 하나.",
-        "오늘 마음에 닿을 이야기를 펼쳐보세요.",
-        "익숙한 장르 밖에도 재미는 있으니까.",
-        "설렘도 반전도, 취향대로 한 컷.",
-        "작은 말풍선에서 시작되는 큰 몰입.",
-        "처음 보는 제목이 최애가 되는 순간.",
-        "이야기 한 조각으로 오늘을 다르게.",
-        "다음에 읽을 즐거움이 여기 있어요.",
-      ],
-    },
-    anime: {
-      category: "ANIME NIGHT",
-      lines: [
-        "오늘 밤의 오프닝을 골라볼까요?",
-        "엔딩 뒤에도 남을 이야기를 만나세요.",
-        "새로운 세계로 향하는 재생 버튼.",
-        "한 장면이 오래도록 마음에 남을 때.",
-        "어떤 세계의 주인공을 만나고 싶나요?",
-        "익숙한 일상에 낯선 모험 한 편.",
-        "다음 최애와의 우연한 만남.",
-        "웃고 울고 빠져들, 오늘의 한 편.",
-        "장르를 넘어 마음이 움직이는 순간.",
-        "취향이라는 자막으로 읽는 새로운 세계.",
-      ],
-    },
-    boardgame: {
-      category: "GAME TABLE",
-      lines: [
-        "오늘 테이블 위에는 어떤 재미를 올릴까요?",
-        "한 수의 고민이 한 판의 추억으로.",
-        "함께 웃을 준비, 주사위는 준비됐어요.",
-        "승부도 협력도, 오늘의 기분대로.",
-        "손에 든 카드보다 중요한 건 함께하는 시간.",
-        "처음 만나는 게임, 금세 가까워지는 사이.",
-        "조용한 두뇌전부터 시끌벅적한 파티까지.",
-        "화면을 잠시 내려놓고 한 판 어때요?",
-        "다음 모임의 주인공이 될 게임을 찾아요.",
-        "작은 상자 하나에 담긴 커다란 즐거움.",
-      ],
-    },
-  }[_type];
   const _known = new Map();
   let _source;
   let _sourceLength = 0;
@@ -62,15 +14,12 @@
   let _groupOrder = [];
   let _families = new Map();
   let _shown = [];
-  let _lines = [];
-  let _lastLine = "";
   let _timer;
   let _busy = false;
   let _paused = false;
   let _hovered = false;
   let _focused = false;
   let _inView = true;
-  let _slide = 0;
   let _pageIndex = 0;
   let _settleTimer;
   let _pointerStart = null;
@@ -78,7 +27,15 @@
   let _lastDrawn = [];
   let _step = 1;
   let _paintFrame = 0;
-  let _currentId = "";
+  let _touching = false;
+  let _gestureStart = null;
+  let _layoutFrame = 0;
+  let _pointerId = null;
+  let _pointerX = 0;
+  let _dragging = false;
+  let _dragFrame = 0;
+  let _dragScroll = 0;
+  let _warmIndex = -1;
 
   function _shuffle(_items) {
     const _result = [..._items];
@@ -89,14 +46,14 @@
     return _result;
   }
 
-  function _setLine() {
-    if (!_lines.length) {
-      _lines = _shuffle(_copy.lines);
-      if (_lines.at(-1) === _lastLine)
-        [_lines[0], _lines[_lines.length - 1]] = [_lines.at(-1), _lines[0]];
-    }
-    _lastLine = _lines.pop();
-    _tagline.textContent = _lastLine;
+  function _isBannerEligible(_item) {
+    if (_type !== "webtoon") return true;
+    // Unknown ratings must never enter the public webtoon banner.
+    return /^(?:전체연령가|전체이용가|(?:7|12|15)세\s*이용가)$/.test(String(_item.age || "").trim()) &&
+      !_item.adult && !_item.isAdult && !_item.nineteen &&
+      !/성인|청소년\s*(?:이용|관람)\s*불가|(?:18|19)\s*(?:세|금|\+)|\b(?:ADULT|NSFW|R[- ]?18|R[- ]?19)\b/i.test(
+        [_item.title, _item.genre, ...(_item.tags || [])].join(" "),
+      );
   }
 
   function _schedule() {
@@ -106,6 +63,8 @@
       !_motion.matches &&
       !_hovered &&
       !_focused &&
+      !_touching &&
+      !_dragging &&
       !document.hidden &&
       _inView &&
       !document.querySelector("dialog[open]");
@@ -224,7 +183,14 @@
       _button.setAttribute("aria-label", _item.title + " 상세 보기");
       const _image = new Image(240, 320);
       _image.loading = "lazy";
+      _image.decoding = "async";
+      _image.fetchPriority = "low";
       _image.draggable = false;
+      if (_type === "boardgame") {
+        _image.addEventListener("load", () => {
+          _button.style.setProperty("--_cover-aspect", String(_image.naturalWidth / _image.naturalHeight));
+        }, { once: true });
+      }
       _image.src = _item.cover.startsWith("assets/") ? "/" + _item.cover : _item.cover;
       _image.alt = _item.title + " 표지";
       const _label = document.createElement("span");
@@ -234,11 +200,31 @@
     }
     if (_before) _deck.prepend(_page);
     else _deck.append(_page);
+    _warmIndex = -1;
+  }
+
+  function _warmImages(_index) {
+    if (_warmIndex === _index) return;
+    _warmIndex = _index;
+    // Decode a bounded look-ahead window; never preload the full catalogue.
+    for (let _distance = 0; _distance <= 4; _distance++) {
+      for (const _position of _distance ? [_index + _distance, _index - _distance] : [_index]) {
+        const _image = _deck.children[_position]?.querySelector("img");
+        if (!_image) continue;
+        _image.fetchPriority = _distance <= 1 ? "high" : "low";
+        _image.loading = "eager";
+        if (_image.dataset.warmed) continue;
+        _image.dataset.warmed = "true";
+        void _image.decode().catch(() => { delete _image.dataset.warmed; });
+      }
+    }
   }
 
   function _paint() {
+    cancelAnimationFrame(_paintFrame);
     _paintFrame = 0;
     const _position = _deck.scrollLeft / _step;
+    _warmImages(Math.round(_position));
     [..._deck.children].forEach((_entry, _index) => {
       const _offset = Math.max(-2, Math.min(2, _index - _position));
       const _pose = _offset.toFixed(3);
@@ -257,24 +243,30 @@
   }
 
   function _layout() {
-    _step = _deck.clientWidth * .22 || 1;
+    cancelAnimationFrame(_layoutFrame);
+    _busy = _deck.children.length > 0;
+    clearTimeout(_timer);
+    _deck.style.scrollSnapType = "none";
+    _gestureStart = null;
+    _step = _deck.clientWidth * .26 || 1;
     _deck.style.setProperty("--_hero-step", _step + "px");
     _deck.style.setProperty("--_hero-inset", (_deck.clientWidth - _step) / 2 + "px");
-    _deck.style.setProperty("--_hero-card-width", _deck.clientWidth * .46 + "px");
+    _deck.style.setProperty("--_hero-card-width", _deck.clientWidth * .55 + "px");
     _deck.scrollTo({ left: _pageIndex * _step, behavior: "instant" });
     _paint();
+    // Restore snapping after layout so viewport changes keep the same selected card.
+    _layoutFrame = requestAnimationFrame(() => {
+      _layoutFrame = 0;
+      _deck.style.scrollSnapType = "";
+      _deck.scrollTo({ left: _pageIndex * _step, behavior: "instant" });
+      _settle();
+    });
   }
 
   function _settle() {
-    if (!_deck.children.length || _pointerStart !== null) return;
+    if (!_deck.children.length || _pointerStart !== null || _touching || _layoutFrame) return;
+    _gestureStart = null;
     const _index = Math.max(0, Math.min(_deck.children.length - 1, Math.round(_deck.scrollLeft / _step)));
-    const _item = _known.get(_deck.children[_index].firstElementChild.dataset.detail);
-    if (_item.id !== _currentId) {
-      if (_slide) _setLine();
-      _currentId = _item.id;
-      _deck.dataset.slide = String(++_slide);
-      document.getElementById("heroSlideNumber").textContent = String(_slide).padStart(2, "0");
-    }
     _pageIndex = _index;
     // Extend both directions while keeping the same visible nodes and at most 36 cards.
     if (_known.size > 3) {
@@ -291,6 +283,7 @@
       }
     }
     const _target = _pageIndex * _step;
+    _warmIndex = -1;
     if (Math.abs(_deck.scrollLeft - _target) > 1) _deck.scrollTo({ left: _target, behavior: "instant" });
     [..._deck.children].forEach((_entry, _position) => {
       const _visible = Math.abs(_position - _pageIndex) <= 1;
@@ -299,6 +292,7 @@
       _entry.setAttribute("aria-current", String(_position === _pageIndex));
     });
     _shown = [..._deck.children].slice(Math.max(0, _pageIndex - 1), _pageIndex + 2).map((_entry) => _known.get(_entry.firstElementChild.dataset.detail));
+    _lastDrawn = [..._deck.children].slice(-2).map((_entry) => _known.get(_entry.firstElementChild.dataset.detail));
     _deck.dataset.size = String(_shown.length);
     _host.dataset.ready = "true";
     _previous.disabled = _pageIndex === 0;
@@ -310,7 +304,7 @@
 
   function _advance(_animate, _manual = false, _direction = 1) {
     if (_busy || !_known.size) return;
-    if (!_manual && (_paused || _hovered || _focused || document.hidden || !_inView || document.querySelector("dialog[open]"))) return;
+    if (!_manual && (_paused || _hovered || _focused || _touching || document.hidden || !_inView || document.querySelector("dialog[open]"))) return;
     if (!_shown.length) {
       _deck.replaceChildren();
       for (let _index = 0; _index < (_known.size > 3 ? 18 : _known.size); _index++) _appendPage();
@@ -333,7 +327,12 @@
       _source = _items;
       _sourceLength = _items.length;
       let _added = false;
+      let _removed = false;
       for (const _item of _items) {
+        if (!_isBannerEligible(_item)) {
+          _removed = _known.delete(_item.id) || _removed;
+          continue;
+        }
         if (!_item.cover || _item.cover.includes("cover-placeholder.svg"))
           continue;
         if (!_known.has(_item.id)) {
@@ -341,7 +340,16 @@
           _added = true;
         }
       }
-      if (!_added) return;
+      if (!_added && !_removed) return;
+      if (_removed) {
+        clearTimeout(_timer);
+        clearTimeout(_settleTimer);
+        _deck.replaceChildren();
+        _shown = [];
+        _lastDrawn = [];
+        _host.dataset.ready = "false";
+        _busy = false;
+      }
       _rebuild();
       if (!_shown.length) _advance(false, true);
       else _schedule();
@@ -351,14 +359,12 @@
     },
   };
 
-  document.getElementById("heroCategory").textContent = _copy.category;
   _host.setAttribute("aria-roledescription", "캐러셀");
   _host.setAttribute("role", "region");
   _next.setAttribute(
     "aria-label",
     _type === "boardgame" ? "다음 게임 한 장 보기" : "다음 작품 한 장 보기",
   );
-  _setLine();
   _next.addEventListener("click", () => {
     _advance(true, true);
   });
@@ -377,19 +383,65 @@
     clearTimeout(_settleTimer);
     _settleTimer = setTimeout(_settle, 140);
   }, { passive: true });
-  _deck.addEventListener("pointerdown", () => {
+  _deck.addEventListener("pointerdown", (_event) => {
+    if (_event.pointerType === "mouse" && _event.button !== 0) return;
     _pointerStart = _deck.scrollLeft;
+    _pointerX = _event.clientX;
+    _pointerId = _event.pointerType === "mouse" ? _event.pointerId : null;
+    _dragScroll = _pointerStart;
     clearTimeout(_timer);
   }, { passive: true });
-  function _release() {
+  _deck.addEventListener("pointermove", (_event) => {
+    if (_pointerId === null || _event.pointerId !== _pointerId || _pointerStart === null) return;
+    const _distance = _pointerX - _event.clientX;
+    if (!_dragging && Math.abs(_distance) < 6) return;
+    if (!_dragging) {
+      _dragging = true;
+      _deck.setPointerCapture(_pointerId);
+      _deck.style.scrollSnapType = "none";
+      _deck.classList.add("is-dragging");
+    }
+    _event.preventDefault();
+    _dragScroll = _pointerStart + _distance;
+    if (!_dragFrame) _dragFrame = requestAnimationFrame(() => {
+      _dragFrame = 0;
+      _deck.scrollLeft = _dragScroll;
+    });
+  }, { passive: false });
+  function _release(_event) {
     if (_pointerStart === null) return;
-    if (Math.abs(_deck.scrollLeft - _pointerStart) > 12) _suppressClickUntil = performance.now() + 350;
+    if (_pointerId !== null && _event.pointerId !== undefined && _event.pointerId !== _pointerId) return;
+    if (_dragging) {
+      cancelAnimationFrame(_dragFrame);
+      _dragFrame = 0;
+      _deck.scrollLeft = _dragScroll;
+      _deck.style.scrollSnapType = "";
+      _deck.classList.remove("is-dragging");
+      if (_deck.hasPointerCapture(_pointerId)) _deck.releasePointerCapture(_pointerId);
+      _suppressClickUntil = performance.now() + 350;
+    } else if (Math.abs(_deck.scrollLeft - _pointerStart) > 12) _suppressClickUntil = performance.now() + 350;
+    _dragging = false;
+    _pointerId = null;
     _pointerStart = null;
     clearTimeout(_settleTimer);
     _settleTimer = setTimeout(_settle, 160);
   }
   window.addEventListener("pointerup", _release, { passive: true });
   window.addEventListener("pointercancel", _release, { passive: true });
+  window.addEventListener("blur", _release);
+  _deck.addEventListener("touchstart", () => {
+    _touching = true;
+    _gestureStart = _deck.scrollLeft / _step;
+    _schedule();
+  }, { passive: true });
+  function _endTouch() {
+    _touching = false;
+    if (_gestureStart !== null && Math.abs(_deck.scrollLeft - _gestureStart * _step) > 12) _suppressClickUntil = performance.now() + 350;
+    clearTimeout(_settleTimer);
+    _settleTimer = setTimeout(_settle, 180);
+  }
+  _deck.addEventListener("touchend", _endTouch, { passive: true });
+  _deck.addEventListener("touchcancel", _endTouch, { passive: true });
   _deck.addEventListener("click", (_event) => {
     if (performance.now() >= _suppressClickUntil) return;
     _event.preventDefault();

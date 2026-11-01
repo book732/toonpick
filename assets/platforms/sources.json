@@ -1,0 +1,68 @@
+[
+  {
+    "key": "naver",
+    "source": "https://shared-comic.pstatic.net/favicon/favicon_96x96.ico",
+    "file": "naver.png",
+    "bytes": 5669
+  },
+  {
+    "key": "naverseries",
+    "source": "https://ssl.pstatic.net/static/nstore/series_favicon_152.ico",
+    "file": "naverseries.png",
+    "bytes": 2843
+  },
+  {
+    "key": "kakaopage",
+    "source": "https://page.kakaocdn.net/pageweb/shared/favicon/favicon.ico",
+    "file": "kakaopage.png",
+    "bytes": 331
+  },
+  {
+    "key": "kakaowebtoon",
+    "source": "https://webtoon.kakao.com/ico/icon76_210521.png",
+    "file": "kakaowebtoon.png",
+    "bytes": 1401
+  },
+  {
+    "key": "lezhin",
+    "source": "https://ccdn.lezhin.com/files/assets/img/favicon.ico",
+    "file": "lezhin.png",
+    "bytes": 813
+  },
+  {
+    "key": "ridi",
+    "source": "https://static.ridicdn.net/books-frontend/p/ec3de7/_next/static/media/favicon.2-qehufv3g0yx.ico",
+    "file": "ridi.png",
+    "bytes": 1125
+  },
+  {
+    "key": "bomtoon",
+    "source": "https://www.bomtoon.com/favicon.ico",
+    "file": "bomtoon.png",
+    "bytes": 1063
+  },
+  {
+    "key": "mrblue",
+    "source": "https://www.mrblue.com/favicon.ico?v=3",
+    "file": "mrblue.png",
+    "bytes": 2081
+  },
+  {
+    "key": "bookcube",
+    "source": "https://www.bookcube.com/images/icon/bookcube_ci.ico",
+    "file": "bookcube.png",
+    "bytes": 236
+  },
+  {
+    "key": "peanutoon",
+    "source": "https://www.peanutoon.com/cdn-sub/common/favicon_20170627163307.ico",
+    "file": "peanutoon.png",
+    "bytes": 4758
+  },
+  {
+    "key": "mootoon",
+    "source": "https://im.mootoon.co.kr/favicon.ico?4",
+    "file": "mootoon.png",
+    "bytes": 376
+  }
+]

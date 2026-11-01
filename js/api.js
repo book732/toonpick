@@ -111,6 +111,18 @@ const ApiService = {
     return _catalog;
   },
 
+  _isValidAnimeSource(_source) {
+    if (!_source || !['laftel', 'netflix'].includes(_source.platformKey) ||
+        typeof _source.id !== 'string' || !new RegExp('^' + _source.platformKey + ':[a-f0-9]{20}$').test(_source.id)) return false;
+    const _platform = this._platforms[_source.platformKey];
+    if (!_platform || _source.platform !== _platform.name) return false;
+    try {
+      const _url = new URL(_source.url);
+      return _url.protocol === 'https:' && _platform.workHosts.includes(_url.hostname) &&
+        !_url.username && !_url.password && !_url.port && new RegExp(_platform.workPattern).test(_url.pathname);
+    } catch (_) { return false; }
+  },
+
   _isValidItem(_item) {
     if (!_item || typeof _item.id !== 'string' || !/^(?:\d+|[a-z][a-z0-9]*:[a-f0-9]{20})$/.test(_item.id) ||
         !['title', 'author', 'description', 'genre', 'status', 'age', 'cover'].every(_key => typeof _item[_key] === 'string') ||
@@ -120,6 +132,10 @@ const ApiService = {
     const _key = _item.platformKey || 'naver';
     const _platform = this._platforms[_key];
     if (!_platform || _item.platform !== _platform.name) return false;
+    if (window.TOONPICK_PAGE?.type === 'anime' && _item.sources !== undefined &&
+        (!Array.isArray(_item.sources) || !_item.sources.length || _item.sources.length > 2 ||
+         new Set(_item.sources.map(_source => _source?.platformKey)).size !== _item.sources.length ||
+         _item.sources.some(_source => !this._isValidAnimeSource(_source)))) return false;
     if (_key === 'naver') {
       if (!/^\d+$/.test(_item.id) || _item.url !== 'https://comic.naver.com/webtoon/list?titleId=' + _item.id) return false;
     } else {
@@ -224,7 +240,11 @@ const ApiService = {
       (!_query || window.TOONPICK_PAGE?.type === 'anime' || _item._searchText.includes(_query))
     );
     if (payload.sort === 'favorites') _items.sort((_a, _b) => _b.favorites - _a.favorites);
-    if (payload.sort === 'title') _items.sort((_a, _b) => _a.title.localeCompare(_b.title, 'ko'));
+    if (payload.sort === 'title') {
+      const _collator = new Intl.Collator('ko', { numeric: true });
+      const _rank = _title => /^[가-힣ㄱ-ㅎㅏ-ㅣ]/u.test(_title.trimStart()) ? 0 : 1;
+      _items.sort((_a, _b) => _rank(_a.title) - _rank(_b.title) || _collator.compare(_a.title, _b.title));
+    }
     if (payload.sort === 'editor' && _source === null) {
       // Rotate platform queues only for catalogue browsing; preserve the AI's order.
       const _groups = new Map();

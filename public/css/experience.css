@@ -181,30 +181,6 @@ body .hero-art {
   left: -2.5%;
   top: -30px;
 }
-.hero-stage-heading {
-  position: absolute;
-  z-index: 4;
-  left: 26px;
-  right: 26px;
-  top: 22px;
-  pointer-events: none;
-}
-.hero-category {
-  display: block;
-  color: var(--hero-highlight);
-  font-size: 8px;
-  letter-spacing: 2.6px;
-  font-weight: 800;
-  margin-bottom: 7px;
-}
-#heroTagline {
-  color: #f1f4ff;
-  font-size: 12px;
-  line-height: 1.6;
-  margin: 0;
-  text-wrap: balance;
-  min-height: 20px;
-}
 .hero-deck {
   position: absolute;
   inset: 0;
@@ -257,22 +233,13 @@ body .hero-art {
   z-index: 5;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 10px;
   color: #dae6f6;
 }
 .hero-controls > div {
   display: flex;
   gap: 6px;
-}
-.hero-slide-caption {
-  font-size: 7px;
-  letter-spacing: 1.7px;
-}
-.hero-slide-caption b {
-  color: var(--hero-highlight);
-  font-size: 10px;
-  margin-left: 5px;
 }
 .hero-controls button {
   border: 1px solid #ffffff30;
@@ -382,10 +349,6 @@ body .hero-art {
     height: 229px;
     top: 100px;
   }
-  .hero-slide-caption {
-    font-size: 6px;
-    letter-spacing: 0.5px;
-  }
   .hero-controls {
     left: 15px;
     right: 15px;
@@ -411,18 +374,6 @@ body .hero-art {
     height: 335px;
     border-radius: 19px;
   }
-  .hero-stage-heading {
-    left: 18px;
-    right: 18px;
-    top: 17px;
-  }
-  #heroTagline {
-    font-size: 10px;
-  }
-  .hero-category {
-    font-size: 7px;
-    letter-spacing: 2px;
-  }
   .hero-art .hero-cover {
     top: 111px;
     height: 159px;
@@ -445,10 +396,6 @@ body .hero-art {
   .hero-controls button {
     padding: 6px 8px;
     font-size: 9px;
-  }
-  .hero-slide-caption {
-    font-size: 6px;
-    letter-spacing: 0.6px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -474,9 +421,8 @@ body .hero-art {
 
 /* Each snap point is one real card; scroll position continuously controls the fan. */
 .hero-art .hero-deck {
-  inset: 101px 18px 67px;
+  inset: 18px 12px 62px;
   display: flex;
-  padding-inline: var(--_hero-inset, 0px);
   overflow-x: auto;
   overflow-y: hidden;
   scroll-snap-type: x mandatory;
@@ -487,8 +433,21 @@ body .hero-art {
   border-radius: 12px;
 }
 .hero-deck::-webkit-scrollbar { display: none; }
+.hero-art .hero-deck,
+.hero-art .hero-deck .hero-cover {
+  cursor: grab;
+  user-select: none;
+}
+.hero-art .hero-deck.is-dragging,
+.hero-art .hero-deck.is-dragging .hero-cover { cursor: grabbing; }
+.hero-deck::before,
+.hero-deck::after {
+  content: "";
+  flex: 0 0 var(--_hero-inset, 0px);
+  pointer-events: none;
+}
 .hero-page {
-  flex: 0 0 var(--_hero-step, 22%);
+  flex: 0 0 var(--_hero-step, 26%);
   min-width: 0;
   position: relative;
   isolation: isolate;
@@ -526,13 +485,19 @@ body .hero-art {
   font-size: 12px;
   opacity: var(--_caption-opacity, 0);
 }
-.hero-slide-caption small { display: block; font-size: 8px; letter-spacing: 0; opacity: .7; margin-top: 4px; }
+.boardgame-page .hero-deck { container-type: size; }
+.boardgame-page .hero-art .hero-page .hero-cover {
+  box-sizing: content-box;
+  width: min(var(--_hero-card-width, 200px), calc(93cqh * var(--_cover-aspect, 1)));
+  height: auto;
+  aspect-ratio: var(--_cover-aspect, 1);
+}
 .hero-controls button:disabled { opacity: .35; cursor: default; }
 .platform-mark[data-platform="laftel"] { background: #7951ce; color: #fff; }
 .platform-mark[data-platform="netflix"] { background: #c71126; color: #fff; }
 .hero-deck:focus-visible { outline: 2px solid var(--hero-highlight); outline-offset: 3px; }
 @media (max-width: 480px) {
-  .hero-art .hero-deck { inset: 86px 12px 64px; }
+  .hero-art .hero-deck { inset: 16px 10px 60px; }
   .hero-art .hero-page .hero-cover span {
     padding-bottom: 10px;
     font-size: 10px;
@@ -546,3 +511,77 @@ body .hero-art {
 @media (prefers-reduced-motion: reduce) {
   .hero-art .hero-page .hero-cover { transition: none; }
 }
+
+/* Footer navigation uses the same type, rules, and palette as the catalogue. */
+.footer {
+  padding: 52px 0 24px;
+  background: color-mix(in srgb, var(--surface) 55%, var(--page));
+}
+.footer .footer-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(180px, 1fr) minmax(200px, 1.1fr);
+  align-items: start;
+  gap: 32px;
+  padding-bottom: 38px;
+}
+.footer .footer-brand { padding-top: 20px; }
+.footer-nav,
+.footer-tools { padding: 20px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.footer .footer-brand .brand-logo { font-size: clamp(28px, 3vw, 38px); letter-spacing: -1.8px; }
+.footer .footer-brand .brand-mark { font-size: 40px; }
+.footer .footer-brand > p { margin-top: 16px; font-size: 13px; line-height: 1.7; }
+.footer-nav h2,
+.footer-tools h2 { margin: 4px 0 12px; font-size: 12px; font-weight: 700; color: var(--muted); }
+.footer-nav a,
+.footer-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+  width: 100%;
+  padding: 9px 0;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  text-align: left;
+  cursor: pointer;
+}
+.footer-nav a span,
+.footer-action span { color: var(--muted); font-weight: 400; }
+.footer-nav a:hover,
+.footer-action:hover,
+.footer-backtop:hover { color: var(--orange-text); }
+.footer a:focus-visible,
+.footer button:focus-visible { outline: 2px solid var(--orange-text); outline-offset: 4px; }
+.footer .footer-tools > p { margin-top: 15px; font-size: 12px; line-height: 1.8; color: var(--muted); }
+.footer .footer-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 24px;
+  padding-top: 22px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.footer-copyright { color: var(--ink); }
+.footer-rights { margin-top: 6px; font-size: 11px; color: var(--muted); }
+.footer-backtop { color: var(--ink); font-size: 12px; font-weight: 600; white-space: nowrap; }
+@media (max-width: 700px) {
+  .footer { padding-top: 36px; }
+  .footer .footer-top { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; padding-bottom: 28px; }
+  .footer-brand { grid-column: 1 / -1; padding-top: 0; }
+  .footer .footer-brand .brand-logo { font-size: 30px; }
+  .footer .footer-brand .brand-mark { font-size: 34px; }
+  .footer .footer-brand > p { margin-top: 12px; font-size: 12px; }
+  .footer-nav a,
+  .footer-action { font-size: 13px; }
+  .footer .footer-bottom { gap: 18px; }
+}
+
+.boardgame-page .mood-container { justify-content: flex-start; }

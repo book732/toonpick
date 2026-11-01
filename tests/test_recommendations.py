@@ -180,6 +180,19 @@ class _HttpTests(unittest.TestCase):
                 self.assertTrue(json.load(_response)["success"])
             self.assertEqual(_recommendation.call_args.args[0]["type"], "anime")
 
+    def test_anime_schedule_dispatch_caches_success_and_never_caches_errors(self):
+        with patch("api.generate._anime_schedule", return_value={"items": [], "year": 2027}) as _schedule:
+            with urllib.request.urlopen(self._url + "?resource=anime_schedule&year=2027&quarter=2") as _response:
+                self.assertEqual(json.load(_response)["year"], 2027)
+                self.assertIn("s-maxage=3600", _response.headers["Cache-Control"])
+            self.assertEqual(_schedule.call_args.args[0]["quarter"], ["2"])
+        with patch("api.generate._anime_schedule", side_effect=_RecommendationError("일정 조회 지연", 502)):
+            with self.assertRaises(urllib.error.HTTPError) as _error:
+                urllib.request.urlopen(self._url + "?resource=anime_schedule")
+            self.assertEqual(_error.exception.code, 502)
+            self.assertEqual(_error.exception.headers["Cache-Control"], "no-store")
+            _error.exception.close()
+
     def test_vercel_catalogue_redirects_to_static_snapshot_without_collection(self):
         with patch.dict(os.environ, {"VERCEL": "1"}), patch("api.generate._catalog_response") as _catalog, patch.object(urllib.request.HTTPRedirectHandler, "redirect_request", return_value=None):
             with self.assertRaises(urllib.error.HTTPError) as _error:

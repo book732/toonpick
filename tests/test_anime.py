@@ -31,9 +31,34 @@ class _AnimeTests(unittest.TestCase):
             _result = _anime._anime_catalog({"page": [str(_page)]})
             _ids.extend(_i["id"] for _i in _result["items"])
         self.assertFalse(_result["pagination"]["hasNextPage"])
-        self.assertEqual(len(_ids), _first["catalogCount"])
+        self.assertEqual(len(_ids), _first["matchedCount"])
         self.assertEqual(len(_ids), len(set(_ids)))
         self.assertTrue(all("_searchText" not in _i for _i in _first["items"]))
+
+    def test_duplicate_service_entries_collapse_before_pagination_but_keep_seasons(self):
+        _title = "터무니없는 스킬로 이세계 방랑 밥"
+        _result = _anime._anime_catalog({"query": [_title]})
+        self.assertEqual(sum(_item["title"] == _title for _item in _result["items"]), 1)
+        _work = next(_item for _item in _result["items"] if _item["title"] == _title)
+        self.assertEqual([_source["platformKey"] for _source in _work["sources"]], ["laftel", "netflix"])
+        self.assertTrue(_work["sources"][0]["url"].startswith("https://laftel.net/item/"))
+        self.assertTrue(_work["sources"][1]["url"].startswith("https://www.netflix.com/kr/title/"))
+        self.assertTrue(any(_item["title"] == _title + " 2" for _item in _result["items"]))
+        for _platform in ("laftel", "netflix"):
+            _filtered = _anime._anime_catalog({"query": [_title], "platform": [_platform]})
+            self.assertEqual(sum(_item["title"] == _title for _item in _filtered["items"]), 1)
+            self.assertTrue(all(_item["platformKey"] == _platform for _item in _filtered["items"]))
+            self.assertEqual(next(_item for _item in _filtered["items"] if _item["title"] == _title)["sources"], _work["sources"])
+
+    def test_discovery_pages_have_unique_work_keys_and_preserve_raw_source_count(self):
+        _first = _anime._anime_catalog({})
+        _keys = []
+        for _page in range(1, (_first["matchedCount"] + 119) // 120 + 1):
+            _result = _anime._anime_catalog({"page": [str(_page)]})
+            _keys.extend((_anime._normalize(_item["title"]), _item["format"]) for _item in _result["items"])
+        self.assertEqual(len(_keys), len(set(_keys)))
+        self.assertEqual(len(_keys), _first["matchedCount"])
+        self.assertEqual(_first["catalogCount"], 9869)
 
     def test_korean_search_reaches_works_beyond_the_initial_page(self):
         _data = _anime._read_anime(_anime._PATH.stat().st_mtime_ns)

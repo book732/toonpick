@@ -25,14 +25,30 @@ def _family(_item):
     return _normalize(_title)
 
 
+def _source_priority(_item):
+    return bool(_item.get("available", _item["platformKey"] == "netflix")), _item["favorites"]
+
+
 @lru_cache(maxsize=1)
 def _read_anime(_modified):
     _data = json.loads(_PATH.read_text(encoding="utf-8"))
+    _sources = {}
     for _item in _data["items"]:
         _item["franchiseKey"] = _family(_item)
+        # Preserve season numbers and formats when unifying service and language variants.
+        _item["_workKey"] = (_normalize(re.sub(r"\([^)]*(?:더빙|자막)[^)]*\)|\[[^]]*(?:더빙|자막)[^]]*\]", "", _item["title"])), _item["format"])
         _item["_searchText"] = _normalize(" ".join([_item["title"], *_item["aliases"], _item["author"], *_item["tags"]]))
         _moods = {"로맨스": "설레는", "액션": "짜릿한", "공포": "몰입되는", "미스터리": "몰입되는", "일상": "힐링", "코미디": "유쾌한", "스포츠": "뭉클한"}
         _item["tags"] = list(dict.fromkeys(_item["tags"] + [_moods[_genre] for _genre in _item["genres"] if _genre in _moods]))
+        _group = _sources.setdefault(_item["_workKey"], {})
+        _previous = _group.get(_item["platformKey"])
+        if _previous is None or _source_priority(_item) > _source_priority(_previous):
+            _group[_item["platformKey"]] = _item
+    _links = {_key: [{_field: _item[_field] for _field in ("id", "platformKey", "platform", "url")}
+                     for _platform in ("laftel", "netflix") if (_item := _group.get(_platform))]
+              for _key, _group in _sources.items()}
+    for _item in _data["items"]:
+        _item["sources"] = _links[_item["_workKey"]]
     return _data
 
 
@@ -69,6 +85,12 @@ def _anime_discovery(_preferences, _page=1, _all=False):
     _items = [_item for _item in _data["items"] if _eligible(_item, _preferences)]
     if not _all and _preferences["mood"] != "전체":
         _items = [_item for _item in _items if _preferences["mood"] in _item["tags"]]
+    _unique = {}
+    for _item in _items:
+        _previous = _unique.get(_item["_workKey"])
+        if _previous is None or _source_priority(_item) > _source_priority(_previous):
+            _unique[_item["_workKey"]] = _item
+    _items = list(_unique.values())
     _items.sort(key=lambda _item: _item["favorites"], reverse=True)
     if not _all:
         _queues = [[_item for _item in _items if _item["platformKey"] == _key] for _key in ("laftel", "netflix")]

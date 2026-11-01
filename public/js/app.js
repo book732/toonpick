@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     _recommendationFloating.dataset.theme = _recommendationCopy.theme;
     document.querySelectorAll('[data-loading-scene]').forEach(_scene => { _scene.hidden = _scene.dataset.loadingScene !== _recommendationCopy.theme; });
     document.getElementById('pickLoadingEyebrow').textContent = _recommendationCopy.eyebrow;
-    document.getElementById('pickLoadingTitle').innerHTML = _recommendationCopy.title.map((_line, _index) => '<span>' + _escape(_line) + (_index === 1 ? '<span class="pick-title-dot">.</span>' : '') + '</span>').join('');
+    document.getElementById('pickLoadingTitle').innerHTML = _recommendationCopy.title.map(_line => '<span>' + _escape(_line) + '</span>').join('');
     document.getElementById('recommendationFloatingLabel').textContent = _recommendationCopy.label;
     document.getElementById('pickLoadingCount').textContent = '요청 ' + _state.count + '개';
     const _stage = document.getElementById('recommendationStage');
@@ -158,6 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const _id = _escape(_item.id);
     const _title = _escape(_item.title);
     const _genreLabel = _isAnime || _isBoardGame ? [...new Set([..._state.genres.filter(_genre => _item.genres.includes(_genre)), ..._item.genres])].slice(0, 2).join(' · ') : _item.genre;
+    const _platformLabel = _isAnime ? _animeSources(_item).map(_source => '<a class="platform-link" href="' + _escape(_source.url) + '" target="_blank" rel="noopener noreferrer"><span class="platform-mark" data-platform="' + _escape(_source.platformKey) + '" aria-hidden="true">' + _escape(_source.platform.slice(0, 1)) + '</span>' + _escape(_source.platform) + ' ↗</a>').join('') : '<span class="platform-mark" data-platform="' + _escape(_item.platformKey || 'naver') + '" aria-label="' + _escape(_item.platform) + '">' + _escape(_item.platform.slice(0, 1)) + '</span><span>' + _escape(_item.platform) + '</span>';
     const _label = _state.sort === 'favorites' ? '관심 ' + new Intl.NumberFormat('ko-KR', { notation: 'compact' }).format(_item.favorites) :
       _item.recommendationReason ? 'AI PICK ' + String(_index + 1).padStart(2, '0') :
       _state.mood !== '전체' ? _state.mood + ' 이야기' : 'PICK ' + String(_index + 1).padStart(2, '0');
@@ -170,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
       '<p class="card-author" title="' + _escape(_item.author) + '">' + _escape(_item.author) + '</p>' +
       (_isAnime ? '<p class="anime-original">' + _escape([_item.formatLabel, _item.year ? _item.year + '년' : '', _item.episodes ? _item.episodes + '화' : ''].filter(Boolean).join(' · ')) + '</p>' : '') +
       (_isBoardGame ? '<p class="anime-original">' + _escape(_item.playersLabel + ' · ' + _item.timeLabel) + '</p><div class="card-meta"><span>' + _escape(_genreLabel) + '</span><span>' + _escape(_item.mode) + '</span><span>난이도 ' + _escape(_item.difficultyLabel) + '</span></div>' :
-      '<div class="card-meta"><span class="platform-mark" data-platform="' + _escape(_item.platformKey || 'naver') + '" aria-label="' + _escape(_item.platform) + '">' + _escape(_item.platform.slice(0, 1)) + '</span><span>' + _escape(_item.platform) + '</span><span class="meta-divider"></span><span>' + _escape(_genreLabel) + '</span><span>' + _escape(_isAnime ? ({ '완결': '방영 완료', '연재': '방영 중', '휴재': '휴방', '방영예정': '방영 예정' }[_item.status] || _item.status) : _item.status) + '</span></div>') +
+      '<div class="card-meta">' + _platformLabel + '<span class="meta-divider"></span><span>' + _escape(_genreLabel) + '</span><span>' + _escape(_isAnime ? ({ '완결': '방영 완료', '연재': '방영 중', '휴재': '휴방', '방영예정': '방영 예정' }[_item.status] || _item.status) : _item.status) + '</span></div>') +
       '<div class="card-tags">' + (_item.discovery === 'web' ? '<span class="orange">공식 검색 발견</span>' : '') + _item.tags.slice(0, 2).map(_tag => '<span>#' + _escape(_tag) + '</span>').join('') + '</div>' +
       (_item.recommendationReason ? '<p class="card-reason"><b>AI 추천 이유</b>' + _escape(_item.recommendationReason) + '</p>' : '') + '</article>';
   }
@@ -200,12 +201,12 @@ document.addEventListener('DOMContentLoaded', () => {
       _filters.length ? _filters.join(' · ') + ' 취향으로 고른 이야기예요.' : _isBoardGame ? '' : '장르를 넘나드는 에디터의 추천을 만나보세요.';
     resultSummary.hidden = !resultSummary.textContent;
     const _recommendationLabel = document.getElementById('recommendationLabel');
-    _recommendationLabel.textContent = data.source === 'ai' ? 'AI 맞춤 추천 · ' + data.model : _isAnime || _isBoardGame ? '' : '오늘의 덕질 에디터 큐레이션';
-    _recommendationLabel.parentElement.hidden = (_isAnime || _isBoardGame) && data.source !== 'ai';
+    _recommendationLabel.textContent = data.source === 'ai' ? 'AI 맞춤 추천 · ' + data.model : '';
+    _recommendationLabel.parentElement.hidden = data.source !== 'ai';
     const _retrieval = data.retrieval;
     const _collectionStatus = document.getElementById('collectionStatus');
     _collectionStatus.textContent = _retrieval ? '자동 수집 ' + _retrieval.catalogCount.toLocaleString('ko-KR') + '작품 · 공식 검색 ' + _retrieval.search.matched + '작품 확인 · AI 후보 ' + _retrieval.candidateCount + '작품' + (_retrieval.search.status === 'unavailable' ? ' · 검색 연결 지연' : _retrieval.search.status === 'partial' ? ' · 검색 일부 지연' : '') :
-      '자동 수집 ' + window.ApiService._catalog.items.length.toLocaleString('ko-KR') + '작품 · 국내 플랫폼 공개 정보' + (window.ApiService._catalog.refreshing ? ' · 목록 갱신 중' : '');
+      '';
     if (_isAnime) {
       _collectionStatus.textContent = _retrieval ? '국내 서비스 목록 ' + _retrieval.catalogCount.toLocaleString('ko-KR') + '개 · AI 후보 ' + _retrieval.candidateCount + '개 · 요청 ' + _retrieval.requestedCount + '개 · 결과 ' + data.items.length + '개' : '국내 서비스 목록 ' + (window.ApiService._catalog.catalogCount || data.items.length).toLocaleString('ko-KR') + '개 · 시즌·더빙판·플랫폼별 항목 포함 · 재생 가능 여부는 서비스 확인';
       if (document.getElementById('formatSelect')) document.getElementById('formatSelect').value = _state.formats.length === 1 ? _state.formats[0] : '전체';
@@ -229,10 +230,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     _statusSelect.value = _state.status;
     _sortSelect.value = _state.sort;
-    _platformSelect.value = _state.platforms.length === 1 ? _state.platforms[0] : _state.platforms.length > 1 ? 'selected' : '전체';
+    let _selectedPlatforms = _platformSelect.querySelector('[value="selected"]');
+    if (_state.platforms.length > 1) {
+      if (!_selectedPlatforms) {
+        _selectedPlatforms = new Option('', 'selected');
+        _selectedPlatforms.hidden = true;
+        _platformSelect.add(_selectedPlatforms);
+      }
+      _selectedPlatforms.textContent = _state.platforms.length + '개 플랫폼 적용';
+      _platformSelect.value = 'selected';
+    } else {
+      _selectedPlatforms?.remove();
+      _platformSelect.value = _state.platforms[0] || '전체';
+    }
     const _updated = new Intl.DateTimeFormat('ko-KR', { dateStyle: 'medium', timeZone: 'Asia/Seoul' }).format(new Date(data.updatedAt));
     document.getElementById('catalogFootnote').textContent =
-      _isBoardGame ? '게임 정보: ' + _updated + ' 출판사·국내 공식 유통사 표기 확인. 시간은 실제 플레이에 따라 달라집니다. 난이도 미확인 게임은 난이도 제한 추천에서 제외합니다. 표지는 출판사·공식 유통사 제품 이미지입니다.' : _isAnime ? '작품 정보: 라프텔·넷플릭스 한국 공식 목록 · ' + _updated + ' 수집. 시즌·극장판·더빙판과 플랫폼별 항목을 포함하며 같은 작품이 여러 번 집계될 수 있습니다. 목록 등록은 현재 재생 가능 여부를 보장하지 않습니다.' : '작품 정보: ' + _updated + ' 수집 기준. 플랫폼별 공개 검색·목록을 활용합니다. 연재 상태·이용 연령이 확인되지 않은 경우 공식 페이지에서 확인해주세요.';
+      _isBoardGame ? '게임 정보: ' + _updated + ' 출판사·국내 공식 유통사 표기 확인. 시간은 실제 플레이에 따라 달라집니다. 난이도 미확인 게임은 난이도 제한 추천에서 제외합니다. 표지는 출판사·공식 유통사 제품 이미지입니다.' : _isAnime ? '작품 정보: 라프텔·넷플릭스 한국 공식 목록 · ' + _updated + ' 수집. 동일 제목·형식은 한 번만 표시하며 시즌·극장판은 별도 작품입니다. 목록 등록은 현재 재생 가능 여부를 보장하지 않습니다.' : '작품 정보: ' + _updated + ' 수집 기준. 플랫폼별 공개 검색·목록을 활용합니다. 연재 상태·이용 연령이 확인되지 않은 경우 공식 페이지에서 확인해주세요.';
   }
 
   function _renderPlatforms(_latest = []) {
@@ -245,27 +258,27 @@ document.addEventListener('DOMContentLoaded', () => {
     if (_isAnime) {
       const _platforms = window.ApiService._catalog.platforms || Object.values(window.ApiService._platforms);
       if (!_platformControlsReady) {
-        _platformSelect.innerHTML = '<option value="전체">모든 플랫폼</option><option value="selected" disabled>선택한 플랫폼</option>' + _platforms.map(_platform => '<option value="' + _platform.key + '">' + _escape(_platform.name) + '</option>').join('');
+        _platformSelect.innerHTML = '<option value="전체">모든 플랫폼</option>' + _platforms.map(_platform => '<option value="' + _platform.key + '">' + _escape(_platform.name) + '</option>').join('');
         document.getElementById('preferencePlatforms').innerHTML = _platforms.map(_platform => '<label><input type="checkbox" name="platform" value="' + _platform.key + '"><span>' + _escape(_platform.name) + '</span></label>').join('');
         _platformControlsReady = true;
       }
       return;
     }
-    const _platforms = Object.values(window.ApiService._platforms);
+    const _platforms = Object.values(window.ApiService._platforms).filter(_platform => _platform.count > 0);
     if (!_platformControlsReady) {
-      _platformSelect.innerHTML = '<option value="전체">모든 플랫폼</option><option value="selected" disabled>선택한 플랫폼</option>' + _platforms.map(_platform => '<option value="' + _platform.key + '">' + _escape(_platform.name) + '</option>').join('');
+      _platformSelect.innerHTML = '<option value="전체">모든 플랫폼</option>' + _platforms.map(_platform => '<option value="' + _platform.key + '">' + _escape(_platform.name) + '</option>').join('');
       document.getElementById('preferencePlatforms').innerHTML = _platforms.map(_platform => '<label><input type="checkbox" name="platform" value="' + _platform.key + '"><span>' + _escape(_platform.name) + '</span></label>').join('');
       _platformControlsReady = true;
     }
     const _latestMap = new Map((_latest || []).map(_entry => [_entry.key, _entry]));
     document.getElementById('platformDirectory').innerHTML = _platforms.map(_platform => {
       const _stateInfo = _latestMap.get(_platform.key) || _platform;
-      const _status = _stateInfo.status === 'ok' ? (_stateInfo.mode === 'public_list' ? '공개 목록 조회' : '공개 검색 조회') : _stateInfo.status === 'unavailable' ? '조회 지연 · 공식 사이트 연결' : '공식 사이트 연결';
+      const _status = _stateInfo.status === 'unavailable' ? '<span class="platform-state">조회 지연 · 공식 사이트 연결</span>' : '';
       const _query = _state.query || _preferenceNotes.value.trim().slice(0, 30) || '웹툰';
       const _url = (_platform.searchUrl || _platform.home || 'https://comic.naver.com/').replace('{query}', encodeURIComponent(_query));
-      return '<a class="platform-card" href="' + _escape(_url) + '" target="_blank" rel="noopener noreferrer"><strong>' + _escape(_platform.name) + ' <span>↗</span></strong><span class="platform-state" data-status="' + _escape(_stateInfo.status || 'link_only') + '">' + _status + '</span><small>' + (_platform.count || 0).toLocaleString('ko-KR') + '개 수집 작품</small></a>';
+      return '<a class="platform-card" href="' + _escape(_url) + '" target="_blank" rel="noopener noreferrer"><img class="platform-logo" src="/assets/platforms/' + _escape(_platform.key) + '.png" alt="" width="32" height="32" loading="lazy" decoding="async"><strong><span class="platform-name">' + _escape(_platform.name) + '</span><span aria-hidden="true">↗</span></strong>' + _status + '<small>' + (_platform.count || 0).toLocaleString('ko-KR') + '개 작품</small></a>';
     }).join('');
-    document.getElementById('platformSummary').textContent = _platforms.length + '개 플랫폼 · 공개 정보를 읽을 수 있는 곳은 자동 조회하고, 나머지는 공식 사이트로 연결합니다.';
+    document.getElementById('platformSummary').textContent = _platforms.length + '개 플랫폼의 작품을 한곳에서 둘러보세요.';
   }
 
   async function _refresh(_useAI = false) {
@@ -304,6 +317,11 @@ document.addEventListener('DOMContentLoaded', () => {
         _loadMoreBtn.hidden = true;
         _emptyState.hidden = true;
         _resultCount.textContent = '불러오기 실패';
+        resultSummary.hidden = true;
+        document.getElementById('collectionStatus').hidden = true;
+        if (!window.ApiService._catalog && !_isAnime && !_isBoardGame) {
+          document.getElementById('platformSummary').textContent = '플랫폼 정보를 불러오지 못했어요.';
+        }
         showAlert('error', '작품 정보 오류', _error.message);
       }
       return false;
@@ -332,6 +350,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (_dialog === _preferenceModal) _recommendationFloating.hidden = true;
   }
 
+  function _animeSources(_item) {
+    return (_item.sources || [_item]).filter(_source => window.ApiService._isValidAnimeSource(_source));
+  }
+
   async function _showDetail(_id) {
     try {
       const _catalog = await window.ApiService._loadCatalog();
@@ -344,13 +366,13 @@ document.addEventListener('DOMContentLoaded', () => {
         '<div class="detail-layout"><img class="detail-cover" src="' + _escape(_coverUrl(_item.cover)) + '" alt="' + _escape(_item.title) + ' 표지" width="180" height="240">' +
         '<div class="detail-copy"><span class="section-kicker orange">YOUR NEXT CHAPTER</span><h2 id="detailTitle">' + _escape(_item.title) + '</h2>' +
         '<p class="detail-author">' + _escape(_item.author) + '</p><div class="detail-chips">' +
-        [_item.genre, _days, _item.age, ...(_isBoardGame ? [_item.playersLabel, _item.timeLabel, '편집 난이도: ' + _item.difficultyLabel] : []), ...(_isAnime ? [_item.formatLabel, _item.year ? _item.year + '년' : '', _item.episodes ? _item.episodes + '화' : ''] : []), ..._item.tags].filter(Boolean).map(_tag => '<span>' + _escape(_tag) + '</span>').join('') +
+        [...new Set([_item.genre, _days, _item.age, ...(_isBoardGame ? [_item.playersLabel, _item.timeLabel, '편집 난이도: ' + _item.difficultyLabel] : []), ...(_isAnime ? [_item.formatLabel, _item.year ? _item.year + '년' : '', _item.episodes ? _item.episodes + '화' : ''] : []), ..._item.tags].filter(Boolean))].map(_tag => '<span>' + _escape(_tag) + '</span>').join('') +
         '</div></div></div>' + (_reason ? '<p class="card-reason"><b>AI 추천 이유</b>' + _escape(_reason) + '</p>' : '') +
         (_isAnime ? '<p class="anime-original">' + _escape(_item.availability || '공식 서비스에서 감상 가능 여부 확인') + '</p>' : '') +
         '<p class="detail-description">' + _escape(_item.description) + '</p>' +
         (_isBoardGame && _item.editionNote ? '<p class="anime-original">판본 안내: ' + _escape(_item.editionNote) + '</p>' : '') +
         (_isAnime && _item.relations?.length ? '<p class="anime-original">관련 시즌·작품: ' + _item.relations.slice(0, 8).map(_relation => '<a href="' + _escape(_relation.url) + '" target="_blank" rel="noopener noreferrer">' + _escape(_relation.title) + ' ↗</a>').join(' · ') + '</p>' : '') +
-        '<div class="detail-actions"><a class="btn btn-primary" href="' + _escape(_item.url) + '" target="_blank" rel="noopener noreferrer">' + (_isBoardGame ? '출판사 게임 정보 · 규칙 ↗' : _escape(_item.platform) + (_isAnime ? ' 작품 정보 ↗' : '에서 보기 ↗')) + '</a>' +
+        '<div class="detail-actions">' + (_isAnime ? _animeSources(_item).map((_source, _index) => '<a class="btn ' + (_index === 0 ? 'btn-primary' : 'btn-outline') + '" href="' + _escape(_source.url) + '" target="_blank" rel="noopener noreferrer">' + _escape(_source.platform) + ' 작품 정보 ↗</a>').join('') : '<a class="btn btn-primary" href="' + _escape(_item.url) + '" target="_blank" rel="noopener noreferrer">' + (_isBoardGame ? '출판사 게임 정보 · 규칙 ↗' : _escape(_item.platform) + '에서 보기 ↗') + '</a>') +
         '<button type="button" class="btn btn-outline detail-save" data-save="' + _escape(_item.id) + '">' + _icon('bookmark') + '보관함에 담기</button></div>' +
         '<p class="detail-source">출처: <a href="' + _escape(_item.url) + '" target="_blank" rel="noopener noreferrer">' + _escape(_isBoardGame ? _item.publisher : _item.platform) + (_isBoardGame ? ' 게임 정보 ↗' : _isAnime ? ' 작품 정보 ↗' : ' 공식 작품 페이지 ↗') + '</a>.' + (_isBoardGame && _item.coverSourcePage ? ' <a href="' + _escape(_item.coverSourcePage) + '" target="_blank" rel="noopener noreferrer">제품 표지 출처 ↗</a>.' : '') + '<br>' + (_isBoardGame ? '시간은 출판사 표기 기준이며 플레이에 따라 달라집니다. 난이도는 오늘의 덕질 편집 분류입니다. 제품 표지의 권리는 각 원저작권자에게 있습니다. 언어·발매 지역에 따라 패키지가 다를 수 있습니다.' : _isAnime ? '방영 완료는 해당 시즌 기준입니다. 감상 가능 여부와 이용 연령은 감상 서비스에서 확인해주세요.' : '표지·줄거리의 권리는 원저작권자에게 있습니다. 연재 상태와 이용 연령은 공식 페이지에서 확인해주세요.') + '</p>';
       updateSavedBadge();
@@ -429,12 +451,48 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // One listener handles both static hero buttons and dynamically rendered cards.
+  let _openContentMenu = null;
+  function _animateContentMenu(_menu, _opening) {
+    _menu.getAnimations().forEach(_animation => _animation.cancel());
+    _menu.inert = !_opening;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { _menu.hidden = !_opening; return; }
+    _menu.hidden = false;
+    const _collapsed = { opacity: 0, transform: 'translateY(-6px)', clipPath: 'inset(0 0 100% 0 round 12px)' };
+    const _expanded = { opacity: 1, transform: 'translateY(0)', clipPath: 'inset(0 0 0 0 round 12px)' };
+    const _animation = _menu.animate(_opening ? [_collapsed, _expanded] : [_expanded, _collapsed], { duration: 220, easing: 'cubic-bezier(.2,.8,.2,1)' });
+    if (!_opening) void _animation.finished.then(() => { _menu.hidden = true; }).catch(() => {});
+  }
+  function _closeContentMenu(_restoreFocus = false) {
+    if (!_openContentMenu) return;
+    _animateContentMenu(document.getElementById(_openContentMenu.dataset.contentMenu), false);
+    _openContentMenu.setAttribute('aria-expanded', 'false');
+    if (_restoreFocus) _openContentMenu.focus();
+    _openContentMenu = null;
+  }
+  document.addEventListener('keydown', _event => {
+    if (_event.key === 'Escape' && _openContentMenu) { _event.preventDefault(); _closeContentMenu(true); }
+  });
+  document.addEventListener('focusin', _event => {
+    if (_openContentMenu && !_openContentMenu.closest('.content-menu').contains(_event.target)) _closeContentMenu();
+  });
   document.addEventListener('click', _event => {
     const _button = _event.target.closest('button');
+    if (_button?.dataset.contentMenu) {
+      const _wasOpen = _openContentMenu === _button;
+      _closeContentMenu();
+      if (!_wasOpen) {
+        _openContentMenu = _button;
+        _animateContentMenu(document.getElementById(_button.dataset.contentMenu), true);
+        _button.setAttribute('aria-expanded', 'true');
+      }
+      return;
+    }
+    _closeContentMenu();
     if (!_button) return;
     if (_button.hasAttribute('data-recommendation-minimize')) { _recommendationExperience.close(); return; }
     if (_button.hasAttribute('data-recommendation-open')) { _showRecommendationExperience(); return; }
     if (_button.hasAttribute('data-close')) { _button.closest('dialog')?.close(); return; }
+    if (_button.hasAttribute('data-open-saved')) { void _openSavedPlans(); return; }
     if (_button.dataset.save) { void _toggleSave(_button.dataset.save); return; }
     if (_button.dataset.detail) { void _showDetail(_button.dataset.detail); return; }
     if (_button.hasAttribute('data-preferences')) {
@@ -458,7 +516,7 @@ document.addEventListener('DOMContentLoaded', () => {
       _aiData = null;
       _state.mood = _state.mood === _button.dataset.mood ? '전체' : _button.dataset.mood;
       void _refresh();
-      document.getElementById('featured').scrollIntoView({ behavior: 'smooth' });
+      document.querySelector('.mood-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   });
   document.addEventListener('error', _event => {
@@ -480,13 +538,14 @@ document.addEventListener('DOMContentLoaded', () => {
   themeToggleBtn.addEventListener('click', () => {
     applyTheme(document.body.classList.contains('dark-theme') ? 'light' : 'dark');
   });
-  savedPlansBtn.addEventListener('click', async () => {
+  async function _openSavedPlans() {
     try {
       await window.ApiService._loadCatalog();
       renderSavedPlansList();
       _openDialog(savedModal);
     } catch (_error) { showToast(_error.message); }
-  });
+  }
+  savedPlansBtn.addEventListener('click', _openSavedPlans);
   document.querySelectorAll('.nav-link').forEach(_link => {
     _link.addEventListener('click', () => {
       _reset();
@@ -569,5 +628,12 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   initTheme();
   updateSavedBadge();
+  const _entryView = new URLSearchParams(window.location.search).get('view');
+  if (_entryView === 'popular' && !_isBoardGame) _state.sort = 'favorites';
+  if (_entryView === 'finished' && !_isBoardGame) _state.status = '완결';
+  if (_entryView === 'quick' && _isBoardGame) _state.maxMinutes = 30;
+  if (['genre', 'finished', 'quick'].includes(_entryView)) {
+    document.querySelectorAll('.nav-link').forEach(_link => _link.classList.toggle('active', _link.dataset.view === _entryView));
+  }
   void _refresh();
 });

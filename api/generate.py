@@ -8,6 +8,7 @@ from http.server import BaseHTTPRequestHandler
 from services.recommendations import _RecommendationError, _recommend
 from services.catalog import _catalog_response
 from services.anime import _anime_catalog, _anime_detail, _recommend_anime
+from services.anime_schedule import _anime_schedule
 from services.boardgames import _boardgame_catalog, _recommend_boardgames
 from urllib.parse import parse_qs, urlsplit
 
@@ -456,11 +457,13 @@ def call_gemini_api(api_key, destination, duration, travelers, theme, budget, no
 
 
 class handler(BaseHTTPRequestHandler):
-    def _send_json(self, data, status=200):
+    def _send_json(self, data, status=200, _cache_control=None):
         body = json.dumps(data, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
+        if _cache_control:
+            self.send_header("Cache-Control", _cache_control)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
         self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
@@ -479,6 +482,12 @@ class handler(BaseHTTPRequestHandler):
     def do_GET(self):
         """API 헬스체크"""
         _parameters = parse_qs(urlsplit(self.path).query)
+        if _parameters.get("resource") == ["anime_schedule"]:
+            try:
+                self._send_json(_anime_schedule(_parameters), _cache_control="public, max-age=300, s-maxage=3600, stale-while-revalidate=86400")
+            except _RecommendationError as _error:
+                self._send_json({"success": False, "error": str(_error)}, status=_error.status, _cache_control="no-store")
+            return
         if _parameters.get("resource") == ["anime_detail"]:
             try:
                 self._send_json(_anime_detail(_parameters.get("id", [""])[0], int(time.time() // 600)))

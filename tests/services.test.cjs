@@ -59,6 +59,20 @@ _test('board game required titles, aliases, hard filters and collections remain 
   _assert.equal(_api._isValidItem({ ..._all[0], cover: 'assets/boardgames/../../bad.svg' }), false);
 });
 
+_test('anime merged service links retain only distinct trusted official sources', async () => {
+  const _catalog = JSON.parse(_fs.readFileSync(_path.join(_root, 'data/anime_domestic.json'), 'utf8'));
+  const { _api } = _context(async () => ({ ok: true, json: async () => _catalog }), 'anime');
+  await _api._loadCatalog();
+  const _item = _catalog.items.find(_entry => _entry.platformKey === 'laftel');
+  const _other = _catalog.items.find(_entry => _entry.platformKey === 'netflix');
+  const _sources = [_item, _other].map(({ id, platformKey, platform, url }) => ({ id, platformKey, platform, url }));
+  _assert.equal(_api._isValidItem({ ..._item, sources: _sources }), true);
+  _assert.equal(_api._isValidItem({ ..._item, sources: [_sources[0], _sources[0]] }), false);
+  for (const _url of ['javascript:alert(1)', 'https://evil.example/item/1', 'https://laftel.net.evil.example/item/1']) {
+    _assert.equal(_api._isValidItem({ ..._item, sources: [{ ..._sources[0], url: _url }] }), false);
+  }
+});
+
 _test('anime uses its own provider, formats, genre alternatives and storage namespace', async () => {
   const _item = { ..._fixture.items[0], id: 'laftel:' + 'a'.repeat(20), animeId: '1', platformKey: 'laftel', platform: '라프텔', url: 'https://laftel.net/item/1', cover: 'https://thumbnail.laftel.net/test.jpg', genre: '액션', genres: ['액션', '판타지'], format: 'TV', aliases: ['Cowboy Bebop'] };
   let _calls = 0;
@@ -155,6 +169,16 @@ _test('search normalizes spacing, case and compatibility characters', async () =
   const _tag = await _api.generateTripPlan({ ..._defaults, query: '세계관' });
   _assert.ok(_tag.data.items.length > 0);
   _assert.ok(_tag.data.items.every(_item => _item.tags.includes('세계관')));
+});
+
+_test('Korean title sorting puts Hangul first and orders numeric titles naturally', async () => {
+  const { _api } = _context(async () => ({ ok: true, json: async () => structuredClone(_fixture) }));
+  await _api._loadCatalog();
+  const _titles = ['13 비버', '나의 이야기', '가나다', '2 게임', 'ABC', 'ㄱ 이야기'];
+  _api._catalog.items = _titles.map((_title, _index) => ({ ..._api._catalog.items[0], id: String(_index), title: _title }));
+  const _items = _api.generateFallbackPlan({ ..._defaults, sort: 'title' }).data.items;
+  _assert.deepEqual(Array.from(_items, _item => _item.title), ['ㄱ 이야기', '가나다', '나의 이야기', '2 게임', '13 비버', 'ABC']);
+  _assert.deepEqual(Array.from(_api._catalog.items, _item => _item.title), _titles);
 });
 
 _test('sorting does not mutate the source editor order', async () => {

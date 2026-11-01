@@ -109,9 +109,6 @@
 .pick-loading h2 > span {
   display: block;
 }
-.pick-title-dot {
-  color: var(--pick-accent);
-}
 .pick-loading-message {
   min-height: 46px;
   margin: 15px 0 14px;

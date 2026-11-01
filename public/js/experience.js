@@ -36,6 +36,8 @@
   let _dragFrame = 0;
   let _dragScroll = 0;
   let _warmIndex = -1;
+  let _warmDecoded = false;
+  let _painted = [];
 
   function _shuffle(_items) {
     const _result = [..._items];
@@ -191,7 +193,7 @@
           _button.style.setProperty("--_cover-aspect", String(_image.naturalWidth / _image.naturalHeight));
         }, { once: true });
       }
-      _image.src = _item.cover.startsWith("assets/") ? "/" + _item.cover : _item.cover;
+      _image.dataset.src = _item.cover.startsWith("assets/") ? "/" + _item.cover : _item.cover;
       _image.alt = _item.title + " 표지";
       const _label = document.createElement("span");
       _label.textContent = _item.title;
@@ -203,19 +205,29 @@
     _warmIndex = -1;
   }
 
-  function _warmImages(_index) {
-    if (_warmIndex === _index) return;
+  function _warmImages(_index, _decode = true) {
+    if (_warmIndex === _index && (!_decode || _warmDecoded)) return;
     _warmIndex = _index;
-    // Decode a bounded look-ahead window; never preload the full catalogue.
+    _warmDecoded = _decode;
+    // Fetch ahead during scrolling; explicitly decode only after scrolling settles.
     for (let _distance = 0; _distance <= 4; _distance++) {
       for (const _position of _distance ? [_index + _distance, _index - _distance] : [_index]) {
         const _image = _deck.children[_position]?.querySelector("img");
         if (!_image) continue;
         _image.fetchPriority = _distance <= 1 ? "high" : "low";
         _image.loading = "eager";
-        if (_image.dataset.warmed) continue;
+        if (!_image.src && _image.dataset.src) _image.src = _image.dataset.fallback ? "/assets/cover-placeholder.svg" : _image.dataset.src;
+        if (!_decode || _distance > 1 || _image.dataset.warmed) continue;
         _image.dataset.warmed = "true";
         void _image.decode().catch(() => { delete _image.dataset.warmed; });
+      }
+    }
+    if (_decode) {
+      for (let _position = 0; _position < _deck.children.length; _position++) {
+        if (Math.abs(_position - _index) <= 4) continue;
+        const _image = _deck.children[_position].querySelector("img");
+        _image.removeAttribute("src");
+        delete _image.dataset.warmed;
       }
     }
   }
@@ -224,22 +236,40 @@
     cancelAnimationFrame(_paintFrame);
     _paintFrame = 0;
     const _position = _deck.scrollLeft / _step;
-    _warmImages(Math.round(_position));
-    [..._deck.children].forEach((_entry, _index) => {
-      const _offset = Math.max(-2, Math.min(2, _index - _position));
+    _warmImages(Math.round(_position), false);
+    const _visible = [];
+    const _first = Math.max(0, Math.floor(_position) - 1);
+    const _last = Math.min(_deck.children.length - 1, Math.ceil(_position) + 1);
+    // Limit composited layers and per-frame writes to the cards actually on screen.
+    for (let _index = _first; _index <= _last; _index++) {
+      const _entry = _deck.children[_index];
+      _visible.push(_entry);
+      const _offset = _index - _position;
       const _pose = _offset.toFixed(3);
-      if (_entry.dataset.offset === _pose) return;
-      _entry.dataset.offset = _pose;
+      if (_entry._paintPose === _pose) continue;
+      if (_entry._paintPose == null) _entry.classList.add("is-nearby");
+      _entry._paintPose = _pose;
       const _distance = Math.abs(_offset);
       const _focus = Math.max(0, 1 - _distance);
+      const _cover = _entry.firstElementChild;
       _entry.style.zIndex = String(30 - Math.round(_distance * 10));
-      _entry.style.setProperty("--_card-scale", (1 - Math.min(1, _distance) * .2).toFixed(3));
-      _entry.style.setProperty("--_card-angle", (_offset * 13 - _focus * 2).toFixed(2) + "deg");
-      _entry.style.setProperty("--_card-opacity", Math.max(0, Math.min(1, 2 - _distance)).toFixed(3));
-      _entry.style.setProperty("--_card-brightness", (.88 + _focus * .12).toFixed(3));
-      _entry.style.setProperty("--_caption-opacity", Math.max(0, 1 - _distance * 2).toFixed(3));
-      _entry.classList.toggle("is-current", _distance < .5);
-    });
+      _cover.style.transform = "translate3d(-50%, 0, 0) rotate(" + (_offset * 13 - _focus * 2).toFixed(2) + "deg) scale(" + (1 - Math.min(1, _distance) * .2).toFixed(3) + ")";
+      _cover.style.opacity = Math.max(0, Math.min(1, 2 - _distance)).toFixed(3);
+      _cover.lastElementChild.style.opacity = Math.max(0, 1 - _distance * 2).toFixed(3);
+      if (_entry._paintCurrent !== (_distance < .5)) {
+        _entry._paintCurrent = _distance < .5;
+        _entry.classList.toggle("is-current", _entry._paintCurrent);
+      }
+    }
+    for (const _entry of _painted) {
+      if (_visible.includes(_entry)) continue;
+      _entry.classList.remove("is-nearby", "is-current");
+      _entry.firstElementChild.style.opacity = "0";
+      _entry.firstElementChild.style.transform = "";
+      _entry._paintPose = null;
+      _entry._paintCurrent = false;
+    }
+    _painted = _visible;
   }
 
   function _layout() {
@@ -298,6 +328,7 @@
     _previous.disabled = _pageIndex === 0;
     _next.disabled = _known.size <= 1 || (_known.size <= 3 && _pageIndex === _deck.children.length - 1);
     _paint();
+    _warmImages(_pageIndex);
     _busy = false;
     _schedule();
   }

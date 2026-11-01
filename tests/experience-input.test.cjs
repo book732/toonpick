@@ -88,19 +88,67 @@ _test('touch input stays native, secondary buttons do not drag, and cancellation
   _assert.equal(_context._pointerStart, null);
 });
 
-_test('rapid navigation decodes only the nearby banner window and reuses already warmed images', () => {
-  const _source = _fs.readFileSync(_path.join(__dirname, '../js/experience.js'), 'utf8');
-  const _images = Array.from({ length: 36 }, () => ({ dataset: {}, calls: 0, decode() { this.calls++; return Promise.resolve(); } }));
-  const _deck = { children: _images.map(_image => ({ querySelector: () => _image })) };
-  const _context = _vm.createContext({ _deck, _warmIndex: -1 });
-  const _start = _source.indexOf('  function _warmImages(');
-  const _end = _source.indexOf('  function _paint(', _start);
-  _vm.runInContext(_source.slice(_start, _end) + '\n_warmImages(16); _warmImages(16);', _context);
-  _assert.equal(_images.reduce((_sum, _image) => _sum + _image.calls, 0), 9);
-  _assert.equal(_images[16].fetchPriority, 'high');
-  _assert.equal(_images[20].fetchPriority, 'low');
-  _vm.runInContext('_warmImages(19);', _context);
-  _assert.equal(_images.reduce((_sum, _image) => _sum + _image.calls, 0), 12);
-  _assert.equal(_images[23].loading, 'eager');
-  _assert.equal(_images[0].calls, 0);
+_test('scrolling fetches a bounded window and defers explicit decoding until settling', () => {
+  for (const _file of ['js/experience.js', 'public/js/experience.js']) {
+    const _source = _fs.readFileSync(_path.join(__dirname, '..', _file), 'utf8');
+    const _images = Array.from({ length: 36 }, (_, _index) => ({
+      dataset: { src: 'https://example.com/' + _index + '.jpg' }, calls: 0,
+      decode() { this.calls++; return Promise.resolve(); },
+      removeAttribute(_name) { delete this[_name]; },
+    }));
+    const _deck = { children: _images.map(_image => ({ querySelector: () => _image })) };
+    const _context = _vm.createContext({ _deck, _warmIndex: -1, _warmDecoded: false });
+    const _start = _source.indexOf('  function _warmImages(');
+    const _end = _source.indexOf('  function _paint(', _start);
+    _vm.runInContext(_source.slice(_start, _end) + '\n_warmImages(16, false); _warmImages(16, false);', _context);
+    _assert.equal(_images.filter(_image => _image.src).length, 9);
+    _assert.equal(_images.reduce((_sum, _image) => _sum + _image.calls, 0), 0);
+    _vm.runInContext('_warmImages(16); _warmImages(16);', _context);
+    _assert.equal(_images.reduce((_sum, _image) => _sum + _image.calls, 0), 3);
+    _assert.equal(_images[16].fetchPriority, 'high');
+    _assert.equal(_images[20].fetchPriority, 'low');
+    _vm.runInContext('_warmImages(19, false);', _context);
+    _assert.equal(_images[23].src, 'https://example.com/23.jpg');
+    _assert.equal(_images[23].calls, 0);
+    _vm.runInContext('_warmImages(19);', _context);
+    _assert.equal(_images.filter(_image => _image.src).length, 9);
+    _assert.equal(_images[12].src, undefined);
+    _assert.equal(_images[0].calls, 0);
+    _assert.equal(_images.reduce((_sum, _image) => _sum + _image.calls, 0), 6);
+    _images[12].dataset.fallback = 'true';
+    _vm.runInContext('_warmImages(12);', _context);
+    _assert.equal(_images[12].src, '/assets/cover-placeholder.svg');
+  }
+});
+
+_test('fan painting touches at most four cards and releases layers after large jumps', () => {
+  for (const _file of ['js/experience.js', 'public/js/experience.js']) {
+    const _source = _fs.readFileSync(_path.join(__dirname, '..', _file), 'utf8');
+    const _entries = Array.from({ length: 36 }, () => {
+      const _classes = new Set();
+      return { style: {}, _classes, firstElementChild: { style: {}, lastElementChild: { style: {} } },
+        classList: {
+          add: _name => _classes.add(_name),
+          remove: (..._names) => _names.forEach(_name => _classes.delete(_name)),
+          toggle: (_name, _enabled) => _enabled ? _classes.add(_name) : _classes.delete(_name),
+        } };
+    });
+    const _deck = { scrollLeft: 620, children: new Proxy(_entries, { get(_target, _key) {
+      if (_key === Symbol.iterator) throw new Error('Full deck traversal during painting');
+      return _target[_key];
+    } }) };
+    const _context = _vm.createContext({ _deck, _step: 100, _paintFrame: 0, _painted: [],
+      cancelAnimationFrame() {}, _warmImages(_index, _decode) { _assert.equal(_decode, false); } });
+    const _start = _source.indexOf('  function _paint('), _end = _source.indexOf('  function _layout(', _start);
+    _vm.runInContext(_source.slice(_start, _end) + '\n_paint();', _context);
+    _assert.equal(_entries.filter(_entry => _entry._classes.has('is-nearby')).length, 4);
+    _assert.match(_entries[6].firstElementChild.style.transform, /translate3d/);
+    _assert.equal(_entries[0].firstElementChild.style.transform, undefined);
+    _deck.scrollLeft = 2100;
+    _context._paint();
+    _assert.equal(_entries.filter(_entry => _entry._classes.has('is-nearby')).length, 3);
+    _assert.equal(_entries[6].firstElementChild.style.transform, '');
+    _assert.equal(_entries[6].firstElementChild.style.opacity, '0');
+    _assert.equal(_entries[21].firstElementChild.style.opacity, '1.000');
+  }
 });

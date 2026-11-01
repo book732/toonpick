@@ -464,12 +464,14 @@ body .hero-art {
   transform: translateX(-50%) rotate(var(--_card-angle, -2deg)) scale(var(--_card-scale, 1));
   transform-origin: 50% 85%;
   opacity: var(--_card-opacity, 0);
-  filter: brightness(var(--_card-brightness, 1));
+  filter: none;
   border-color: #ffffff38;
   box-shadow: 0 9px 16px #0004;
   overflow: hidden;
   transition: border-color .2s ease;
 }
+.hero-art .hero-page:not(.is-nearby) .hero-cover { visibility: hidden; }
+.hero-art .hero-page.is-nearby .hero-cover { will-change: transform, opacity; }
 .hero-art .hero-page.is-current .hero-cover {
   border-color: color-mix(in srgb, var(--hero-highlight) 72%, #fff);
   box-shadow: 0 16px 24px #0006, 0 0 0 1px #ffffff12;

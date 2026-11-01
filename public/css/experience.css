@@ -597,5 +597,5 @@ body .hero-art {
 }
 
 .content-chevron { display: block; width: 12px; height: 12px; }
-body .content-menu:has(.content-link.active) { background: #1e3a8a; border-color: #1e3a8a; color: #fff; }
+body .content-menu:has(.content-link.active) { background: var(--action-fill); border-color: var(--action-fill); color: #fff; }
 body .content-menu .content-link.active { background: transparent; border-color: transparent; color: inherit; }

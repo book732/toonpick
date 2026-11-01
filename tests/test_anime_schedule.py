@@ -59,3 +59,17 @@ class _ScheduleTests(unittest.TestCase):
         with patch.object(_schedule.urllib.request, "urlopen", side_effect=OSError("provider unavailable")), self.assertRaises(_RecommendationError) as _error:
             _schedule._fetch_schedule(2027, 3, 1, 1)
         self.assertEqual(_error.exception.status, 502)
+
+    def test_korean_names_take_priority_and_translations_keep_the_source_title(self):
+        _untranslated = {**_ITEM, "synonyms": []}
+        with patch.object(_schedule, "_schedule_aliases", return_value={}), patch.object(_schedule, "_schedule_translations", return_value={"123": "작품 번역"}), patch.object(_schedule.urllib.request, "urlopen", return_value=_response([_untranslated])):
+            _item = _schedule._fetch_schedule(2027, 1, 1, 1)["items"][0]
+        self.assertEqual(_item["title"], "작품 번역")
+        self.assertEqual(_item["sourceTitle"], "作品")
+        self.assertTrue(_item["translatedTitle"])
+        self.assertFalse(_item["originalTitle"])
+        _schedule._fetch_schedule.cache_clear()
+        with patch.object(_schedule, "_schedule_aliases", return_value={"123": "한국 공식명"}), patch.object(_schedule, "_schedule_translations", return_value={"123": "작품 번역"}), patch.object(_schedule.urllib.request, "urlopen", return_value=_response([_untranslated])):
+            _item = _schedule._fetch_schedule(2027, 1, 1, 1)["items"][0]
+        self.assertEqual(_item["title"], "한국 공식명")
+        self.assertFalse(_item["translatedTitle"])

@@ -584,7 +584,6 @@ body .hero-art {
   .footer .footer-bottom { gap: 18px; }
 }
 
-.boardgame-page .mood-container { justify-content: flex-start; }
 
 .catalog-section[data-view="genre"] .genre-tabs {
   flex-wrap: wrap;
@@ -596,3 +595,7 @@ body .hero-art {
   border-radius: 10px;
   background: var(--surface);
 }
+
+.content-chevron { display: block; width: 12px; height: 12px; }
+body .content-menu:has(.content-link.active) { background: #1e3a8a; border-color: #1e3a8a; color: #fff; }
+body .content-menu .content-link.active { background: transparent; border-color: transparent; color: inherit; }

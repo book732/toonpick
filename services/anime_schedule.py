@@ -33,6 +33,11 @@ def _schedule_aliases():
     return json.loads((Path(__file__).resolve().parents[1] / "data/anime_aliases.json").read_text(encoding="utf-8"))
 
 
+@lru_cache(maxsize=1)
+def _schedule_translations():
+    return json.loads((Path(__file__).resolve().parents[1] / "data/anime_schedule_translations.json").read_text(encoding="utf-8"))
+
+
 @lru_cache(maxsize=64)
 def _fetch_schedule(_year, _quarter, _page, _bucket):
     _request = urllib.request.Request("https://graphql.anilist.co", data=json.dumps({"query": _QUERY, "variables": {"year": _year, "season": _SEASONS[_quarter - 1], "page": _page}}).encode(), headers={"Content-Type": "application/json", "Accept": "application/json", "User-Agent": "ToonPick/1.0"})
@@ -49,7 +54,9 @@ def _fetch_schedule(_year, _quarter, _page, _bucket):
                 continue
             _titles = _item["title"]
             _korean = _schedule_aliases().get(str(_id)) or next((_name for _name in _item.get("synonyms", []) if isinstance(_name, str) and re.search(r"[가-힣]", _name)), None)
-            _title = _korean or _titles.get("native") or _titles.get("english") or _titles.get("romaji")
+            _original = _titles.get("native") or _titles.get("english") or _titles.get("romaji")
+            _translated = _schedule_translations().get(str(_id))
+            _title = _korean or _translated or _original
             if not isinstance(_title, str) or not _title.strip():
                 continue
             _cover = (_item.get("coverImage") or {}).get("large") or ""
@@ -57,7 +64,7 @@ def _fetch_schedule(_year, _quarter, _page, _bucket):
             if _url.scheme != "https" or _url.hostname not in {"s4.anilist.co", "s3.anilist.co"} or _url.username or _url.password or _url.port:
                 _cover = "/assets/cover-placeholder.svg"
             _date = _item.get("startDate") or {}
-            _items.append({"id": _id, "title": _title[:240], "originalTitle": not bool(_korean), "cover": _cover, "url": "https://anilist.co/anime/" + str(_id), "format": _item.get("format"), "status": _item.get("status"), "startDate": {_key: _date.get(_key) if type(_date.get(_key)) is int else None for _key in ("year", "month", "day")}})
+            _items.append({"id": _id, "title": _title[:240], "sourceTitle": _original, "translatedTitle": bool(_translated and not _korean), "originalTitle": not bool(_korean or _translated), "cover": _cover, "url": "https://anilist.co/anime/" + str(_id), "format": _item.get("format"), "status": _item.get("status"), "startDate": {_key: _date.get(_key) if type(_date.get(_key)) is int else None for _key in ("year", "month", "day")}})
             _seen.add(_id)
         return {"items": _items, "hasNextPage": _result["pageInfo"]["hasNextPage"], "year": _year, "quarter": _quarter, "page": _page, "updatedAt": datetime.now(_KST).isoformat(), "source": "AniList", "sourceUrl": "https://anilist.co/search/anime?year=" + str(_year) + "&season=" + _SEASONS[_quarter - 1]}
     except (OSError, ValueError, KeyError, TypeError, AttributeError):

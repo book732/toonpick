@@ -35,7 +35,7 @@
 }
 .content-menu { position: relative; display: flex; align-items: stretch; border: 1px solid var(--line); border-radius: 100px; white-space: nowrap; }
 .content-menu:has(.active) { background: var(--ink); color: var(--surface); border-color: var(--ink); }
-.content-menu > button { width: 25px; padding: 0 7px 3px 0; background: transparent; color: inherit; border: 0; border-radius: 0 100px 100px 0; cursor: pointer; }
+.content-menu > button { display: inline-flex; align-items: center; justify-content: center; width: 25px; padding: 0; background: transparent; color: inherit; border: 0; border-radius: 0 100px 100px 0; cursor: pointer; }
 .content-dropdown { position: absolute; top: calc(100% + 8px); left: 0; display: grid; min-width: 175px; padding: 6px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 10px 30px #0002; z-index: 20; }
 .content-dropdown[hidden] { display: none; }
 .content-menu:last-child .content-dropdown { left: auto; right: 0; }
@@ -44,7 +44,7 @@
 .platform-link { display: inline-flex; align-items: center; gap: 4px; }
 .platform-link:hover { text-decoration: underline; }
 @media (prefers-reduced-motion: no-preference) {
-  .word-highlight { animation: discovery-sway 3.2s steps(2, end) infinite; transform-origin: 50% 80%; }
+  .word-highlight { animation: discovery-sway 1.6s steps(1, end) infinite; transform-origin: 50% 80%; }
   .hero-cta-group .btn .icon:last-child { animation: discovery-nudge 2.4s ease-out infinite; }
   .mood-chip { animation: discovery-wave 2.8s cubic-bezier(.2,.8,.3,1) infinite; }
   .mood-chip:nth-child(2) { animation-delay: .2s; }
@@ -53,11 +53,9 @@
   .mood-chip:hover, .mood-chip:focus-visible { animation-play-state: paused; }
 }
 @keyframes discovery-sway {
-  0%, 12%, 32%, 100% { transform: rotate(0) scale(1); }
-  16% { transform: rotate(-3deg) scale(1.035); }
-  20% { transform: rotate(2deg) scale(1.015); }
-  24% { transform: rotate(-1deg) scale(1.025); }
-  28% { transform: rotate(1deg) scale(1); }
+  0%, 100% { transform: rotate(-3deg); }
+  25%, 75% { transform: rotate(0); }
+  50% { transform: rotate(3deg); }
 }
 @keyframes discovery-nudge {
   0%, 50%, 84%, 100% { transform: translateX(0); }
@@ -1960,7 +1958,7 @@ dialog::backdrop {
   .content-switch { gap: 4px; }
   .content-link { padding: 6px; gap: 4px; font-size: 11px; }
   .content-link .icon { width: 14px; height: 14px; }
-  .content-menu > button { width: 18px; padding-right: 4px; }
+  .content-menu > button { width: 18px; padding: 0; }
   .brand-logo {
     font-size: 26px;
   }

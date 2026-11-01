@@ -40,7 +40,7 @@
     }
 
     function _render() {
-      _grid.innerHTML = _items.map(_item => '<article class="schedule-card"><a href="https://anilist.co/anime/' + _item.id + '" target="_blank" rel="noopener noreferrer"><div class="schedule-art"><img src="' + _escape(_item.cover) + '" alt="" width="180" height="240" loading="lazy" decoding="async"><span>' + _escape(_statuses[_item.status] || '일정 확인 중') + '</span></div><h3>' + _escape(_item.title) + '</h3><p>' + _escape(_scheduleDate(_item.startDate)) + '</p><small>' + _escape(_formats[_item.format] || '애니메이션') + (_item.originalTitle ? ' · 원제' : '') + '<span aria-hidden="true"> ↗</span></small></a></article>').join('');
+      _grid.innerHTML = _items.map(_item => '<article class="schedule-card"><a href="https://anilist.co/anime/' + _item.id + '" target="_blank" rel="noopener noreferrer"><div class="schedule-art"><img src="' + _escape(_item.cover) + '" alt="" width="180" height="240" loading="lazy" decoding="async"><span>' + _escape(_statuses[_item.status] || '일정 확인 중') + '</span></div><h3 title="' + _escape(_item.sourceTitle || _item.title) + '">' + _escape(_item.title) + '</h3><p>' + _escape(_scheduleDate(_item.startDate)) + '</p><small>' + _escape(_formats[_item.format] || '애니메이션') + (_item.translatedTitle ? ' · 번역명' : _item.originalTitle ? ' · 원제' : '') + '<span aria-hidden="true"> ↗</span></small></a></article>').join('');
     }
 
     async function _load(_append = false) {
@@ -59,7 +59,7 @@
       if (!_append) { _items = []; _render(); _more.hidden = true; }
       _section.querySelectorAll('[data-quarter]').forEach(_button => _button.setAttribute('aria-pressed', String(Number(_button.dataset.quarter) === _quarter)));
       try {
-        const _response = await fetch('/api/generate?' + new URLSearchParams({ resource: 'anime_schedule', year: _year, quarter: _quarter, page: _nextPage }), { signal: _controller.signal });
+        const _response = await fetch('/api/generate?' + new URLSearchParams({ resource: 'anime_schedule', language: 'ko', year: _year, quarter: _quarter, page: _nextPage }), { signal: _controller.signal });
         const _data = await _response.json();
         if (!_response.ok) throw new Error(_data.error || '방영 일정을 불러오지 못했어요.');
         if (!Array.isArray(_data.items) || _data.year !== _year || _data.quarter !== _quarter || _data.page !== _nextPage || typeof _data.hasNextPage !== 'boolean' || _data.items.some(_item => !Number.isInteger(_item.id) || _item.id < 1 || typeof _item.title !== 'string' || !/^https:\/\/s[34]\.anilist\.co\/[^\s]*$/.test(_item.cover) && _item.cover !== '/assets/cover-placeholder.svg')) throw new Error('방영 일정 형식을 확인하지 못했어요.');

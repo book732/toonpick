@@ -201,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resetBtn.hidden = !_aiData && !_filters.length && !_state.query && _state.sort === 'editor';
     resultSummary.textContent = _state.query ? '“' + _state.query + '” 검색 결과예요.' :
       data.summary ? data.summary :
-      _filters.length ? _filters.join(' · ') + ' 취향으로 고른 이야기예요.' : _browseView === 'genre' ? '보고 싶은 ' + (_isBoardGame ? '유형을' : '장르를') + ' 골라보세요. 여러 개를 함께 선택할 수 있어요.' : _isBoardGame ? '' : '장르를 넘나드는 에디터의 추천을 만나보세요.';
+      _filters.length ? _filters.join(' · ') + ' 취향으로 고른 이야기예요.' : _browseView === 'genre' ? '보고 싶은 ' + (_isBoardGame ? '유형을' : '장르를') + ' 고르면 해당 작품만 모아볼 수 있어요.' : _isBoardGame ? '' : '장르를 넘나드는 에디터의 추천을 만나보세요.';
     resultSummary.hidden = !resultSummary.textContent;
     const _recommendationLabel = document.getElementById('recommendationLabel');
     _recommendationLabel.textContent = data.source === 'ai' ? 'AI 맞춤 추천 · ' + data.model : '';
@@ -340,23 +340,41 @@ document.addEventListener('DOMContentLoaded', () => {
   function _setBrowseView(_view) {
     _browseView = _view;
     document.getElementById('featured').dataset.view = _view;
-    _catalogTitle.textContent = _view === 'genre' ? (_isBoardGame ? '유형별 보드게임 탐색' : '장르별 ' + (_isAnime ? '애니메이션' : '웹툰') + ' 탐색') : _catalogHeading;
+    _catalogTitle.textContent = _view === 'genre' ? (_isBoardGame ? '유형별 보드게임 탐색' : '장르별 ' + (_isAnime ? '애니메이션' : '웹툰') + ' 탐색') : _view === 'popular' ? '인기 ' + (_isAnime ? '애니메이션' : '웹툰') : _view === 'finished' ? (_isAnime ? '방영 완료 애니메이션' : '완결 웹툰') : _view === 'quick' ? '30분 안에 즐기는 보드게임' : _catalogHeading;
     document.querySelectorAll('.nav-link').forEach(_link => {
-      const _active = _link.dataset.view === _view;
+      const _active = _link.dataset.view === (_view === 'popular' ? 'all' : _view);
       _link.classList.toggle('active', _active);
       if (_active) _link.setAttribute('aria-current', 'page');
       else _link.removeAttribute('aria-current');
     });
   }
 
-  function _reset() {
+  function _reset(_reload = true) {
     clearTimeout(_searchTimer);
     _aiData = null;
     Object.assign(_state, { genres: [], mood: '전체', status: '전체', query: '', sort: 'editor', platforms: [], formats: [], count: 6, players: 0, maxMinutes: 0, difficulty: 0 });
     _searchInput.value = '';
     form.reset();
     _setBrowseView('all');
-    void _refresh();
+    if (_reload) void _refresh();
+  }
+
+  async function _navigateView(_view, _hash = '#featured', _record = true) {
+    _reset(false);
+    if (_view === 'popular' && !_isBoardGame) _state.sort = 'favorites';
+    if (_view === 'finished' && !_isBoardGame) _state.status = '완결';
+    if (_view === 'quick' && _isBoardGame) _state.maxMinutes = 30;
+    _setBrowseView(_view);
+    if (_record) {
+      const _url = new URL(window.location.href);
+      if (_view === 'all') _url.searchParams.delete('view');
+      else _url.searchParams.set('view', _view);
+      _url.hash = _hash;
+      window.history.pushState(null, '', _url);
+    }
+    if (!await _refresh()) return;
+    document.getElementById(_hash.slice(1))?.scrollIntoView({ behavior: 'instant', block: 'start' });
+    if (_view === 'genre') document.querySelector('#genreTabs button')?.focus({ preventScroll: true });
   }
 
   function _openDialog(_dialog) {
@@ -467,6 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // One listener handles both static hero buttons and dynamically rendered cards.
   let _openContentMenu = null;
+  let _contentMenuTimer;
   function _animateContentMenu(_menu, _opening) {
     _menu.getAnimations().forEach(_animation => _animation.cancel());
     _menu.inert = !_opening;
@@ -478,12 +497,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!_opening) void _animation.finished.then(() => { _menu.hidden = true; }).catch(() => {});
   }
   function _closeContentMenu(_restoreFocus = false) {
+    clearTimeout(_contentMenuTimer);
     if (!_openContentMenu) return;
     _animateContentMenu(document.getElementById(_openContentMenu.dataset.contentMenu), false);
     _openContentMenu.setAttribute('aria-expanded', 'false');
     if (_restoreFocus) _openContentMenu.focus();
     _openContentMenu = null;
   }
+  function _showContentMenu(_button) {
+    clearTimeout(_contentMenuTimer);
+    if (_openContentMenu === _button) return;
+    _closeContentMenu();
+    _openContentMenu = _button;
+    _animateContentMenu(document.getElementById(_button.dataset.contentMenu), true);
+    _button.setAttribute('aria-expanded', 'true');
+  }
+  document.querySelectorAll('.content-menu').forEach(_menu => {
+    _menu.addEventListener('pointerenter', _event => {
+      if (_event.pointerType === 'mouse') _showContentMenu(_menu.querySelector('[data-content-menu]'));
+    });
+    _menu.addEventListener('pointerleave', _event => {
+      if (_event.pointerType !== 'mouse') return;
+      clearTimeout(_contentMenuTimer);
+      _contentMenuTimer = setTimeout(() => _closeContentMenu(), 140);
+    });
+  });
   document.addEventListener('keydown', _event => {
     if (_event.key === 'Escape' && _openContentMenu) { _event.preventDefault(); _closeContentMenu(true); }
   });
@@ -491,15 +529,21 @@ document.addEventListener('DOMContentLoaded', () => {
     if (_openContentMenu && !_openContentMenu.closest('.content-menu').contains(_event.target)) _closeContentMenu();
   });
   document.addEventListener('click', _event => {
+    const _link = _event.target.closest('.content-dropdown a');
+    if (_link && !_event.ctrlKey && !_event.metaKey && !_event.shiftKey && !_event.altKey) {
+      const _url = new URL(_link.href);
+      if (_url.origin === window.location.origin && _url.pathname.replace(/\/$/, '') === window.location.pathname.replace(/\/$/, '') && _url.searchParams.has('view')) {
+        _event.preventDefault();
+        _closeContentMenu();
+        void _navigateView(_url.searchParams.get('view'), _url.hash || '#featured');
+        return;
+      }
+    }
     const _button = _event.target.closest('button');
     if (_button?.dataset.contentMenu) {
       const _wasOpen = _openContentMenu === _button;
-      _closeContentMenu();
-      if (!_wasOpen) {
-        _openContentMenu = _button;
-        _animateContentMenu(document.getElementById(_button.dataset.contentMenu), true);
-        _button.setAttribute('aria-expanded', 'true');
-      }
+      if (_wasOpen && _event.pointerType !== 'mouse') _closeContentMenu();
+      else _showContentMenu(_button);
       return;
     }
     _closeContentMenu();
@@ -530,8 +574,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (_button.dataset.mood) {
       _aiData = null;
       _state.mood = _state.mood === _button.dataset.mood ? '전체' : _button.dataset.mood;
-      void _refresh();
-      document.querySelector('.mood-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      void _refresh().then(_ready => { if (_ready) document.getElementById('featured').scrollIntoView({ behavior: 'instant', block: 'start' }); });
     }
   });
   document.addEventListener('error', _event => {
@@ -562,17 +605,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   savedPlansBtn.addEventListener('click', _openSavedPlans);
   document.querySelectorAll('.nav-link').forEach(_link => {
-    _link.addEventListener('click', () => {
-      _reset();
-      _setBrowseView(_link.dataset.view);
-      if (_link.dataset.view === 'finished') {
-        _state.status = '완결';
-        void _refresh();
-      }
-      if (_isBoardGame && _link.dataset.view === 'quick') { _state.maxMinutes = 30; void _refresh(); }
-      if (_link.dataset.view === 'genre') document.querySelector('[data-genre="' + window.ApiService._genres[0] + '"]')?.focus({ preventScroll: true });
+    _link.addEventListener('click', _event => {
+      if (_event.ctrlKey || _event.metaKey || _event.shiftKey || _event.altKey) return;
+      _event.preventDefault();
+      void _navigateView(_link.dataset.view, _link.dataset.view === 'genre' ? '#genreTabs' : '#featured');
     });
   });
+  window.addEventListener('popstate', () => { void _navigateView(new URLSearchParams(window.location.search).get('view') || 'all', window.location.hash || '#featured', false); });
   _searchInput.addEventListener('input', () => {
     clearTimeout(_searchTimer);
     _searchTimer = setTimeout(() => { _state.query = _searchInput.value.trim(); void _refresh(); }, _isAnime ? 450 : 120);
@@ -647,6 +686,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (_entryView === 'popular' && !_isBoardGame) _state.sort = 'favorites';
   if (_entryView === 'finished' && !_isBoardGame) _state.status = '완결';
   if (_entryView === 'quick' && _isBoardGame) _state.maxMinutes = 30;
-  _setBrowseView(['genre', 'finished', 'quick'].includes(_entryView) ? _entryView : 'all');
-  void _refresh();
+  _setBrowseView(['genre', 'finished', 'quick', 'popular'].includes(_entryView) ? _entryView : 'all');
+  void _refresh().then(_ready => { if (_ready && _entryView) document.getElementById(_entryView === 'genre' ? 'genreTabs' : 'featured').scrollIntoView({ behavior: 'instant' }); });
 });

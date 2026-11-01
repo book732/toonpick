@@ -42,6 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const _submitLabel = submitBtn.innerHTML;
   const _resultCount = document.getElementById('resultCount');
   const _activeFilter = document.getElementById('activeFilter');
+  const _catalogTitle = document.getElementById('catalogTitle');
+  const _catalogHeading = _catalogTitle.textContent.trim();
+  let _browseView = 'all';
   const _state = { genres: [], mood: '전체', status: '전체', query: '', sort: 'editor', platforms: [], formats: [], count: 6, players: 0, maxMinutes: 0, difficulty: 0 };
   const _platformSelect = document.getElementById('platformSelect');
   let _platformControlsReady = false;
@@ -198,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resetBtn.hidden = !_aiData && !_filters.length && !_state.query && _state.sort === 'editor';
     resultSummary.textContent = _state.query ? '“' + _state.query + '” 검색 결과예요.' :
       data.summary ? data.summary :
-      _filters.length ? _filters.join(' · ') + ' 취향으로 고른 이야기예요.' : _isBoardGame ? '' : '장르를 넘나드는 에디터의 추천을 만나보세요.';
+      _filters.length ? _filters.join(' · ') + ' 취향으로 고른 이야기예요.' : _browseView === 'genre' ? '보고 싶은 ' + (_isBoardGame ? '유형을' : '장르를') + ' 골라보세요. 여러 개를 함께 선택할 수 있어요.' : _isBoardGame ? '' : '장르를 넘나드는 에디터의 추천을 만나보세요.';
     resultSummary.hidden = !resultSummary.textContent;
     const _recommendationLabel = document.getElementById('recommendationLabel');
     _recommendationLabel.textContent = data.source === 'ai' ? 'AI 맞춤 추천 · ' + data.model : '';
@@ -334,13 +337,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  function _setBrowseView(_view) {
+    _browseView = _view;
+    document.getElementById('featured').dataset.view = _view;
+    _catalogTitle.textContent = _view === 'genre' ? (_isBoardGame ? '유형별 보드게임 탐색' : '장르별 ' + (_isAnime ? '애니메이션' : '웹툰') + ' 탐색') : _catalogHeading;
+    document.querySelectorAll('.nav-link').forEach(_link => {
+      const _active = _link.dataset.view === _view;
+      _link.classList.toggle('active', _active);
+      if (_active) _link.setAttribute('aria-current', 'page');
+      else _link.removeAttribute('aria-current');
+    });
+  }
+
   function _reset() {
     clearTimeout(_searchTimer);
     _aiData = null;
     Object.assign(_state, { genres: [], mood: '전체', status: '전체', query: '', sort: 'editor', platforms: [], formats: [], count: 6, players: 0, maxMinutes: 0, difficulty: 0 });
     _searchInput.value = '';
     form.reset();
-    document.querySelectorAll('.nav-link').forEach(_link => _link.classList.toggle('active', _link.dataset.view === 'all'));
+    _setBrowseView('all');
     void _refresh();
   }
 
@@ -549,7 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.nav-link').forEach(_link => {
     _link.addEventListener('click', () => {
       _reset();
-      document.querySelectorAll('.nav-link').forEach(_entry => _entry.classList.toggle('active', _entry === _link));
+      _setBrowseView(_link.dataset.view);
       if (_link.dataset.view === 'finished') {
         _state.status = '완결';
         void _refresh();
@@ -632,8 +647,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (_entryView === 'popular' && !_isBoardGame) _state.sort = 'favorites';
   if (_entryView === 'finished' && !_isBoardGame) _state.status = '완결';
   if (_entryView === 'quick' && _isBoardGame) _state.maxMinutes = 30;
-  if (['genre', 'finished', 'quick'].includes(_entryView)) {
-    document.querySelectorAll('.nav-link').forEach(_link => _link.classList.toggle('active', _link.dataset.view === _entryView));
-  }
+  _setBrowseView(['genre', 'finished', 'quick'].includes(_entryView) ? _entryView : 'all');
   void _refresh();
 });

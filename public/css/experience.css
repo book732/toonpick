@@ -585,3 +585,14 @@ body .hero-art {
 }
 
 .boardgame-page .mood-container { justify-content: flex-start; }
+
+.catalog-section[data-view="genre"] .genre-tabs {
+  flex-wrap: wrap;
+  width: 100%;
+  margin-right: 0;
+  padding: 14px;
+  overflow: visible;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+}

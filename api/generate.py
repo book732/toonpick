@@ -538,7 +538,8 @@ class handler(BaseHTTPRequestHandler):
                 }, status=400)
                 return
 
-            if content_length > 16384:
+            # Accommodate the bounded browser-local exclusion list without accepting unbounded bodies.
+            if content_length > 1048576:
                 self._send_json({"success": False, "error": "요청 본문이 너무 큽니다."}, status=413)
                 return
 

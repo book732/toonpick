@@ -166,6 +166,7 @@ const ApiService = {
   },
 
   async _requestRecommendations(payload, onProgressUpdate) {
+    const _excludedIds = window.StorageManager._getSeenItems().map(_entry => _entry.id);
     const _controller = new AbortController();
     const _timer = setTimeout(() => _controller.abort(), API_CONFIG.AI_TIMEOUT_MS);
     onProgressUpdate({ percent: 10, text: 'AI가 취향과 작품 줄거리를 함께 살펴보고 있어요.' });
@@ -173,7 +174,7 @@ const ApiService = {
       const _response = await fetch(API_CONFIG.RECOMMEND_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ type: window.TOONPICK_PAGE?.type || 'webtoon', genres: payload.genres, mood: payload.mood, status: payload.status, notes: payload.notes || '', platforms: payload.platforms || [], count: payload.count ?? 6, ...(window.TOONPICK_PAGE?.type === 'anime' ? { formats: payload.formats || [] } : {}), ...(window.TOONPICK_PAGE?.type === 'boardgame' ? { players: payload.players || 0, maxMinutes: payload.maxMinutes || 0, difficulty: payload.difficulty || 0 } : {}) }),
+        body: JSON.stringify({ type: window.TOONPICK_PAGE?.type || 'webtoon', genres: payload.genres, mood: payload.mood, status: payload.status, notes: payload.notes || '', platforms: payload.platforms || [], count: payload.count ?? 6, excludedIds: _excludedIds, ...(window.TOONPICK_PAGE?.type === 'anime' ? { formats: payload.formats || [] } : {}), ...(window.TOONPICK_PAGE?.type === 'boardgame' ? { players: payload.players || 0, maxMinutes: payload.maxMinutes || 0, difficulty: payload.difficulty || 0 } : {}) }),
         signal: _controller.signal
       });
       let _result;
@@ -209,7 +210,9 @@ const ApiService = {
         return _resolved;
       });
       onProgressUpdate({ percent: 100, text: 'AI가 추천할 이야기를 골랐어요.' });
-      return { success: true, data: { ..._data, items: _items } };
+      // Recheck local state after the request; the reader may mark a work while AI is loading.
+      const _currentSeen = window.StorageManager._getSeenKeys();
+      return { success: true, data: { ..._data, items: _items.filter(_item => !_currentSeen.has(window.StorageManager._getSeenKey(_item))) } };
     } catch (_error) {
       if (_error.name === 'AbortError') throw new Error('AI 추천 시간이 초과되었습니다. 다시 추천받아주세요.');
       throw _error;

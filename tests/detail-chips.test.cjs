@@ -16,7 +16,7 @@ async function _detail(_file) {
   const _context = _vm.createContext({
     _isAnime: false, _isBoardGame: false, _aiData: null, _dayNames: {},
     _detailModal: {}, _escape: _value => String(_value), _coverUrl: _value => _value,
-    _icon: () => '', updateSavedBadge() {}, _openDialog() {},
+    _icon: () => '', _seenButton: () => '', updateSavedBadge() {}, _openDialog() {},
     showToast(_message) { throw new Error(_message); },
     document: { getElementById: () => _content },
     window: { ApiService: { _loadCatalog: async () => ({ items: [_item] }), _isValidItem: () => true } },

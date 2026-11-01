@@ -7,7 +7,7 @@ import random
 from functools import lru_cache
 from pathlib import Path
 
-from services.recommendations import _RecommendationError, _request_recommendations
+from services.recommendations import _RecommendationError, _request_recommendations, _validate_excluded_ids
 
 
 _PATH = Path(__file__).resolve().parents[1] / "data/boardgames.json"
@@ -49,7 +49,7 @@ def _validate_boardgame(_payload):
             or type(_minutes) is not int or _minutes not in {0, 15, 20, 30, 45, 60, 90, 120}
             or type(_difficulty) is not int or not 0 <= _difficulty <= 3):
         raise _RecommendationError("보드게임 장르·인원·시간·난이도·추천 개수를 확인해주세요.", 400)
-    return {"genres": _genres, "mood": _mood, "notes": _notes.strip(), "count": _count, "players": _players, "maxMinutes": _minutes, "difficulty": _difficulty, "_contentType": "boardgame"}
+    return {"genres": _genres, "mood": _mood, "notes": _notes.strip(), "count": _count, "players": _players, "maxMinutes": _minutes, "difficulty": _difficulty, "_contentType": "boardgame", "excludedIds": _validate_excluded_ids(_payload)}
 
 
 def _eligible_boardgame(_item, _preferences):
@@ -62,7 +62,8 @@ def _eligible_boardgame(_item, _preferences):
 def _recommend_boardgames(_payload):
     _preferences = _validate_boardgame(_payload)
     _catalog = _boardgame_catalog()
-    _candidates = [_item for _item in _catalog["items"] if _eligible_boardgame(_item, _preferences)]
+    _excluded = set(_preferences["excludedIds"])
+    _candidates = [_item for _item in _catalog["items"] if _item["id"] not in _excluded and _eligible_boardgame(_item, _preferences)]
     _tokens = re.findall(r"[가-힣A-Za-z0-9]{2,18}", _preferences["notes"].lower())
     _candidates.sort(key=lambda _item: (sum(_token in (_item["description"] + " ".join(_item["tags"])).lower() for _token in _tokens), _preferences["mood"] in _item["moods"], _item.get("featured", False)), reverse=True)
     _matched = len(_candidates)

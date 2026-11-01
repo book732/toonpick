@@ -310,7 +310,7 @@ _test('AI requests use the server endpoint and send only reader preferences', as
     return { ok: true, json: async () => _aiResponse() };
   });
   const _result = await _api.generateTripPlan({ ..._defaults, ai: true, notes: '성장 이야기' });
-  _assert.deepEqual(Object.keys(_posted).sort(), ['type', 'genres', 'mood', 'status', 'notes', 'platforms', 'count'].sort());
+  _assert.deepEqual(Object.keys(_posted).sort(), ['type', 'genres', 'mood', 'status', 'notes', 'platforms', 'count', 'excludedIds'].sort());
   _assert.equal(_posted.count, 6);
   _assert.equal(_posted.type, 'webtoon');
   _assert.equal(_posted.notes, '성장 이야기');
@@ -324,6 +324,51 @@ _test('AI results resolve trusted titles and links from the local catalogue', as
   const _result = await _api.generateTripPlan({ ..._defaults, ai: true });
   _assert.equal(_result.data.items[0].title, _fixture.items[0].title);
   _assert.equal(_result.data.items[0].url, _fixture.items[0].url);
+});
+
+_test('seen marks persist independently of collections, toggle equivalent editions and isolate categories', () => {
+  for (const _type of [false, true, 'boardgame']) {
+    const { _manager, _storage, _sandbox } = _context(null, _type);
+    const _item = { ..._fixture.items[0], title: '테스트 (자막)', format: 'TV' };
+    _manager.savePlan(_item);
+    _assert.equal(_manager._toggleSeen(_item).seen, true);
+    _assert.equal(_manager._getSeenKeys().has(_manager._getSeenKey(_item)), true);
+    _vm.runInContext(_fs.readFileSync(_path.join(_root, 'js/storage.js'), 'utf8'), _vm.createContext({ window: _sandbox.window, localStorage: _sandbox.localStorage }));
+    _assert.equal(_sandbox.window.StorageManager._getSeenItems().length, 1);
+    _assert.equal(_manager.getSavedPlans().length, 1);
+    _assert.ok(_storage.has(_manager._seenStorageKey));
+    if (_type === true) {
+      _assert.equal(_manager._getSeenKey({ ..._item, title: '테스트 (더빙)' }), _manager._getSeenKey(_item));
+      _assert.notEqual(_manager._getSeenKey({ ..._item, title: '테스트 2기' }), _manager._getSeenKey(_item));
+      _assert.notEqual(_manager._getSeenKey({ ..._item, format: 'MOVIE' }), _manager._getSeenKey(_item));
+    }
+    _assert.equal(_manager._toggleSeen(_item).seen, false);
+    _assert.equal(_manager._getSeenItems().length, 0);
+    for (const _other of ['toonpick_saved_webtoons_seen', 'toonpick_saved_anime_seen', 'toonpick_saved_boardgames_seen']) {
+      if (_other !== _manager._seenStorageKey) _assert.equal(_storage.has(_other), false);
+    }
+    _storage.set(_manager._seenStorageKey, '[null,{"id":"bad","key":"x"}]');
+    _assert.equal(_manager._getSeenItems().length, 0);
+    _sandbox.localStorage.setItem = () => { throw new Error('denied'); };
+    _assert.equal(_manager._toggleSeen(_item).success, false);
+  }
+});
+
+_test('AI sends seen IDs and filters marks made while the request is pending without hiding discovery', async () => {
+  let _posted;
+  let _manager;
+  const _contextResult = _context(async (_url, _options) => {
+    if (!_options?.body) return { ok: true, json: async () => structuredClone(_fixture) };
+    _posted = JSON.parse(_options.body);
+    _manager._toggleSeen(_fixture.items[1]);
+    return { ok: true, json: async () => _aiResponse() };
+  });
+  _manager = _contextResult._manager;
+  _manager._toggleSeen(_fixture.items[0]);
+  const _result = await _contextResult._api.generateTripPlan({ ..._defaults, ai: true });
+  _assert.deepEqual(_posted.excludedIds, [_fixture.items[0].id]);
+  _assert.ok(_result.data.items.every(_item => ![_fixture.items[0].id, _fixture.items[1].id].includes(_item.id)));
+  _assert.ok(_contextResult._api.generateFallbackPlan(_defaults).data.items.some(_item => _item.id === _fixture.items[0].id));
 });
 
 _test('AI failures remain failures instead of silently returning local recommendations', async () => {

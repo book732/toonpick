@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let _lastRequestAI = false;
   let _visibleCount = 24;
   let _lastRenderData = null;
+  let _seenKeys = window.StorageManager._getSeenKeys();
   const _loadMoreBtn = document.getElementById('loadMoreBtn');
 
   function _escape(_value) {
@@ -157,6 +158,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function _seenButton(_item, _detail = false) {
+    const _key = window.StorageManager._getSeenKey(_item);
+    const _seen = _seenKeys.has(_key);
+    const _label = _isBoardGame ? '플레이했어요' : '봤어요';
+    return '<button type="button" class="' + (_detail ? 'btn btn-outline detail-seen' : 'card-seen') + '" data-seen="' + _escape(_item.id) + '" data-seen-key="' + _escape(_key) + '" aria-pressed="' + _seen + '" aria-label="' + _escape(_item.title) + ' ' + _label + '" title="표시한 작품은 AI 추천에서 제외됩니다">' + (_seen ? '✓ ' : '') + _label + '</button>';
+  }
+
+  function _syncSeen() {
+    _seenKeys = window.StorageManager._getSeenKeys();
+    if (_aiData && _lastRenderData) renderResult(_lastRenderData);
+    document.querySelectorAll('[data-seen]').forEach(_button => {
+      const _seen = _seenKeys.has(_button.dataset.seenKey);
+      _button.setAttribute('aria-pressed', String(_seen));
+      _button.textContent = (_seen ? '✓ ' : '') + (_isBoardGame ? '플레이했어요' : '봤어요');
+    });
+  }
+
+  async function _toggleSeen(_id) {
+    try {
+      const _catalog = await window.ApiService._loadCatalog();
+      const _item = _catalog.items.find(_entry => _entry.id === _id) || window._ToonpickExperience._getItem(_id) || window.StorageManager.getSavedPlans().find(_entry => _entry.id === _id)?.data;
+      if (!_item) return;
+      const _result = window.StorageManager._toggleSeen(_item);
+      if (!_result.success) { showToast(_result.error); return; }
+      _syncSeen();
+      showToast(_result.seen ? 'AI 추천에서 제외했어요. 이 브라우저에 저장됩니다.' : '표시를 해제했어요. 다시 AI 추천을 받을 수 있어요.');
+    } catch (_error) { showToast(_error.message); }
+  }
+
   function _card(_item, _index, _saved) {
     const _id = _escape(_item.id);
     const _title = _escape(_item.title);
@@ -176,6 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
       (_isBoardGame ? '<p class="anime-original">' + _escape(_item.playersLabel + ' · ' + _item.timeLabel) + '</p><div class="card-meta"><span>' + _escape(_genreLabel) + '</span><span>' + _escape(_item.mode) + '</span><span>난이도 ' + _escape(_item.difficultyLabel) + '</span></div>' :
       '<div class="card-meta">' + _platformLabel + '<span class="meta-divider"></span><span>' + _escape(_genreLabel) + '</span><span>' + _escape(_isAnime ? ({ '완결': '방영 완료', '연재': '방영 중', '휴재': '휴방', '방영예정': '방영 예정' }[_item.status] || _item.status) : _item.status) + '</span></div>') +
       '<div class="card-tags">' + (_item.discovery === 'web' ? '<span class="orange">공식 검색 발견</span>' : '') + _item.tags.slice(0, 2).map(_tag => '<span>#' + _escape(_tag) + '</span>').join('') + '</div>' +
+      _seenButton(_item) +
       (_item.recommendationReason ? '<p class="card-reason"><b>AI 추천 이유</b>' + _escape(_item.recommendationReason) + '</p>' : '') + '</article>';
   }
 
@@ -183,6 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window._ToonpickExperience._setCatalog(window.ApiService._catalog.heroItems || window.ApiService._catalog.items);
     _renderPlatforms(data.retrieval?.search?.platforms);
     _lastRenderData = data;
+    if (_aiData) data = { ...data, items: data.items.filter(_item => !_seenKeys.has(window.StorageManager._getSeenKey(_item))) };
     const _saved = new Set(window.StorageManager.getSavedPlans().map(_entry => _entry.id));
     resultContainer.innerHTML = data.items.slice(0, _visibleCount).map((_item, _index) => _card(_item, _index, _saved)).join('');
     _loadMoreBtn.hidden = data.items.length <= _visibleCount && !(_isAnime && !_aiData && window.ApiService._catalog.pagination?.hasNextPage);
@@ -406,7 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
         (_isBoardGame && _item.editionNote ? '<p class="anime-original">판본 안내: ' + _escape(_item.editionNote) + '</p>' : '') +
         (_isAnime && _item.relations?.length ? '<p class="anime-original">관련 시즌·작품: ' + _item.relations.slice(0, 8).map(_relation => '<a href="' + _escape(_relation.url) + '" target="_blank" rel="noopener noreferrer">' + _escape(_relation.title) + ' ↗</a>').join(' · ') + '</p>' : '') +
         '<div class="detail-actions">' + (_isAnime ? _animeSources(_item).map((_source, _index) => '<a class="btn ' + (_index === 0 ? 'btn-primary' : 'btn-outline') + '" href="' + _escape(_source.url) + '" target="_blank" rel="noopener noreferrer">' + _escape(_source.platform) + ' 작품 정보 ↗</a>').join('') : '<a class="btn btn-primary" href="' + _escape(_item.url) + '" target="_blank" rel="noopener noreferrer">' + (_isBoardGame ? '출판사 게임 정보 · 규칙 ↗' : _escape(_item.platform) + '에서 보기 ↗') + '</a>') +
-        '<button type="button" class="btn btn-outline detail-save" data-save="' + _escape(_item.id) + '">' + _icon('bookmark') + '보관함에 담기</button></div>' +
+        '<button type="button" class="btn btn-outline detail-save" data-save="' + _escape(_item.id) + '">' + _icon('bookmark') + '보관함에 담기</button>' + _seenButton(_item, true) + '</div>' +
         '<p class="detail-source">출처: <a href="' + _escape(_item.url) + '" target="_blank" rel="noopener noreferrer">' + _escape(_isBoardGame ? _item.publisher : _item.platform) + (_isBoardGame ? ' 게임 정보 ↗' : _isAnime ? ' 작품 정보 ↗' : ' 공식 작품 페이지 ↗') + '</a>.' + (_isBoardGame && _item.coverSourcePage ? ' <a href="' + _escape(_item.coverSourcePage) + '" target="_blank" rel="noopener noreferrer">제품 표지 출처 ↗</a>.' : '') + '<br>' + (_isBoardGame ? '시간은 출판사 표기 기준이며 플레이에 따라 달라집니다. 난이도는 오늘의 덕질 편집 분류입니다. 제품 표지의 권리는 각 원저작권자에게 있습니다. 언어·발매 지역에 따라 패키지가 다를 수 있습니다.' : _isAnime ? '방영 완료는 해당 시즌 기준입니다. 감상 가능 여부와 이용 연령은 감상 서비스에서 확인해주세요.' : '표지·줄거리의 권리는 원저작권자에게 있습니다. 연재 상태와 이용 연령은 공식 페이지에서 확인해주세요.') + '</p>';
       updateSavedBadge();
       _openDialog(_detailModal);
@@ -553,6 +585,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (_button.hasAttribute('data-close')) { _button.closest('dialog')?.close(); return; }
     if (_button.hasAttribute('data-open-saved')) { void _openSavedPlans(); return; }
     if (_button.dataset.save) { void _toggleSave(_button.dataset.save); return; }
+    if (_button.dataset.seen) { void _toggleSeen(_button.dataset.seen); return; }
     if (_button.dataset.detail) { void _showDetail(_button.dataset.detail); return; }
     if (_button.hasAttribute('data-preferences')) {
       if (_recommendationStarted) { _showRecommendationExperience(); return; }
@@ -674,6 +707,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   window.addEventListener('storage', _event => {
+    if (_event.key === window.StorageManager._seenStorageKey || _event.key === null) _syncSeen();
     if (_event.key === STORAGE_KEYS.SAVED_PLANS || _event.key === null) {
       updateSavedBadge();
       if (savedModal.open) renderSavedPlansList();

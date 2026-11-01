@@ -1,6 +1,7 @@
 """Regression coverage for grounded AI recommendations and the HTTP entrypoint."""
 
 import io
+import http.client
 import json
 import os
 import threading
@@ -214,13 +215,34 @@ class _HttpTests(unittest.TestCase):
             self.assertEqual(_recommendation.call_args.args[0]["players"], 2)
 
     def test_input_errors_are_returned_as_json_with_correct_status(self):
-        for _body, _status in [(b"[]", 400), (b"not-json", 400), (b"x" * 16385, 413)]:
+        for _body, _status in [(b"[]", 400), (b"not-json", 400)]:
             _request = urllib.request.Request(self._url, data=_body)
             with self.assertRaises(urllib.error.HTTPError) as _error:
                 urllib.request.urlopen(_request)
             self.assertEqual(_error.exception.code, _status)
             self.assertFalse(json.load(_error.exception)["success"])
             _error.exception.close()
+
+        # Reject the declared length without uploading a megabyte after an early 413.
+        _connection = http.client.HTTPConnection(self._url.removeprefix("http://").split("/", 1)[0])
+        try:
+            _connection.putrequest("POST", "/api/generate")
+            _connection.putheader("Content-Length", "1048577")
+            _connection.endheaders()
+            _response = _connection.getresponse()
+            self.assertEqual(_response.status, 413)
+            self.assertFalse(json.load(_response)["success"])
+        finally:
+            _connection.close()
+
+    def test_seen_list_larger_than_the_old_body_limit_reaches_recommendations(self):
+        _ids = ["kakao:" + format(_index, "020x") for _index in range(1000)]
+        _body = json.dumps({"type": "webtoon", **_PREFERENCES, "excludedIds": _ids}).encode()
+        self.assertGreater(len(_body), 16384)
+        with patch("api.generate._recommend", return_value={"success": True, "data": {"items": []}}) as _recommendation:
+            with urllib.request.urlopen(urllib.request.Request(self._url, data=_body)) as _response:
+                self.assertTrue(json.load(_response)["success"])
+            self.assertEqual(_recommendation.call_args.args[0]["excludedIds"], _ids)
 
     def test_recommendation_failure_is_returned_without_fake_results(self):
         _request = urllib.request.Request(self._url, data=json.dumps({"type": "webtoon", **_PREFERENCES}).encode("utf-8"))

@@ -7,7 +7,7 @@ import urllib.request
 from functools import lru_cache
 from pathlib import Path
 
-from services.recommendations import _RecommendationError, _request_recommendations, _MOODS
+from services.recommendations import _RecommendationError, _request_recommendations, _MOODS, _validate_excluded_ids
 
 _PATH = Path(__file__).resolve().parents[1] / "data/anime_domestic.json"
 _GENRES = {"액션", "모험", "코미디", "드라마", "판타지", "공포", "음악", "미스터리", "로맨스", "SF", "일상", "스포츠", "스릴러", "초자연"}
@@ -65,7 +65,7 @@ def _validate_anime(_payload):
             or type(_count) is not int or not 1 <= _count <= 18 or not isinstance(_query, str) or len(_query) > 100
             or not isinstance(_notes, str) or len(_notes) > 600):
         raise _RecommendationError("애니메이션 장르·플랫폼·형식·방영 상태·추천 개수를 확인해주세요.", 400)
-    return {"genres": list(dict.fromkeys(_genres)), "formats": list(dict.fromkeys(_formats)), "platforms": list(dict.fromkeys(_platforms)), "status": _status, "mood": _mood, "count": _count, "query": _query.strip(), "notes": _notes.strip(), "_contentType": "anime"}
+    return {"genres": list(dict.fromkeys(_genres)), "formats": list(dict.fromkeys(_formats)), "platforms": list(dict.fromkeys(_platforms)), "status": _status, "mood": _mood, "count": _count, "query": _query.strip(), "notes": _notes.strip(), "_contentType": "anime", "excludedIds": _validate_excluded_ids(_payload)}
 
 
 def _eligible(_item, _preferences):
@@ -146,7 +146,10 @@ def _anime_detail(_id, _bucket):
 def _recommend_anime(_payload):
     _preferences = _validate_anime(_payload)
     _catalog = _anime_discovery(_preferences, _all=True)
-    _items = _catalog["items"]
+    _excluded = set(_preferences["excludedIds"])
+    _excluded_works = {_item["_workKey"] for _item in _read_anime(_PATH.stat().st_mtime_ns)["items"] if _item["id"] in _excluded}
+    _excluded_ids = {_item["id"] for _item in _read_anime(_PATH.stat().st_mtime_ns)["items"] if _item["_workKey"] in _excluded_works} | _excluded
+    _items = [_item for _item in _catalog["items"] if _item["id"] not in _excluded_ids]
     _viewable = [_item for _item in _items if _item.get("available", _item["platformKey"] == "netflix")]
     if not _preferences["query"] and len(_viewable) >= _preferences["count"]:
         _items = _viewable

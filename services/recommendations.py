@@ -25,6 +25,14 @@ def _load_catalog():
     return _get_catalog()
 
 
+def _validate_excluded_ids(_payload):
+    _ids = _payload.get("excludedIds", [])
+    if (not isinstance(_ids, list) or len(_ids) > 20000
+            or any(not isinstance(_id, str) or not re.fullmatch(r"(?:\d{1,20}|[a-z][a-z0-9]{0,23}:[a-f0-9]{20})", _id) for _id in _ids)):
+        raise _RecommendationError("본 작품 목록이 올바르지 않습니다.", 400)
+    return list(dict.fromkeys(_ids))
+
+
 def _validate_inputs(_payload):
     if not isinstance(_payload, dict):
         raise _RecommendationError("추천 조건은 JSON 객체로 전송해주세요.", 400)
@@ -50,7 +58,7 @@ def _validate_inputs(_payload):
         or type(_count) is not int or not 1 <= _count <= 18
     ):
         raise _RecommendationError("장르·분위기·연재 상태와 요청사항을 확인해주세요.", 400)
-    return {"genres": _genres, "mood": _mood, "status": _status, "notes": _notes.strip(), "platforms": _platforms, "count": _count}
+    return {"genres": _genres, "mood": _mood, "status": _status, "notes": _notes.strip(), "platforms": _platforms, "count": _count, "excludedIds": _validate_excluded_ids(_payload)}
 
 
 def _quota_plan(_candidates, _count=6):
@@ -120,7 +128,7 @@ def _request_recommendations(_preferences, _candidates):
         "messages": [
             {"role": "system", "content": _system},
             {"role": "user", "content": json.dumps({
-                "preferences": _preferences,
+                "preferences": {_key: _value for _key, _value in _preferences.items() if _key != "excludedIds"},
                 "allocation": None if _is_anime or _is_boardgame else _quota_plan(_candidates, _preferences.get("count", 6)),
                 "catalogue": [
                     {"id": _item["id"], "title": _item["title"], "genre": _item["genre"], "platform": _item["platform"],
@@ -173,7 +181,11 @@ def _recommend(_payload):
     _preferences = _validate_inputs(_payload)
     _catalog = _load_catalog()
     _web_items, _search = _search_web(_preferences, _catalog)
-    _candidates = _select_candidates(_preferences, _catalog, _web_items)
+    _excluded = set(_preferences["excludedIds"])
+    _excluded_stories = {_story_key(_item) for _item in (*_catalog["items"], *_web_items) if _item["id"] in _excluded}
+    # Exclude before candidate limits and quotas, including duplicate platform editions.
+    _eligible = lambda _item: _item["id"] not in _excluded and _story_key(_item) not in _excluded_stories
+    _candidates = _select_candidates(_preferences, {**_catalog, "items": [_item for _item in _catalog["items"] if _eligible(_item)]}, [_item for _item in _web_items if _eligible(_item)])
     _quota = _quota_plan(_candidates, _preferences["count"])
     _actual = {"naver": 0, "kakao": 0, "other": 0}
     _retrieval = {"catalogCount": len(_catalog["items"]), "candidateCount": len(_candidates), "requestedCount": _preferences["count"], "search": _search, "quota": {**_quota, "actual": _actual}}

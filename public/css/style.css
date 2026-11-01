@@ -1045,6 +1045,20 @@ h1 {
 .card-save[aria-pressed="true"] .icon {
   fill: currentColor;
 }
+.card-seen {
+  min-height: 36px;
+  margin-top: 10px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.card-seen[aria-pressed="true"], .detail-seen[aria-pressed="true"] {
+  border-color: var(--action-fill);
+  background: var(--action-fill);
+  color: #fff;
+}
 .card-label {
   position: absolute;
   bottom: 9px;
@@ -1638,6 +1652,7 @@ dialog::backdrop {
 }
 .detail-actions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 10px;
   margin-top: 24px;
